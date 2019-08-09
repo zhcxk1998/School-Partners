@@ -1,0 +1,29 @@
+{
+	"miniprogramRoot": "dist/",
+	"projectname": "School-Partners",
+	"description": "一个为学生提供在线学习、做题PK、上课签到、资料查阅、成绩分析等功能的微信小程序",
+	"appid": "wx95ac3fd7606cf67a",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"enhance": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"libVersion": "2.8.0",
+	"condition": {}
+}

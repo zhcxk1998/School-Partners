@@ -1,0 +1,21 @@
+@import '../../../styles/base.scss';
+
+.exam-topic {
+  padding: 0 .5em;
+  color: #333;
+  font-size: $font-size-primary;
+
+  .type {
+    $height-primary: $font-size-primary+.4em;
+
+    display: inline-block;
+    width: 3em;
+    height: $height-primary;
+    color: $color-light;
+    line-height: $height-primary;
+    text-align: center;
+    background-image: linear-gradient(-20deg, #fc6076 0%, #ff9a44 100%);
+    border-radius: .8em;
+    transform: scale(0.8, 0.8)
+  }
+}
