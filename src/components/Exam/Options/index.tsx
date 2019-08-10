@@ -4,11 +4,14 @@ import { View } from '@tarojs/components'
 import './index.scss'
 
 interface IProps {
-  options: Array<string>
+  options: Array<string>,
+  number: number,
+  answers: Array<Array<number>>,
+  type: string,
+  handleOptionClick: (number: number, index: number) => void
 }
 
 interface IState {
-  active: number
 }
 
 class Options extends Component<IProps, IState> {
@@ -16,7 +19,6 @@ class Options extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      active: -1
     }
   }
 
@@ -24,27 +26,23 @@ class Options extends Component<IProps, IState> {
     return String.fromCharCode(number + 65)
   }
 
-  handleOptionClick(index: number) {
-    this.setState({
-      active: index
-    })
-  }
-
   render() {
-    const { options } = this.props;
-    const { active } = this.state;
+    const { options, number, answers, handleOptionClick, type } = this.props;
+    const buttonClassName: string = answers[number].some(_ => _ === 1) ? 'confirm' : 'confirm hide';
+
     return (
       <View className='exam-options'>
         {options.map((option, index) => {
-          const className: string = index === active ? 'number active' : 'number';
+          // const className: string = index === active ? 'number active' : 'number';
+          const optionClassName: string = answers[number][index] === 1 ? 'number active' : 'number';
           return (
-            <View className='wrap' key={index} onClick={this.handleOptionClick.bind(this, index)}>
-              <View className={className}>{this.formatNumber(index)}</View>
+            <View className='wrap' key={index} onClick={handleOptionClick.bind(this, number, index, type)}>
+              <View className={optionClassName}>{this.formatNumber(index)}</View>
               <View className='content'>{option}</View>
             </View>
           )
         })}
-        <View className='confirm'>确认答案</View>
+        <View className={buttonClassName}>确认答案</View>
       </View>
     )
   }

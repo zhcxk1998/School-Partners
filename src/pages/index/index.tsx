@@ -1,7 +1,7 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, Text, Image } from '@tarojs/components'
-import { observer, inject } from '@tarojs/mobx'
+// import { observer, inject } from '@tarojs/mobx'
 
 import Tabbar from '../../components/Tabbar/index'
 
@@ -16,8 +16,8 @@ interface IState {
   current: number
 }
 
-@inject('counterStore')
-@observer
+// @inject('counterStore')
+// @observer
 class Index extends Component<IProps, IState> {
 
   /**
@@ -56,6 +56,7 @@ class Index extends Component<IProps, IState> {
     const { current } = this.state;
     return (
       <View className='index-container'>
+        
         <Button type='primary' onClick={() => { Taro.navigateTo({ url: '/pages/exam/index' }) }}>exam</Button>
         <Tabbar onSwitchTab={this.switchTab.bind(this)} current={current} />
       </View>

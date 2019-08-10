@@ -17,9 +17,10 @@ class Topic extends Component<IProps, {}> {
 
   render() {
     const { type, topic } = this.props;
+    const tag: string = type === 'radio' ? '单选' : '多选';
     return (
       <View className='exam-topic'>
-        <View className='type'>{type}</View>
+        <View className='type'>{tag}</View>
         {topic}
       </View>
     )

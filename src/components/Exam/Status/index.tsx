@@ -18,7 +18,7 @@ class Status extends Component<IProps, {}> {
         </View>
         <View className='progress'>
           <AtIcon value='numbered-list' size='16' color='#fa4b2a'></AtIcon>
-          <Text className='tag'>1/20</Text>
+          <Text className='tag'>1/6</Text>
         </View>
       </View>
     )
