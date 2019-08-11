@@ -1,22 +1,23 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { observer, inject } from '@tarojs/mobx'
+
+import examStore from '../../../store/examStore'
 
 import './index.scss'
 
 interface IProps {
-  type: string,
-  topic: string
+  number: number,
+  examStore: examStore,
 }
 
+@inject('examStore')
+@observer
 class Topic extends Component<IProps, {}> {
-
-  static defaultProps = {
-    type: '未知',
-    topic: '题目正在生成...'
-  }
-
   render() {
-    const { type, topic } = this.props;
+    const { number, examStore: { topics } } = this.props;
+    if (!topics[number]) return;
+    const { type, topic } = topics[number];
     const tag: string = type === 'radio' ? '单选' : '多选';
     return (
       <View className='exam-topic'>

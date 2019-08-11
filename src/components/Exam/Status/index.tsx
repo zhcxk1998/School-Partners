@@ -1,15 +1,16 @@
 import Taro, { Component } from '@tarojs/taro'
-import { View,Text } from '@tarojs/components'
+import { View, Text } from '@tarojs/components'
 import { AtIcon } from 'taro-ui'
 import './index.scss'
 
 interface IProps {
-
+  current: number
 }
 
 class Status extends Component<IProps, {}> {
 
   render() {
+    const { current } = this.props;
     return (
       <View className='exam-status'>
         <View className='star'>
@@ -18,7 +19,7 @@ class Status extends Component<IProps, {}> {
         </View>
         <View className='progress'>
           <AtIcon value='numbered-list' size='16' color='#fa4b2a'></AtIcon>
-          <Text className='tag'>1/6</Text>
+          <Text className='tag'>{current+1}</Text>/6
         </View>
       </View>
     )

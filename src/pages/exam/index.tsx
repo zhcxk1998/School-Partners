@@ -8,28 +8,20 @@ import Topic from '../../components/Exam/Topic/index'
 import Options from '../../components/Exam/Options/index'
 import Status from '../../components/Exam/Status/index'
 
+import examStore from '../../store/examStore';
+
 import getExamTopic from '../../utils/getExamTopic'
 
 import './index.scss'
 
 
 interface IProps {
-  examStore: {
-    currentPage: number,
-    nextPage: Function,
-    previousPage: Function,
-    setPage: Function,
-  }
-}
-
-interface IState {
-  topics: Array<{ type: string, topic: string, options: Array<string> }>,
-  answers: Array<Array<number>>
+  examStore: examStore
 }
 
 @inject('examStore')
 @observer
-class Exam extends Component<IProps, IState> {
+class Exam extends Component<IProps, {}> {
 
   config: Config = {
     navigationBarTitleText: '做题'
@@ -37,51 +29,36 @@ class Exam extends Component<IProps, IState> {
 
   constructor(props) {
     super(props);
-    this.state = {
-      topics: [],
-      answers: []
-    }
   }
 
   async componentDidMount() {
+    Taro.showLoading({
+      title: '请稍等...'
+    })
     await this.fetchExamTopic()
+    Taro.hideLoading()
   }
 
   async fetchExamTopic() {
+    const { examStore: { setTopics, setAnswers } } = this.props;
     const topics: Array<{ type: string, topic: string, options: Array<string> }> = await getExamTopic()
     const answers: Array<Array<number>> = Array.from({ length: topics.length }, (_, index) => Array.from({ length: topics[index].options.length }, __ => 0))
-    // const answers: Array<Array<number>> = Array(topics.length).fill(0).map((_, index) => Array(topics[index].options.length).fill(-1))
-    this.setState({
-      topics,
-      answers
-    })
+    setTopics(topics)
+    setAnswers(answers)
   }
 
-  switchPage(index: number) {
-    const { examStore: { setPage } } = this.props;
-    setPage(index)
+  switchPage(current: number) {
+    const { examStore: { setCurrentPage } } = this.props;
+    setCurrentPage(current)
   }
 
   generateTab(): Array<{ title: string }> {
-    const { topics } = this.state;
+    const { examStore: { topics } } = this.props;
     return Array.from({ length: topics.length }).map((_, index) => ({ title: (index + 1).toString() }))
   }
 
-  handleOptionClick(number: number, index: number, type: string): void {
-    const { answers } = this.state;
-    if (type === 'radio') {
-      answers[number].fill(0) 
-    }
-    answers[number][index] = answers[number][index] === 1 ? 0 : 1
-    this.setState({
-      answers
-    })
-
-  }
-
   render() {
-    const { topics, answers } = this.state;
-    const { examStore: { currentPage } } = this.props;
+    const { examStore: { currentPage, topics } } = this.props;
     const tabList = this.generateTab();
     return (
       <View className='exam-container'>
@@ -90,24 +67,17 @@ class Exam extends Component<IProps, IState> {
           scroll
           tabList={tabList}
           onClick={this.switchPage.bind(this)}>
-          {topics.map((item, index) => {
-            const { type, topic, options } = item
+          {topics.map((_, index) => {
             return (
               <AtTabsPane current={currentPage} index={index} key={index}>
                 <View className='exam-timer'></View>
-                <Topic type={type} topic={topic} />
-                <Options options={options} number={index} answers={answers} type={type} handleOptionClick={this.handleOptionClick.bind(this)} />
+                <Topic number={index} examStore={new examStore()} />
+                <Options number={index} examStore={new examStore()} />
               </AtTabsPane>
             )
           })}
         </AtTabs>
-        {/* <View className='exam-timer'>
-
-        </View>
-        <Topic type={type} topic={topic} />
-        <Options options={options} />
-        <Status></Status> */}
-        <Status></Status>
+        <Status current={currentPage}></Status>
       </View>
     )
   }
