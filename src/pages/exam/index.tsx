@@ -2,7 +2,7 @@ import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { AtTabs, AtTabsPane } from 'taro-ui'
+import { AtTabs, AtTabsPane, AtSlider, AtFloatLayout } from 'taro-ui'
 
 import Topic from '../../components/Exam/Topic/index'
 import Options from '../../components/Exam/Options/index'
@@ -24,7 +24,7 @@ interface IProps {
 class Exam extends Component<IProps, {}> {
 
   config: Config = {
-    navigationBarTitleText: '做题'
+    navigationBarTitleText: '刷题'
   }
 
   constructor(props) {
@@ -40,11 +40,13 @@ class Exam extends Component<IProps, {}> {
   }
 
   async fetchExamTopic() {
-    const { examStore: { setTopics, setAnswers } } = this.props;
+    const { examStore: { setTopics, setAnswers, setTotalPage } } = this.props;
     const topics: Array<{ type: string, topic: string, options: Array<string> }> = await getExamTopic()
     const answers: Array<Array<number>> = Array.from({ length: topics.length }, (_, index) => Array.from({ length: topics[index].options.length }, __ => 0))
+    const total: number = topics.length;
     setTopics(topics)
     setAnswers(answers)
+    setTotalPage(total)
   }
 
   switchPage(current: number) {
@@ -55,6 +57,11 @@ class Exam extends Component<IProps, {}> {
   generateTab(): Array<{ title: string }> {
     const { examStore: { topics } } = this.props;
     return Array.from({ length: topics.length }).map((_, index) => ({ title: (index + 1).toString() }))
+  }
+
+  switchFontSize(type: number): void {
+    const { examStore: { fontSizeId, setFontSize } } = this.props;
+    setFontSize(fontSizeId + type)
   }
 
   render() {
@@ -70,14 +77,13 @@ class Exam extends Component<IProps, {}> {
           {topics.map((_, index) => {
             return (
               <AtTabsPane current={currentPage} index={index} key={index}>
-                <View className='exam-timer'></View>
                 <Topic number={index} examStore={new examStore()} />
                 <Options number={index} examStore={new examStore()} />
               </AtTabsPane>
             )
           })}
         </AtTabs>
-        <Status current={currentPage}></Status>
+        <Status examStore={new examStore()} ></Status>
       </View>
     )
   }

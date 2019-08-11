@@ -28,7 +28,6 @@ module.exports = function getExamTopic() {
           options: ['面向对象', '面向数据', '面向过程', '面向属性']
         }
       ])
-    }, 3000)
-
+    }, 1000)
   })
 }

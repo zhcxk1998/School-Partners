@@ -1,18 +1,34 @@
-@import '../../../styles/base.scss';
+.smaller {
+  font-size: 1em;
+}
+
+.small {
+  font-size: 1.2em;
+}
+
+.normal {
+  font-size: 1.4em;
+}
+
+.large {
+  font-size: 1.6em;
+}
+
+.larger {
+  font-size: 1.8em;
+}
 
 .exam-topic {
-  padding: .5em .5em 0 .5em;
+  padding: .5em .8em 0 .8em;
   color: #333;
-  font-size: $font-size-primary;
+  line-height: 1.8em;
 
   .type {
-    $height-primary: $font-size-primary+.4em;
-
     display: inline-block;
     width: 3em;
-    height: $height-primary;
-    color: $color-light;
-    line-height: $height-primary;
+    height: 1.6em;
+    color: #fff;
+    line-height: 1.6em;
     text-align: center;
     background-image: linear-gradient(-20deg, #fc6076 0%, #ff9a44 100%);
     border-radius: .8em;

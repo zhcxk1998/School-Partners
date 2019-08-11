@@ -8,6 +8,12 @@
   margin-left: .2em;
 }
 
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .exam-status {
   @extend .flex;
 
@@ -32,6 +38,24 @@
     @extend .tag;
 
     .tag {
+      font-weight: bold;
+    }
+  }
+
+  .setting {
+    @extend .flex;
+    @extend .tag;
+  }
+}
+
+.setting-wrap {
+  .font-size {
+    @extend .center;
+    flex-direction: column;
+    font-size: small;
+
+    .title {
+      font-size: larger;
       font-weight: bold;
     }
   }

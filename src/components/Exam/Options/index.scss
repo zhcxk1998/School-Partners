@@ -1,9 +1,27 @@
-@import '../../../styles/base.scss';
+.smaller {
+  font-size: 0.7em;
+}
+
+.small {
+  font-size: 0.9em;
+}
+
+.normal {
+  font-size: 1.1em;
+}
+
+.large {
+  font-size: 1.3em;
+}
+
+.larger {
+  font-size: 1.5em;
+}
 
 .exam-options {
-  padding: 1em 1em;
+  padding: 1em 1.2em;
   font-size: 1.2em;
-  color: #555;
+  color: #666;
 
   .wrap {
     display: flex;
@@ -14,9 +32,6 @@
   }
 
   .number {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     flex-shrink: 0;
     width: 1.8em;
     height: 1.8em;

@@ -17,8 +17,6 @@ class Options extends Component<IProps, {}> {
 
   constructor(props) {
     super(props);
-    this.state = {
-    }
   }
 
   formatNumber(number: number): string {
@@ -30,8 +28,13 @@ class Options extends Component<IProps, {}> {
     handleOptionClick(number, index);
   }
 
+  onConfirmClick(): void {
+    const { examStore: { handleConfirmClick } } = this.props;
+    handleConfirmClick();
+  }
+
   render() {
-    const { number, examStore: { topics, answers } } = this.props;
+    const { number, examStore: { topics, answers, fontSize } } = this.props;
     if (!answers[number] || !topics[number]) return;
     const { options } = topics[number];
     const buttonClassName: string = answers[number].some(_ => _ === 1) ? 'confirm' : 'confirm hide';
@@ -42,11 +45,11 @@ class Options extends Component<IProps, {}> {
           return (
             <View className='wrap' key={index} onClick={this.onOptionClick.bind(this, number, index)}>
               <View className={optionClassName}>{this.formatNumber(index)}</View>
-              <View className='content'>{option}</View>
+              <View className={`content ${fontSize}`}>{option}</View>
             </View>
           )
         })}
-        <View className={buttonClassName}>确认答案</View>
+        <View className={buttonClassName} onClick={this.onConfirmClick.bind(this)}>确认答案</View>
       </View>
     )
   }
