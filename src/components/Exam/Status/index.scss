@@ -31,7 +31,7 @@
     @extend .flex;
     @extend .tag;
 
-    .tag:first-letter{
+    .tag {
       font-weight: bold;
     }
   }
