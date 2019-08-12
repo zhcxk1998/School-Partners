@@ -2,7 +2,7 @@ import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-import { AtTabs, AtTabsPane, AtSlider, AtFloatLayout } from 'taro-ui'
+import { AtTabs, AtTabsPane } from 'taro-ui'
 
 import Topic from '../../components/Exam/Topic/index'
 import Options from '../../components/Exam/Options/index'
@@ -68,7 +68,7 @@ class Exam extends Component<IProps, {}> {
     const { examStore: { currentPage, topics } } = this.props;
     const tabList = this.generateTab();
     return (
-      <View className='exam-container'>
+      <View className='exam-container light'>
         <AtTabs
           current={currentPage}
           scroll
@@ -83,7 +83,7 @@ class Exam extends Component<IProps, {}> {
             )
           })}
         </AtTabs>
-        <Status examStore={new examStore()} ></Status>
+        <Status examStore={new examStore()} />
       </View>
     )
   }
