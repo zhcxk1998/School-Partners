@@ -1,4 +1,14 @@
-.exam-container {
-  padding-bottom: 4em;
+.dark {
+  color: #dfe9f3;
+  background: #333;
 }
 
+.light {
+  color: #333;
+  background: #fff;
+}
+
+.exam-container {
+  min-height: calc(100vh - 4em);
+  padding-bottom: 4em;
+}
