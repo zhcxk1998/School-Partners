@@ -1,19 +1,36 @@
+@import "~taro-ui/dist/style/components/tabs.scss";
+
 .dark {
-  color: #dfe9f3;
-  background: #333;
+  color: hsl(0, 0, 50);
+  background: hsl(0, 0, 10);
+  // color: hsl(0, 0, 50);
+  // background: hsl(216, 20, 10);
 }
 
 .light {
-  color: #333;
-  background: #fff;
+  color: hsl(0, 0, 10);
+  background: hsl(0, 0, 100);
 }
 
 .care {
-  color: #555;
+  color: hsl(0, 0, 10);
   background: #cce8cf;
 }
 
 .exam-container {
   min-height: calc(100vh - 4em);
   padding-bottom: 4em;
+}
+
+/* 覆盖taro-ui样式 */
+.at-tabs__header {
+  background: transparent;
+}
+
+.at-tabs__item {
+  color: inherit;
+}
+
+.at-tabs__item--active {
+  color: #fa4b2a;
 }
