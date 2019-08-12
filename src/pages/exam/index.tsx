@@ -65,10 +65,10 @@ class Exam extends Component<IProps, {}> {
   }
 
   render() {
-    const { examStore: { currentPage, topics } } = this.props;
+    const { examStore: { currentPage, topics, theme } } = this.props;
     const tabList = this.generateTab();
     return (
-      <View className='exam-container light'>
+      <View className={`exam-container ${theme}`}>
         <AtTabs
           current={currentPage}
           scroll

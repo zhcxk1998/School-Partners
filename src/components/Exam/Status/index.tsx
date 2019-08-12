@@ -1,6 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
-import { AtIcon, AtSlider } from 'taro-ui'
+import { AtSlider } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 
 import examStore from '../../../store/examStore'
@@ -26,27 +26,32 @@ class Status extends Component<IProps, {}> {
     setFontSize(value - 1);
   }
 
+  onThemeChange(themeId: number): void {
+    const { examStore: { themeList, setTheme } } = this.props;
+    setTheme(themeList[themeId].theme)
+  }
+
   handleTouchMove(e): void {
     e.stopPropagation()
   }
 
   render() {
-    const { examStore: { fontSizeId, currentPage, totalPage, settingOpened } } = this.props;
+    const { examStore: { fontSizeId, theme, themeList, currentPage, totalPage, settingOpened } } = this.props;
     return (
       <View>
         <View className={`float-layout-overlay ${settingOpened ? 'setting-mass' : ''} `} onClick={this.onSettingClick.bind(this)} />
-        <View className={`exam-status ${settingOpened ? 'setting-open' : ''}`} onTouchMove={this.handleTouchMove.bind(this)}>
+        <View className={`exam-status ${theme} ${settingOpened ? 'setting-open' : ''}`} onTouchMove={this.handleTouchMove.bind(this)}>
           <View className='exam-footer'>
             <View className='star'>
-              <AtIcon value='star' size='16' color='#666'></AtIcon>
+              <View className='iconfont icon-star'></View>
               <Text className='tag'>收藏</Text>
             </View>
             <View className='setting' onClick={this.onSettingClick.bind(this)}>
-              <AtIcon value='settings' size='16' color='#1296db'></AtIcon>
+              <View className='iconfont icon-setting'></View>
               <Text className='tag'>设置</Text>
             </View>
             <View className='progress'>
-              <AtIcon value='numbered-list' size='16' color='#fa4b2a'></AtIcon>
+              <View className='iconfont icon-list'></View>
               <Text className='tag'>{currentPage + 1}</Text>/{totalPage}
             </View>
           </View>
@@ -62,17 +67,19 @@ class Status extends Component<IProps, {}> {
               </View>
               <View className='font-size at-col at-col-2'>A+</View>
             </View>
-            {/* <View className='background-setting'>
-              <View className='background'>
-
-              </View>
-              <View className='background'>
-
-              </View>
-              <View className='background'>
-
-              </View>
-            </View> */}
+            <View className='theme-setting'>
+              {themeList.map((item, index) => {
+                const { theme, title, icon } = item;
+                return (
+                  <View className={`theme-wrap ${theme === themeList[index].theme ? 'active' : ''}`} key={index} onClick={this.onThemeChange.bind(this, index)}>
+                    <View className={`theme-icon`}>
+                      <View className={`${icon} iconfont`}></View>
+                    </View>
+                    <View>{title}</View>
+                  </View>
+                )
+              })}
+            </View>
           </View>
         </View>
       </View>

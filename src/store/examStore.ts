@@ -1,10 +1,28 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
 
+const themeList: Array<{ theme: string, title: string, icon: string }> = [
+  {
+    theme: 'light',
+    title: '日间模式',
+    icon: 'icon-light'
+  }, {
+    theme: 'dark',
+    title: '夜间模式',
+    icon: 'icon-dark'
+  }, {
+    theme: 'care',
+    title: '护眼模式',
+    icon: 'icon-care'
+  }
+];
+
 class examStore {
   @observable fontSize: string = 'normal';
   @observable fontSizeId: number = 2;
   @observable settingOpened: boolean = false;
+  @observable theme: string = 'light';
+  @observable themeList: Array<{ theme: string, title: string, icon: string }> = themeList
 
   @observable currentPage: number = 0;
   @observable totalPage: number = 0;
@@ -16,6 +34,11 @@ class examStore {
     if (sizeId > 4 || sizeId < 0) return;
     this.fontSizeId = sizeId;
     this.fontSize = ['smaller', 'small', 'normal', 'large', 'larger'][sizeId]
+  }
+
+  @action.bound
+  setTheme(theme: string = 'light'): void {
+    this.theme = theme;
   }
 
   @action.bound

@@ -1,6 +1,20 @@
+@import '../../../styles/iconfont';
+
+.dark {
+  background: #333;
+}
+
+.light {
+  background: #fff;
+}
+
+.care {
+  background: #cce8cf;
+}
+
 .flex {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -22,22 +36,28 @@
 
   .exam-footer {
     @extend .flex;
+    justify-content: space-between;
 
     height: 3em;
     padding: 0 .5em;
     color: #666;
-    border-top: #d7d7d7 1px solid;
-    border-bottom: #d7d7d7 1px solid;
-    background-color: #fff;
+    border-top: rgba(102, 102, 102, .5) 1px solid;
+    border-bottom: rgba(241, 241, 241, .5) 1px solid;
 
     .star {
-      @extend .flex;
-      @extend .tag;
+      .iconfont {
+        display: inline-block;
+        color: #666;
+        font-size: 1em;
+      }
     }
 
     .progress {
-      @extend .flex;
-      @extend .tag;
+      .iconfont {
+        display: inline-block;
+        color: #fa4b2a;
+        font-size: 1em;
+      }
 
       .tag {
         font-weight: bold;
@@ -45,35 +65,67 @@
     }
 
     .setting {
-      @extend .flex;
-      @extend .tag;
+      .iconfont {
+        display: inline-block;
+        color: #1890ff;
+        font-size: 1em;
+      }
+
+      .tag {
+        font-size: 1em;
+        line-height: 1em;
+      }
     }
   }
 
   .exam-setting {
     height: 16em;
-    background: #fff;
 
     .font-setting {
       padding: 1em 0;
 
       .font-size {
         @extend .flex;
-        justify-content: center;
         flex-direction: column;
         font-weight: bold;
       }
     }
 
-    .background-setting {
+    .theme-setting {
       @extend .flex;
       justify-content: space-evenly;
 
-      .background {
-        width: 3em;
-        height: 3em;
-        border-radius: 50%;
-        background: red;
+
+      .theme-wrap {
+        @extend .flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        opacity: .8;
+
+        .theme-icon {
+          @extend .flex;
+
+          width: 3em;
+          height: 3em;
+          margin-bottom: .2em;
+          text-align: center;
+          border: #999 2px solid;
+          border-radius: 50%;
+
+          .iconfont {
+            font-size: 2em;
+          }
+        }
+      }
+
+      .active {
+        opacity: 1 !important;
+
+        .theme-icon {
+          color: #fff;
+          border: none;
+          background-image: linear-gradient(-45deg, #FFC796 0%, #FF6B95 100%);
+        }
       }
     }
   }
