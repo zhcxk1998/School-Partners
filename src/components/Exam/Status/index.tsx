@@ -55,6 +55,7 @@ class Status extends Component<IProps, {}> {
               <View className='font-size at-col at-col-2'>A-</View>
               <View className='at-col at-col-8'>
                 <AtSlider value={fontSizeId + 1} min={1} max={5}
+                  onChange={this.onSliderChange.bind(this)}
                   onChanging={this.onSliderChange.bind(this)}
                   activeColor='#fa4b2a'
                 />
