@@ -79,8 +79,16 @@ class examStore {
     if (this.currentPage + 1 < this.totalPage) {
       this.currentPage += 1;
     } else {
+      const emptyPage: number = this.answers.findIndex((answer) => answer.every(option => option === 0));
+      const isFinished: boolean = emptyPage === -1;
+      if (!isFinished) {
+        this.currentPage = emptyPage
+      } else {
+        /* 处理答案 */
+      }
+
       Taro.showToast({
-        title: 'ok'
+        title: `${isFinished ? 'ok' : '还没有完成哦！'}`
       })
     }
   }
