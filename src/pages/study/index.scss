@@ -1,0 +1,43 @@
+.study-container {
+  // padding: 0 1em;
+
+  .study-banner {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100vw;
+    height: 400px;
+    padding-bottom: 100px;
+    background-image: linear-gradient(60deg, rgb(142, 177, 253) 0%, rgb(222, 255, 254) 80%);
+    
+
+    .bg {
+      width: 300px;
+      height: 300px;
+    }
+
+    .slogan {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      width: 300px;
+      height: 300px;
+      color: #666;
+      font-size: 1em;
+
+      .title {
+        color: #333;
+        font-size: 65px;
+        font-weight: bolder;
+      }
+
+      .button {
+        padding: 10px;
+        color: #fff;
+        text-align: center;
+        border-radius: 20px;
+        background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+      }
+    }
+  }
+}

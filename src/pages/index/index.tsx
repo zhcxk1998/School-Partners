@@ -1,11 +1,12 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, Text, Image } from '@tarojs/components'
-// import { observer, inject } from '@tarojs/mobx'
+import { View } from '@tarojs/components'
 
+import Study from '../study/index'
 import Tabbar from '../../components/Tabbar/index'
 
 import './index.scss'
+
 
 interface IProps {
 
@@ -13,11 +14,8 @@ interface IProps {
 
 interface IState {
   count: number,
-  current: number
+  current: number,
 }
-
-// @inject('counterStore')
-// @observer
 class Index extends Component<IProps, IState> {
 
   /**
@@ -31,21 +29,16 @@ class Index extends Component<IProps, IState> {
     navigationBarTitleText: '首页'
   }
 
-  // readonly state: Readonly<IState> = {
-  //   count: 1,
-  //   current: 0
-  // }
-
   constructor(props) {
     super(props);
     this.state = {
       count: 1,
-      current: 0
+      current: 0,
     }
   }
 
-  componentDidShow() {
 
+  async componentDidShow() {
   }
 
   switchTab(index: number): void {
@@ -56,8 +49,7 @@ class Index extends Component<IProps, IState> {
     const { current } = this.state;
     return (
       <View className='index-container'>
-        
-        <Button type='primary' onClick={() => { Taro.navigateTo({ url: '/pages/exam/index' }) }}>exam</Button>
+        <Study></Study>
         <Tabbar onSwitchTab={this.switchTab.bind(this)} current={current} />
       </View>
     )

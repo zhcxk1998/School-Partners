@@ -1,0 +1,28 @@
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.banner-container {
+  white-space: nowrap;
+
+  .banner-item {
+    display: inline-block;
+    width: 240px;
+    height: 280px;
+    margin-left: 1em;
+    border: #d7d7d7 2px solid;
+    border-radius: 20px;
+    // background: #fa4b2a;
+
+    .bg {
+      width: 200px;
+      height: 240px;
+    }
+  }
+
+  .banner-item:last-child {
+    margin-right: 1em;
+  }
+}

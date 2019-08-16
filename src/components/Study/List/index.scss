@@ -1,0 +1,23 @@
+.list-container {
+  padding: 0 1em;
+
+  .list-wrap {
+    display: flex;
+    margin: 20px 0;
+
+    .list-preview {
+      width: 200px;
+      height: 200px;
+      margin-right: 20px;
+      border: #d7d7d7 2px solid;
+      border-radius: 20px;
+    }
+
+    .list-content {
+      flex-grow: 1;
+      height: 200px;
+      border: #d7d7d7 2px solid;
+      border-radius: 20px;
+    }
+  }
+}

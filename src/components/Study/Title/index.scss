@@ -1,0 +1,16 @@
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em 1em .5em 1em;
+  color: #333;
+  font-size: 1.2em;
+  font-weight: bold;
+  font-family: '黑体';
+
+  .link {
+    color: #888;
+    font-size: 0.8em;
+    font-weight: normal;
+  }
+}

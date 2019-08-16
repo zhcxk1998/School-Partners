@@ -1,0 +1,45 @@
+@import '../../../styles/iconfont';
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation {
+
+
+  .navigation-container {
+    @extend .flex;
+    justify-content: space-evenly;
+    width: 650px;
+    margin: -100px auto 0 auto;
+    padding: 30px 0;
+    border-radius: 20px;
+    box-shadow: 0 6px 12px #d7d7d7;
+    background: #fff;
+
+    .link-wrap {
+      @extend .flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      opacity: .8;
+
+      .link-icon {
+        @extend .flex;
+
+        width: 80px;
+        height: 80px;
+        margin-bottom: .2em;
+        color: #fff;
+        text-align: center;
+        border-radius: 50%;
+        background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+
+        .iconfont {
+          font-size: 50px;
+        }
+      }
+    }
+  }
+}
