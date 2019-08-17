@@ -1,23 +1,54 @@
+@import '../../../styles/iconfont';
+
 .list-container {
   padding: 0 1em;
 
   .list-wrap {
     display: flex;
+    align-items: center;
     margin: 20px 0;
+    padding: 20px 0;
+    box-shadow: 0 12px 24px -12px #f0f0f0;
 
     .list-preview {
-      width: 200px;
-      height: 200px;
-      margin-right: 20px;
-      border: #d7d7d7 2px solid;
-      border-radius: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 100px;
+      margin-right: 40px;
+      border-radius: 20%;
+      background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+
+      .icon-tiku {
+        color: #fff;
+        font-size: 60px;
+      }
     }
 
-    .list-content {
+    .list-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
       flex-grow: 1;
-      height: 200px;
-      border: #d7d7d7 2px solid;
-      border-radius: 20px;
+      max-width: 80%;
+      height: 120px;
+
+      .title {
+        color: #444;
+        font-size: 1.2em;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .content {
+        color: #888;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     }
   }
 }
