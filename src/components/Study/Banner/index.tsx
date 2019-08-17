@@ -1,5 +1,5 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, ScrollView, Image } from '@tarojs/components'
+import Taro, { Component } from '@tarojs/taro'
+import { View, ScrollView, Image } from '@tarojs/components'
 
 import './index.scss'
 
@@ -11,6 +11,7 @@ interface IProps {
 interface IState {
 
 }
+
 class Banner extends Component<IProps, IState> {
   constructor(props) {
     super(props);
@@ -18,10 +19,9 @@ class Banner extends Component<IProps, IState> {
     }
   }
 
-
   async componentDidShow() {
-  }
 
+  }
 
   render() {
     const list: Array<{ title: string, background: string }> = [
