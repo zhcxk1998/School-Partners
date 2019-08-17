@@ -45,7 +45,7 @@ class Study extends Component<IProps, IState> {
     return (
       <View className='study-container'>
         <View className='study-banner'>
-          <Image className='bg' src={require('../../assets/image/banner-bg.svg')}></Image>
+          <Image className='bg' src={'http://cdn.algbb.cn/study/banner-bg.svg'}></Image>
           <View className='slogan'>
             <View><View className='title'>Hey Guys</View >come to study !</View>
 
@@ -58,6 +58,7 @@ class Study extends Component<IProps, IState> {
 
         <Title>推荐题库</Title>
         <List />
+        {/* <View>illustration by Ouch.picshttps://icons8.com</View> */}
       </View>
     )
   }
