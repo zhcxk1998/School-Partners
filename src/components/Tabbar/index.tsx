@@ -16,11 +16,11 @@ class Tabbar extends Component<IProps, {}> {
       <View>
         <AtTabBar
           fixed
-          selectedColor='#fa4b2a'
+          selectedColor='#1890ff'
           tabList={[
             { title: '首页', iconType: 'bullet-list' },
-            { title: '拍照', iconType: 'camera' },
-            { title: '文件夹', iconType: 'folder' }
+            { title: '对战', iconType: 'lightning-bolt' },
+            { title: '个人', iconType: 'home' }
           ]}
           onClick={onSwitchTab}
           current={current}

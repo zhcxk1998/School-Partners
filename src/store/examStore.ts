@@ -89,7 +89,7 @@ class examStore {
 
       Taro.showToast({
         title: `${isFinished ? 'ok' : '还没有完成哦！'}`,
-        icon:'loading'
+        icon: 'none'
       })
     }
   }
