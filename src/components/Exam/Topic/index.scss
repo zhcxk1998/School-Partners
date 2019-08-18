@@ -20,7 +20,6 @@
 
 .exam-topic {
   padding: .5em .8em 0 .8em;
-  // color: #333;
   line-height: 1.8em;
 
   .type {
@@ -30,9 +29,7 @@
     color: #fff;
     line-height: 1.6em;
     text-align: center;
-    // background-image: linear-gradient(to right, #ffc3a0 0%, #ffafbd 100%);
-    background-image: linear-gradient(-225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%);
-
+    background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
     border-radius: .8em;
     transform: scale(0.8, 0.8)
   }

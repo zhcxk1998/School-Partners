@@ -3,8 +3,6 @@
 .dark {
   color: hsl(0, 0, 50);
   background: hsl(0, 0, 10);
-  // color: hsl(0, 0, 50);
-  // background: hsl(216, 20, 10);
 }
 
 .light {
@@ -32,5 +30,9 @@
 }
 
 .at-tabs__item--active {
-  color: #fa4b2a;
+  color: #66a6ff;
+}
+
+.at-tabs__item-underline {
+  background: #66a6ff;
 }
