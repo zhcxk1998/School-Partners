@@ -2,10 +2,10 @@ import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 
-import List from '../../../components/Study/List/index'
-import Navigation from '../../../components/Study/Navigation/index'
-import Title from '../../../components/Study/Title/index'
-import Banner from '../../../components/Study/Banner/index'
+import List from '../../components/Study/List/index'
+import Navigation from '../../components/Study/Navigation/index'
+import Title from '../../components/Study/Title/index'
+import Banner from '../../components/Study/Banner/index'
 import './index.scss'
 
 

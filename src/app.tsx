@@ -1,10 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
-import Index from './pages/index'
+import Index from './client/pages/index'
 
-// import counterStore from './store/counter'
-
-import store from './store/index'
+import store from './client/store/index'
 
 
 import './app.scss'

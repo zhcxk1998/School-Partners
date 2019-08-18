@@ -4,13 +4,13 @@ import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 
-import Topic from '../../../components/Exam/Topic/index'
-import Options from '../../../components/Exam/Options/index'
-import Status from '../../../components/Exam/Status/index'
+import Topic from '../../components/Exam/Topic/index'
+import Options from '../../components/Exam/Options/index'
+import Status from '../../components/Exam/Status/index'
 
-import examStore from '../../../store/examStore';
+import examStore from '../../store/examStore';
 
-import getExamTopic from '../../../utils/getExamTopic'
+import getExamTopic from '../../utils/getExamTopic'
 
 import './index.scss'
 

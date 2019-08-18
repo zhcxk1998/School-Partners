@@ -3,7 +3,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 
 import Study from '../study/index'
-import Tabbar from '../../../components/Tabbar/index'
+import Tabbar from '../../components/Tabbar/index'
 
 import './index.scss'
 
