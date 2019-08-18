@@ -1,21 +1,28 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
+import { observer, inject } from '@tarojs/mobx'
+
+import studyStore from '../../store/studyStore';
 
 import List from '../../components/Study/List/index'
 import Navigation from '../../components/Study/Navigation/index'
 import Title from '../../components/Study/Title/index'
 import Banner from '../../components/Study/Banner/index'
+
 import './index.scss'
 
 
 interface IProps {
-
+  studyStore: studyStore
 }
 
 interface IState {
 
 }
+
+@inject('studyStore')
+@observer
 class Study extends Component<IProps, IState> {
 
   /**
@@ -32,13 +39,14 @@ class Study extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
+
     }
   }
 
-
-  async componentDidShow() {
+  async componentDidMount() {
+    const { studyStore: { getCourseList } } = this.props;
+    await getCourseList()
   }
-
 
   render() {
     return (
@@ -53,7 +61,7 @@ class Study extends Component<IProps, IState> {
         </View>
         <Navigation />
         <Title>热门课程</Title>
-        <Banner />
+        <Banner studyStore={new studyStore()} />
 
         <Title>推荐题库</Title>
         <List />

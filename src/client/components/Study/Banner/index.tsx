@@ -1,50 +1,48 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, ScrollView, Image } from '@tarojs/components'
+import { observer, inject } from '@tarojs/mobx'
+
+import studyStore from '../../../store/studyStore'
 
 import './index.scss'
 
 
 interface IProps {
-
+  studyStore: studyStore
 }
 
 interface IState {
 
 }
 
+@inject('studyStore')
+@observer
 class Banner extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
+
     }
   }
 
-  async componentDidShow() {
+  async componentDidMount() {
 
   }
 
   render() {
-    const list: Array<{ title: string, background: string }> = [
-      { title: '软件工程', background: 'http://cdn.algbb.cn/study/banner/1.svg' },
-      { title: '数据库', background: 'http://cdn.algbb.cn/study/banner/2.svg' },
-      { title: 'Java高编', background: 'http://cdn.algbb.cn/study/banner/3.svg' },
-      { title: '软件测试', background: 'http://cdn.algbb.cn/study/banner/4.svg' },
-      { title: '计算机算法', background: 'http://cdn.algbb.cn/study/banner/5.svg' },
-      { title: 'web前端', background: 'http://cdn.algbb.cn/study/banner/6.svg' },
-    ]
-
+    const { studyStore: { recommendCourseList } } = this.props;
     return (
       <ScrollView
         className='banner-container'
         scrollX
         scrollWithAnimation
       >
-        {list.map((item, index) => {
-          const { title, background } = item;
+        {recommendCourseList && recommendCourseList.map((item, index) => {
+          const { course_name } = item;
           return (
             <View className='banner-item' key={index}>
-              <View className='title'>{title}</View>
-              <Image className='bg' src={background} />
+              <View className='title'>{course_name}</View>
+              <Image className='bg' src={`http://cdn.algbb.cn/study/banner/${index + 1}.svg`} />
             </View>
           )
         })}
