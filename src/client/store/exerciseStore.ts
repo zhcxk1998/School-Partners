@@ -66,7 +66,6 @@ class exerciseStore {
 
   @action.bound
   setFontSize(sizeId: number = 2): void {
-    console.log(sizeId)
     if (sizeId > 4 || sizeId < 0) return;
     this.fontSizeId = sizeId;
     this.fontSize = ['smaller', 'small', 'normal', 'large', 'larger'][sizeId]
@@ -93,7 +92,6 @@ class exerciseStore {
       this.userAnswers[number].fill(0)
     }
     this.userAnswers[number][index] = this.userAnswers[number][index] === 1 ? 0 : 1
-    console.log(this.userAnswers.slice().map(item => item.slice()))
   }
 
   @action.bound
