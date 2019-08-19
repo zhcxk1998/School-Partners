@@ -26,11 +26,47 @@ class exerciseStore {
 
   @observable currentPage: number = 0;
   @observable totalPage: number = 0;
-  @observable topics: Array<{ type: string, topic: string, options: Array<string> }> = [];
-  @observable answers: Array<Array<number>> = [];
+  @observable exerciseCid: string = '';
+  @observable exerciseDetail: Array<{ type: string, topic: string, options: Array<string> }> = [];
+  // 题目的标准答案
+  @observable exerciseAnswers: Array<number> = [];
+  // 用户选择的答案
+  @observable userAnswers: Array<Array<number>> = []
+
+  @action.bound
+  resetExerciseDetail(): void {
+    this.exerciseDetail = []
+    this.exerciseAnswers = []
+    this.userAnswers = []
+    this.currentPage = 0
+    this.totalPage = 0
+  }
+
+  @action.bound
+  getExerciseDetail(cid: string): any {
+    return new Promise(async (resolve, reject) => {
+      await Taro.navigateTo({
+        url: '/client/pages/exercise/index'
+      })
+      Taro.showLoading({
+        title: '加载中...'
+      })
+      const { data } = await Taro.request({
+        url: `http://localhost:3000/exercises/${cid}`,
+        method: 'GET',
+      })
+      const detailList = data.detail_list
+      this.exerciseDetail = detailList
+      this.userAnswers = Array.from({ length: detailList.length }, (_, index) => Array.from({ length: detailList[index].options.length }, __ => 0))
+      this.totalPage = detailList.length
+      Taro.hideLoading()
+      resolve()
+    })
+  }
 
   @action.bound
   setFontSize(sizeId: number = 2): void {
+    console.log(sizeId)
     if (sizeId > 4 || sizeId < 0) return;
     this.fontSizeId = sizeId;
     this.fontSize = ['smaller', 'small', 'normal', 'large', 'larger'][sizeId]
@@ -52,26 +88,12 @@ class exerciseStore {
   }
 
   @action.bound
-  setTotalPage(total: number = 0): void {
-    this.totalPage = total;
-  }
-
-  @action.bound
-  setTopics(topics: Array<{ type: string, topic: string, options: Array<string> }> = []) {
-    this.topics = topics;
-  }
-
-  @action.bound
-  setAnswers(answers: Array<Array<number>> = []) {
-    this.answers = answers;
-  }
-
-  @action.bound
   handleOptionClick(number: number, index: number): void {
-    if (this.topics[number].type === 'radio') {
-      this.answers[number].fill(0)
+    if (this.exerciseDetail[number].type === 'radio') {
+      this.userAnswers[number].fill(0)
     }
-    this.answers[number][index] = this.answers[number][index] === 1 ? 0 : 1
+    this.userAnswers[number][index] = this.userAnswers[number][index] === 1 ? 0 : 1
+    console.log(this.userAnswers.slice().map(item => item.slice()))
   }
 
   @action.bound
@@ -79,7 +101,7 @@ class exerciseStore {
     if (this.currentPage + 1 < this.totalPage) {
       this.currentPage += 1;
     } else {
-      const emptyPage: number = this.answers.findIndex((answer) => answer.every(option => option === 0));
+      const emptyPage: number = this.userAnswers.findIndex((answer) => answer.every(option => option === 0));
       const isFinished: boolean = emptyPage === -1;
       if (!isFinished) {
         this.currentPage = emptyPage

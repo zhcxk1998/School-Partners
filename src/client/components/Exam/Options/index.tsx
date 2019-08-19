@@ -34,14 +34,14 @@ class Options extends Component<IProps, {}> {
   }
 
   render() {
-    const { number, exerciseStore: { topics, answers, fontSize } } = this.props;
-    if (!answers[number] || !topics[number]) return;
-    const { options } = topics[number];
-    const buttonClassName: string = answers[number].some(_ => _ === 1) ? 'confirm' : 'confirm hide';
+    const { number, exerciseStore: { exerciseDetail, userAnswers, fontSize } } = this.props;
+    if (!userAnswers[number] || !exerciseDetail[number]) return;
+    const { options } = exerciseDetail[number];
+    const buttonClassName: string = userAnswers[number].some(_ => _ === 1) ? 'confirm' : 'confirm hide';
     return (
       <View className='exam-options'>
         {options.map((option, index) => {
-          const optionClassName: string = answers[number][index] === 1 ? 'number active' : 'number';
+          const optionClassName: string = userAnswers[number][index] === 1 ? 'number active' : 'number';
           return (
             <View className='wrap' key={index} onClick={this.onOptionClick.bind(this, number, index)}>
               <View className={optionClassName}>{this.formatNumber(index)}</View>

@@ -15,9 +15,9 @@ interface IProps {
 @observer
 class Topic extends Component<IProps, {}> {
   render() {
-    const { number, exerciseStore: { topics, fontSize } } = this.props;
-    if (!topics[number]) return;
-    const { type, topic } = topics[number];
+    const { number, exerciseStore: { exerciseDetail, fontSize } } = this.props;
+    if (!exerciseDetail[number]) return;
+    const { type, topic } = exerciseDetail[number];
     const tag: string = type === 'radio' ? '单选' : '多选';
     return (
       <View className={`exam-topic ${fontSize}`}>

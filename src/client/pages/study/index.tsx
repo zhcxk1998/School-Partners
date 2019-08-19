@@ -4,6 +4,7 @@ import { View, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
 import studyStore from '../../store/studyStore';
+import exerciseStore from '../../store/exerciseStore'
 
 import List from '../../components/Study/List/index'
 import Navigation from '../../components/Study/Navigation/index'
@@ -65,7 +66,7 @@ class Study extends Component<IProps, IState> {
         <Banner studyStore={new studyStore()} />
 
         <Title>热门题库</Title>
-        <List />
+        <List studyStore={new studyStore()} exerciseStore={new exerciseStore()} />
         {/* <View>illustration by Ouch.picshttps://icons8.com</View> */}
       </View>
     )

@@ -29,23 +29,14 @@ class Exam extends Component<IProps, {}> {
     super(props);
   }
 
-  async componentDidMount() {
-    Taro.showLoading({
-      title: '请稍等...'
-    })
-    await this.fetchExamTopic()
-    Taro.hideLoading()
+  async componentDidShow() {
   }
 
-  async fetchExamTopic() {
-    const { exerciseStore: { setTopics, setAnswers, setTotalPage } } = this.props;
-    const topics: Array<{ type: string, topic: string, options: Array<string> }> = await getExamTopic()
-    const answers: Array<Array<number>> = Array.from({ length: topics.length }, (_, index) => Array.from({ length: topics[index].options.length }, __ => 0))
-    const total: number = topics.length;
-    setTopics(topics)
-    setAnswers(answers)
-    setTotalPage(total)
+  componentWillUnmount() {
+    const { exerciseStore: { resetExerciseDetail } } = this.props
+    resetExerciseDetail()
   }
+
 
   switchPage(current: number) {
     const { exerciseStore: { setCurrentPage } } = this.props;
@@ -53,8 +44,8 @@ class Exam extends Component<IProps, {}> {
   }
 
   generateTab(): Array<{ title: string }> {
-    const { exerciseStore: { topics } } = this.props;
-    return Array.from({ length: topics.length }).map((_, index) => ({ title: (index + 1).toString() }))
+    const { exerciseStore: { exerciseDetail } } = this.props;
+    return Array.from({ length: exerciseDetail.length }).map((_, index) => ({ title: (index + 1).toString() }))
   }
 
   switchFontSize(type: number): void {
@@ -63,7 +54,7 @@ class Exam extends Component<IProps, {}> {
   }
 
   render() {
-    const { exerciseStore: { currentPage, topics, theme } } = this.props;
+    const { exerciseStore: { currentPage, exerciseDetail, theme } } = this.props;
     const tabList = this.generateTab();
     return (
       <View className={`exam-container ${theme}`}>
@@ -72,7 +63,7 @@ class Exam extends Component<IProps, {}> {
           scroll
           tabList={tabList}
           onClick={this.switchPage.bind(this)}>
-          {topics.map((_, index) => {
+          {exerciseDetail.map((_, index) => {
             return (
               <AtTabsPane current={currentPage} index={index} key={index}>
                 <Topic number={index} exerciseStore={new exerciseStore()} />

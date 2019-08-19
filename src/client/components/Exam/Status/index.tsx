@@ -16,17 +16,17 @@ interface IProps {
 @observer
 class Status extends Component<IProps, {}> {
 
-  onSettingClick(): void {
+  handleSettingClick(): void {
     const { exerciseStore: { setSettingOpened } } = this.props;
     setSettingOpened()
   }
 
-  onSliderChange({ value }): void {
+  handleSliderChange({ value }): void {
     const { exerciseStore: { setFontSize } } = this.props;
     setFontSize(value - 1);
   }
 
-  onThemeChange(themeId: number): void {
+  handleThemeChange(themeId: number): void {
     const { exerciseStore: { themeList, setTheme } } = this.props;
     setTheme(themeList[themeId].theme)
   }
@@ -39,14 +39,14 @@ class Status extends Component<IProps, {}> {
     const { exerciseStore: { fontSizeId, theme, themeList, currentPage, totalPage, settingOpened } } = this.props;
     return (
       <View>
-        <View className={`float-layout-overlay ${settingOpened ? 'setting-mass' : ''} `} onClick={this.onSettingClick.bind(this)} />
+        <View className={`float-layout-overlay ${settingOpened ? 'setting-mass' : ''} `} onClick={this.handleSettingClick.bind(this)} />
         <View className={`exam-status ${theme} ${settingOpened ? 'setting-open' : ''}`} onTouchMove={this.handleTouchMove.bind(this)}>
           <View className='exam-footer'>
             <View className='star'>
               <View className='iconfont icon-star'></View>
               <Text className='tag'>收藏</Text>
             </View>
-            <View className='setting' onClick={this.onSettingClick.bind(this)}>
+            <View className='setting' onClick={this.handleSettingClick.bind(this)}>
               <View className='iconfont icon-setting'></View>
               <Text className='tag'>设置</Text>
             </View>
@@ -60,8 +60,8 @@ class Status extends Component<IProps, {}> {
               <View className='font-size at-col at-col-2'>A-</View>
               <View className='at-col at-col-8'>
                 <AtSlider value={fontSizeId + 1} min={1} max={5}
-                  onChange={this.onSliderChange.bind(this)}
-                  onChanging={this.onSliderChange.bind(this)}
+                  onChange={this.handleSliderChange.bind(this)}
+                  onChanging={this.handleSliderChange.bind(this)}
                   activeColor='#66a6ff'
                 />
               </View>
@@ -71,7 +71,7 @@ class Status extends Component<IProps, {}> {
               {themeList.map((item, index) => {
                 const { theme, title, icon } = item;
                 return (
-                  <View className={`theme-wrap ${theme === themeList[index].theme ? 'active' : ''}`} key={index} onClick={this.onThemeChange.bind(this, index)}>
+                  <View className={`theme-wrap ${theme === themeList[index].theme ? 'active' : ''}`} key={index} onClick={this.handleThemeChange.bind(this, index)}>
                     <View className={`theme-icon`}>
                       <View className={`${icon} iconfont`}></View>
                     </View>
