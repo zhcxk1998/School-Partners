@@ -1,10 +1,11 @@
 const router = require('koa-router')()
 const { query } = require('../utils/query')
 const { QUERY_TABLE, INSERT_TABLE, UPDATE_TABLE, DELETE_TABLE } = require('../utils/sql');
+const parse = require('../utils/parse')
 
 router.get('/courses', async (ctx) => {
   const res = await query(QUERY_TABLE('course_list'));
-  ctx.response.body = JSON.stringify(res);
+  ctx.response.body = parse(res);
 })
 
 router.put('/courses', async (ctx) => {
