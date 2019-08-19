@@ -16,6 +16,7 @@ interface IState {
   count: number,
   current: number,
 }
+
 class Index extends Component<IProps, IState> {
 
   /**

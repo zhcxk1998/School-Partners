@@ -1,7 +1,7 @@
-import examStore from './examStore'
+import exerciseStore from './exerciseStore'
 import studyStore from './studyStore'
 
 export default {
-  examStore: new examStore(),
+  exerciseStore: new exerciseStore(),
   studyStore: new studyStore()
 }

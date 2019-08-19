@@ -8,18 +8,16 @@ import Topic from '../../components/Exam/Topic/index'
 import Options from '../../components/Exam/Options/index'
 import Status from '../../components/Exam/Status/index'
 
-import examStore from '../../store/examStore';
-
-import getExamTopic from '../../utils/getExamTopic'
+import exerciseStore from '../../store/exerciseStore';
 
 import './index.scss'
 
 
 interface IProps {
-  examStore: examStore
+  exerciseStore: exerciseStore
 }
 
-@inject('examStore')
+@inject('exerciseStore')
 @observer
 class Exam extends Component<IProps, {}> {
 
@@ -40,7 +38,7 @@ class Exam extends Component<IProps, {}> {
   }
 
   async fetchExamTopic() {
-    const { examStore: { setTopics, setAnswers, setTotalPage } } = this.props;
+    const { exerciseStore: { setTopics, setAnswers, setTotalPage } } = this.props;
     const topics: Array<{ type: string, topic: string, options: Array<string> }> = await getExamTopic()
     const answers: Array<Array<number>> = Array.from({ length: topics.length }, (_, index) => Array.from({ length: topics[index].options.length }, __ => 0))
     const total: number = topics.length;
@@ -50,22 +48,22 @@ class Exam extends Component<IProps, {}> {
   }
 
   switchPage(current: number) {
-    const { examStore: { setCurrentPage } } = this.props;
+    const { exerciseStore: { setCurrentPage } } = this.props;
     setCurrentPage(current)
   }
 
   generateTab(): Array<{ title: string }> {
-    const { examStore: { topics } } = this.props;
+    const { exerciseStore: { topics } } = this.props;
     return Array.from({ length: topics.length }).map((_, index) => ({ title: (index + 1).toString() }))
   }
 
   switchFontSize(type: number): void {
-    const { examStore: { fontSizeId, setFontSize } } = this.props;
+    const { exerciseStore: { fontSizeId, setFontSize } } = this.props;
     setFontSize(fontSizeId + type)
   }
 
   render() {
-    const { examStore: { currentPage, topics, theme } } = this.props;
+    const { exerciseStore: { currentPage, topics, theme } } = this.props;
     const tabList = this.generateTab();
     return (
       <View className={`exam-container ${theme}`}>
@@ -77,13 +75,13 @@ class Exam extends Component<IProps, {}> {
           {topics.map((_, index) => {
             return (
               <AtTabsPane current={currentPage} index={index} key={index}>
-                <Topic number={index} examStore={new examStore()} />
-                <Options number={index} examStore={new examStore()} />
+                <Topic number={index} examStore={new exerciseStore()} />
+                <Options number={index} examStore={new exerciseStore()} />
               </AtTabsPane>
             )
           })}
         </AtTabs>
-        <Status examStore={new examStore()} />
+        <Status examStore={new exerciseStore()} />
       </View>
     )
   }

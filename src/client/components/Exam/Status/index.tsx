@@ -3,31 +3,31 @@ import { View, Text } from '@tarojs/components'
 import { AtSlider } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 
-import examStore from '../../../store/examStore'
+import exerciseStore from '../../../store/exerciseStore'
 
 import './index.scss'
 import 'taro-ui/dist/style/components/flex.scss';
 
 interface IProps {
-  examStore: examStore
+  exerciseStore: exerciseStore
 }
 
-@inject('examStore')
+@inject('exerciseStore')
 @observer
 class Status extends Component<IProps, {}> {
 
   onSettingClick(): void {
-    const { examStore: { setSettingOpened } } = this.props;
+    const { exerciseStore: { setSettingOpened } } = this.props;
     setSettingOpened()
   }
 
   onSliderChange({ value }): void {
-    const { examStore: { setFontSize } } = this.props;
+    const { exerciseStore: { setFontSize } } = this.props;
     setFontSize(value - 1);
   }
 
   onThemeChange(themeId: number): void {
-    const { examStore: { themeList, setTheme } } = this.props;
+    const { exerciseStore: { themeList, setTheme } } = this.props;
     setTheme(themeList[themeId].theme)
   }
 
@@ -36,7 +36,7 @@ class Status extends Component<IProps, {}> {
   }
 
   render() {
-    const { examStore: { fontSizeId, theme, themeList, currentPage, totalPage, settingOpened } } = this.props;
+    const { exerciseStore: { fontSizeId, theme, themeList, currentPage, totalPage, settingOpened } } = this.props;
     return (
       <View>
         <View className={`float-layout-overlay ${settingOpened ? 'setting-mass' : ''} `} onClick={this.onSettingClick.bind(this)} />

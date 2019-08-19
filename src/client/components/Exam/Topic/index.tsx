@@ -2,20 +2,20 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import examStore from '../../../store/examStore'
+import exerciseStore from '../../../store/exerciseStore'
 
 import './index.scss'
 
 interface IProps {
   number: number,
-  examStore: examStore,
+  exerciseStore: exerciseStore,
 }
 
-@inject('examStore')
+@inject('exerciseStore')
 @observer
 class Topic extends Component<IProps, {}> {
   render() {
-    const { number, examStore: { topics, fontSize } } = this.props;
+    const { number, exerciseStore: { topics, fontSize } } = this.props;
     if (!topics[number]) return;
     const { type, topic } = topics[number];
     const tag: string = type === 'radio' ? '单选' : '多选';

@@ -2,16 +2,16 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import examStore from '../../../store/examStore'
+import exerciseStore from '../../../store/exerciseStore'
 
 import './index.scss'
 
 interface IProps {
   number: number,
-  examStore: examStore
+  exerciseStore: exerciseStore
 }
 
-@inject('examStore')
+@inject('exerciseStore')
 @observer
 class Options extends Component<IProps, {}> {
 
@@ -24,17 +24,17 @@ class Options extends Component<IProps, {}> {
   }
 
   onOptionClick(number: number, index: number): void {
-    const { examStore: { handleOptionClick } } = this.props;
+    const { exerciseStore: { handleOptionClick } } = this.props;
     handleOptionClick(number, index);
   }
 
   onConfirmClick(): void {
-    const { examStore: { handleConfirmClick } } = this.props;
+    const { exerciseStore: { handleConfirmClick } } = this.props;
     handleConfirmClick();
   }
 
   render() {
-    const { number, examStore: { topics, answers, fontSize } } = this.props;
+    const { number, exerciseStore: { topics, answers, fontSize } } = this.props;
     if (!answers[number] || !topics[number]) return;
     const { options } = topics[number];
     const buttonClassName: string = answers[number].some(_ => _ === 1) ? 'confirm' : 'confirm hide';
