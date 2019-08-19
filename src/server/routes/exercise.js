@@ -10,7 +10,7 @@ router.get('/exercises', async (ctx) => {
 
 router.get('/exercises/:cid', async (ctx) => {
   const cid = ctx.params.cid
-  const res = await query(`SELECT * FROM exercise_topic WHERE exercise_cid = ${cid}`)
+  const res = await query(`SELECT * FROM exercise_detail WHERE exercise_cid = ${cid}`)
   const isExist = res.length === 0
   if (isExist) {
     ctx.response.status = 404
