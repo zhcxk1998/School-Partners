@@ -75,13 +75,13 @@ class Exam extends Component<IProps, {}> {
           {topics.map((_, index) => {
             return (
               <AtTabsPane current={currentPage} index={index} key={index}>
-                <Topic number={index} examStore={new exerciseStore()} />
-                <Options number={index} examStore={new exerciseStore()} />
+                <Topic number={index} exerciseStore={new exerciseStore()} />
+                <Options number={index} exerciseStore={new exerciseStore()} />
               </AtTabsPane>
             )
           })}
         </AtTabs>
-        <Status examStore={new exerciseStore()} />
+        <Status exerciseStore={new exerciseStore()} />
       </View>
     )
   }
