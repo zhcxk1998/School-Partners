@@ -44,8 +44,9 @@ class Study extends Component<IProps, IState> {
   }
 
   async componentDidMount() {
-    const { studyStore: { getCourseList } } = this.props;
+    const { studyStore: { getCourseList, getExerciseList } } = this.props;
     await getCourseList()
+    await getExerciseList()
   }
 
   render() {
@@ -60,10 +61,10 @@ class Study extends Component<IProps, IState> {
           </View>
         </View>
         <Navigation />
-        <Title>热门课程</Title>
+        <Title>推荐课程</Title>
         <Banner studyStore={new studyStore()} />
 
-        <Title>推荐题库</Title>
+        <Title>热门题库</Title>
         <List />
         {/* <View>illustration by Ouch.picshttps://icons8.com</View> */}
       </View>
