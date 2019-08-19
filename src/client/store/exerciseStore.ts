@@ -17,7 +17,7 @@ const themeList: Array<{ theme: string, title: string, icon: string }> = [
   }
 ];
 
-class examStore {
+class exerciseStore {
   @observable fontSize: string = 'normal';
   @observable fontSizeId: number = 2;
   @observable settingOpened: boolean = false;
@@ -95,4 +95,4 @@ class examStore {
   }
 }
 
-export default examStore
+export default exerciseStore
