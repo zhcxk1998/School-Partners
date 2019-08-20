@@ -34,10 +34,11 @@ class Options extends Component<IProps, {}> {
   }
 
   render() {
-    const { number, exerciseStore: { exerciseDetail, userAnswers, fontSize } } = this.props;
+    const { number, exerciseStore: { exerciseDetail, userAnswers, fontSize, isFinished } } = this.props;
     if (!userAnswers[number] || !exerciseDetail[number]) return;
     const { options } = exerciseDetail[number];
     const buttonClassName: string = userAnswers[number].some(_ => _ === 1) ? 'confirm' : 'confirm hide';
+    const buttonName: string = isFinished ? '完成答题' : '下一题'
     return (
       <View className='exam-options'>
         {options.map((option, index) => {
@@ -49,7 +50,7 @@ class Options extends Component<IProps, {}> {
             </View>
           )
         })}
-        <View className={buttonClassName} onClick={this.onConfirmClick.bind(this)}>确认答案</View>
+        <View className={buttonClassName} onClick={this.onConfirmClick.bind(this)}>{buttonName}</View>
       </View>
     )
   }

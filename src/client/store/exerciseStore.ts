@@ -24,12 +24,14 @@ class exerciseStore {
   @observable theme: string = 'light';
   @observable themeList: Array<{ theme: string, title: string, icon: string }> = themeList
 
+  @observable emptyPage: number = 0;
+  @observable isFinished: boolean = this.emptyPage === -1
   @observable currentPage: number = 0;
   @observable totalPage: number = 0;
   @observable exerciseCid: string = '';
   @observable exerciseDetail: Array<{ type: string, topic: string, options: Array<string> }> = [];
   // 题目的标准答案
-  @observable exerciseAnswers: Array<number> = [];
+  @observable exerciseAnswers: Array<Array<number>> = [];
   // 用户选择的答案
   @observable userAnswers: Array<Array<number>> = []
 
@@ -56,8 +58,20 @@ class exerciseStore {
         method: 'GET',
       })
       const detailList = data.detail_list
+      const answerList = Array.from({ length: detailList.length }, (_, index) => Array.from({ length: detailList[index].options.length }, __ => 0))
+
       this.exerciseDetail = detailList
-      this.userAnswers = Array.from({ length: detailList.length }, (_, index) => Array.from({ length: detailList[index].options.length }, __ => 0))
+      this.userAnswers = answerList
+      this.exerciseAnswers = [...answerList]
+      // this.exerciseAnswers = JSON.parse(JSON.stringify(this.userAnswers))
+      // Object.assign(this.exerciseAnswers,this.userAnswers)
+      this.exerciseAnswers.map((exercise, index) => {
+        exercise.map((_, idx) => {
+          if (data.detail_answers[index].search(idx + '') !== -1) {
+            exercise[idx] = 1
+          }
+        })
+      })
       this.totalPage = detailList.length
       Taro.hideLoading()
       resolve()
@@ -92,23 +106,19 @@ class exerciseStore {
       this.userAnswers[number].fill(0)
     }
     this.userAnswers[number][index] = this.userAnswers[number][index] === 1 ? 0 : 1
+    this.emptyPage = this.userAnswers.findIndex((answer) => answer.every(option => option === 0));
+    this.isFinished = this.emptyPage === -1
   }
 
   @action.bound
   handleConfirmClick(): void {
-    if (this.currentPage + 1 < this.totalPage) {
-      this.currentPage += 1;
-    } else {
-      const emptyPage: number = this.userAnswers.findIndex((answer) => answer.every(option => option === 0));
-      const isFinished: boolean = emptyPage === -1;
-      if (!isFinished) {
-        this.currentPage = emptyPage
-      } else {
-        /* 处理答案 */
-      }
-
+    if (!this.isFinished) {
+      this.currentPage = this.emptyPage
+    }
+    else {
+      /* 处理答案 */
       Taro.showToast({
-        title: `${isFinished ? 'ok' : '还没有完成哦！'}`,
+        title: 'ok',
         icon: 'none'
       })
     }
