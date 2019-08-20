@@ -59,7 +59,7 @@ class exerciseStore {
         title: '加载中...'
       })
       const { data } = await Taro.request({
-        url: `http://localhost:3000/exercises/${cid}`,
+        url: `https://www.algbb.cn/exercises/${cid}`,
         method: 'GET',
       })
       const detailList = data.detail_list

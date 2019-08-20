@@ -40,7 +40,7 @@ class studyStore {
   getCourseList(): any {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
-        url: 'http://localhost:3000/courses',
+        url: 'https://www.algbb.cn/courses',
         method: 'GET',
       })
       this.courseList = data;
@@ -53,7 +53,7 @@ class studyStore {
   getExerciseList(): any {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
-        url: 'http://localhost:3000/exercises',
+        url: 'https://www.algbb.cn/exercises',
         method: 'GET',
       })
       this.exerciseList = data;

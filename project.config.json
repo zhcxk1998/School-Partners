@@ -4,7 +4,7 @@
 	"description": "一个为学生提供在线学习、做题PK、上课签到、资料查阅、成绩分析等功能的微信小程序",
 	"appid": "wxaf13f2d00f29cc9f",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": false,
 		"enhance": false,
 		"postcss": false,
