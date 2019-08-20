@@ -25,7 +25,8 @@ class exerciseStore {
   @observable themeList: Array<{ theme: string, title: string, icon: string }> = themeList
 
   @observable emptyPage: number = 0;
-  @observable isFinished: boolean = this.emptyPage === -1
+  @observable isFinished: boolean = false
+  @observable isSubmitted: boolean = false
   @observable currentPage: number = 0;
   @observable totalPage: number = 0;
   @observable exerciseCid: string = '';
@@ -40,8 +41,12 @@ class exerciseStore {
     this.exerciseDetail = []
     this.exerciseAnswers = []
     this.userAnswers = []
+    this.exerciseAnswers = []
     this.currentPage = 0
     this.totalPage = 0
+    this.emptyPage = 0
+    this.isFinished = false
+    this.isSubmitted = false
   }
 
   @action.bound
@@ -102,6 +107,7 @@ class exerciseStore {
 
   @action.bound
   handleOptionClick(number: number, index: number): void {
+    if (this.isSubmitted) return
     if (this.exerciseDetail[number].type === 'radio') {
       this.userAnswers[number].fill(0)
     }
@@ -112,11 +118,22 @@ class exerciseStore {
 
   @action.bound
   handleConfirmClick(): void {
+    if (this.isSubmitted) return
     if (!this.isFinished) {
       this.currentPage = this.emptyPage
     }
     else {
       /* 处理答案 */
+      this.isSubmitted = true
+      this.userAnswers.map((answer, answerIndex) => {
+        answer.map((option, optionIndex) => {
+          const correctAnswer = this.exerciseAnswers[answerIndex][optionIndex]
+          if (option !== correctAnswer) {
+            this.userAnswers[answerIndex][optionIndex] = correctAnswer - option
+          }
+        })
+      })
+
       Taro.showToast({
         title: 'ok',
         icon: 'none'
