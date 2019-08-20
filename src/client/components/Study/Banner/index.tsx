@@ -1,6 +1,7 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View, ScrollView, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
+import { AtActivityIndicator } from 'taro-ui'
 
 import studyStore from '../../../store/studyStore'
 
@@ -31,23 +32,27 @@ class Banner extends Component<IProps, IState> {
 
   render() {
     const { studyStore: { recommendCourseList } } = this.props;
-    return (
+    return recommendCourseList && recommendCourseList.slice().length !== 0 ? (
       <ScrollView
         className='banner-container'
         scrollX
         scrollWithAnimation
       >
-        {recommendCourseList && recommendCourseList.map((item, index) => {
+        {recommendCourseList.map((item, index) => {
           const { course_name } = item;
           return (
             <View className='banner-item' key={index}>
               <View className='title'>{course_name}</View>
-              <Image className='bg' src={`http://cdn.algbb.cn/study/banner/${index + 1}.svg`} />
+              <Image className='bg' src={`http://cdn.algbb.cn/study/banner/${index + 1}.svg`} lazyLoad />
             </View>
           )
         })}
       </ScrollView>
-    )
+    ) : (
+        <View className='banner-loading'>
+          <AtActivityIndicator size={40} content='加载中' mode='center'></AtActivityIndicator>
+        </View>
+      )
   }
 }
 

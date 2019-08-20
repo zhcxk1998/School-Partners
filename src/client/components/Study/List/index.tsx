@@ -1,5 +1,6 @@
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { AtActivityIndicator } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 import studyStore from '../../../store/studyStore'
 import exerciseStore from '../../../store/exerciseStore'
@@ -31,9 +32,9 @@ class List extends Component<IProps, IState> {
   render() {
     const { studyStore: { hotExerciseList }, exerciseStore: { getExerciseDetail } } = this.props
 
-    return (
+    return hotExerciseList && hotExerciseList.slice().length !== 0 ? (
       <View className='list-container'>
-        {hotExerciseList && hotExerciseList.map((item, index) => {
+        {hotExerciseList.map((item, index) => {
           const { exercise_cid, exercise_name, exercise_content } = item;
           return (
             <View className='list-wrap' key={index} onClick={() => { getExerciseDetail(exercise_cid) }}>
@@ -49,6 +50,11 @@ class List extends Component<IProps, IState> {
         })}
       </View>
     )
+      : (
+        <View className='list-loading'>
+          <AtActivityIndicator size={40} content='加载中' mode='center'></AtActivityIndicator>
+        </View>
+      )
   }
 }
 

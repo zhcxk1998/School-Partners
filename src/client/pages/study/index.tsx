@@ -44,10 +44,14 @@ class Study extends Component<IProps, IState> {
     }
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
+    Taro.showLoading({
+      title: '加载中...'
+    })
     const { studyStore: { getCourseList, getExerciseList } } = this.props;
     await getCourseList()
     await getExerciseList()
+    Taro.hideLoading()
   }
 
   render() {
