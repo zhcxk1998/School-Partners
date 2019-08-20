@@ -133,7 +133,7 @@ class exerciseStore {
           }
         })
       })
-
+      this.currentPage = 0
       Taro.showToast({
         title: 'ok',
         icon: 'none'
