@@ -1,6 +1,9 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
+import { observer, inject } from '@tarojs/mobx'
+
+import studyStore from '../../store/studyStore'
 
 import Study from '../study/index'
 import Tabbar from '../../components/Tabbar/index'
@@ -9,7 +12,7 @@ import './index.scss'
 
 
 interface IProps {
-
+  studyStore: studyStore
 }
 
 interface IState {
@@ -17,6 +20,8 @@ interface IState {
   current: number,
 }
 
+@inject('studyStore')
+@observer
 class Index extends Component<IProps, IState> {
 
   /**
@@ -27,7 +32,8 @@ class Index extends Component<IProps, IState> {
    * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
    */
   config: Config = {
-    navigationBarTitleText: '首页'
+    navigationBarTitleText: '首页',
+    enablePullDownRefresh: true, // 允许下拉加载
   }
 
   constructor(props) {
@@ -38,6 +44,21 @@ class Index extends Component<IProps, IState> {
     }
   }
 
+  onReachBottom() {
+    /* 触摸底部加载更多题库 */
+  }
+
+  async onPullDownRefresh() {
+    /* 下拉刷新课程、题库列表 */
+    Taro.showNavigationBarLoading()
+    Taro.showLoading({ title: '刷新中...' })
+    const { studyStore: { getCourseList, getExerciseList } } = this.props;
+    await getCourseList()
+    await getExerciseList()
+    Taro.hideLoading()
+    Taro.hideNavigationBarLoading()
+    Taro.stopPullDownRefresh()
+  }
 
   async componentDidShow() {
   }

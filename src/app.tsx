@@ -33,10 +33,11 @@ class App extends Component {
       'client/pages/exercise/index'
     ],
     window: {
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
+      backgroundTextStyle: 'dark',
+      backgroundColor:'#f7f7f7',
+      navigationBarBackgroundColor: '#66a6ff',
       navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTextStyle: 'white'
     }
   }
 
