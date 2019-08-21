@@ -6,6 +6,7 @@ import { observer, inject } from '@tarojs/mobx'
 import studyStore from '../../store/studyStore'
 
 import Study from '../study/index'
+import DashBoard from '../dashboard';
 import Tabbar from '../../components/Tabbar/index'
 
 import './index.scss'
@@ -61,6 +62,7 @@ class Index extends Component<IProps, IState> {
   }
 
   async componentDidShow() {
+
   }
 
   switchTab(index: number): void {
@@ -71,7 +73,9 @@ class Index extends Component<IProps, IState> {
     const { current } = this.state;
     return (
       <View className='index-container'>
-        <Study></Study>
+        {current === 0 ? <Study />
+          : current === 2 ? <DashBoard />
+            : null}
         <Tabbar onSwitchTab={this.switchTab.bind(this)} current={current} />
       </View>
     )
