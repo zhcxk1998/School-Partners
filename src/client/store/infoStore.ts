@@ -23,6 +23,14 @@ class infoStore {
   }
 
   @action.bound
+  handleUserLogin(): any {
+    return new Promise(async (resolve, reject) => {
+      await Taro.login()
+      resolve()
+    })
+  }
+
+  @action.bound
   getUserInfo(): any {
     return new Promise(async (resolve, reject) => {
       const { userInfo } = await Taro.getUserInfo()
