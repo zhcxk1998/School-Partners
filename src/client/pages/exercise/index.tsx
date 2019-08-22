@@ -4,9 +4,9 @@ import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 
-import Topic from '../../components/Exam/Topic/index'
-import Options from '../../components/Exam/Options/index'
-import Status from '../../components/Exam/Status/index'
+import Topic from '../../components/Exercise/Topic/index'
+import Options from '../../components/Exercise/Options/index'
+import Status from '../../components/Exercise/Status/index'
 
 import exerciseStore from '../../store/exerciseStore';
 
