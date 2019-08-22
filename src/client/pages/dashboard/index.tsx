@@ -1,7 +1,11 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Image } from '@tarojs/components'
+import { View, Button } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
+
+import PersonalInfo from '../../components/DashBoard/PersonalInfo/index'
+import Recoomend from '../../components/DashBoard/Recommend/index'
+import FeatureList from '../../components/DashBoard/FeatureList/index'
 
 import infoStore from '../../store/infoStore'
 
@@ -39,52 +43,25 @@ class DashBoard extends Component<IProps, IState> {
   }
 
   async componentWillMount() {
-    const { infoStore: { getUserInfo } } = this.props
+    const { infoStore: { handleUserLogin, getUserInfo } } = this.props
     Taro.showLoading({
       title: '加载中...'
     })
+    await handleUserLogin()
     await getUserInfo()
     this.setState({ isLoading: false })
     Taro.hideLoading()
   }
 
   render() {
-    const { infoStore: { userInfo } } = this.props
-    const { avatarUrl, nickName } = userInfo
     const { isLoading } = this.state
     return !isLoading ? (
       <View className='dashboard-container'>
-        <View className='information-container'>
-          <View className='information-wrap'>
-            <Image className='avatar' src={avatarUrl} lazyLoad></Image>
-            <View className='nickname'>
-              <View>{nickName}</View>
-              <View className='tag'>北京师范大学珠海分校的一名小菜鸡</View>
-            </View>
-            <View className='status'>
-              <View className='status-wrap'>
-                <View className='amount'>
-                  4
-                </View>
-                <View>通过课程</View>
-              </View>
-              <View className='status-wrap'>
-                <View className='amount'>
-                  3
-                </View>
-                <View>完成题库</View>
-              </View>
-              <View className='status-wrap'>
-                <View className='amount'>
-                  12
-                </View>
-                <View>收藏</View>
-              </View>
-            </View>
-          </View>
-        </View>
+        <PersonalInfo infoStore={new infoStore()} />
+        <Recoomend />
+        <FeatureList />
       </View>
-    ) : null
+    ) : <Button openType='getUserInfo' >点击登录</Button>
   }
 }
 
