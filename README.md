@@ -22,13 +22,13 @@
 
 ## 运行截图
 
-> 主页
+### 1. 主页
 ![](http://cdn.algbb.cn/screenshots/1.gif)
 
-> 做题模块
+### 2. 做题模块
 ![](http://cdn.algbb.cn/screenshots/2.gif)
 
-> 个人中心
+### 3. 个人中心
 ![](http://cdn.algbb.cn/screenshots/3.gif)
 
 ## 安装运行
