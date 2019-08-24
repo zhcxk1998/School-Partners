@@ -68,7 +68,6 @@ class Study extends Component<IProps, IState> {
         <Navigation />
         <Title>推荐课程</Title>
         <Banner studyStore={new studyStore()} />
-
         <Title>热门题库</Title>
         <List studyStore={new studyStore()} exerciseStore={new exerciseStore()} />
         {/* <View>illustration by Ouch.picshttps://icons8.com</View> */}

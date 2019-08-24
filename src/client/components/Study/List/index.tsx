@@ -35,15 +35,15 @@ class List extends Component<IProps, IState> {
     return hotExerciseList && hotExerciseList.slice().length !== 0 ? (
       <View className='list-container'>
         {hotExerciseList.map((item, index) => {
-          const { exercise_cid, exercise_name, exercise_content } = item;
+          const { exerciseCid, exerciseName, exerciseContent } = item;
           return (
-            <View className='list-wrap' key={index} onClick={() => { getExerciseDetail(exercise_cid) }}>
+            <View className='list-wrap' key={exerciseCid} onClick={() => { getExerciseDetail(exerciseCid) }}>
               <View className='list-preview'>
                 <View className='iconfont icon-tiku'></View>
               </View>
               <View className='list-info'>
-                <View className='title'>{exercise_name}</View>
-                <View className='content'>{exercise_content}</View>
+                <View className='title'>{exerciseName}</View>
+                <View className='content'>{exerciseContent}</View>
               </View>
             </View>
           )

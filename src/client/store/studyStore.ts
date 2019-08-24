@@ -3,44 +3,44 @@ import Taro from '@tarojs/taro'
 
 class studyStore {
   @observable courseList: Array<{
-    course_cid: string,
-    course_name: string,
-    is_recommend: string
+    courseCid: string,
+    courseName: string,
+    isRecommend: string
   }> = [];
 
   @observable recommendCourseList: Array<{
-    course_cid: string,
-    course_name: string,
-    is_recommend: string
+    courseCid: string,
+    courseName: string,
+    isRecommend: string
   }> = [];
 
   @observable exerciseList: Array<{
-    exercise_cid: string,
-    exercise_name: string,
-    exercise_content: string,
-    is_hot: string
+    exerciseCid: string,
+    exerciseName: string,
+    exerciseContent: string,
+    isHot: string
   }>
 
   @observable hotExerciseList: Array<{
-    exercise_cid: string,
-    exercise_name: string,
-    exercise_content: string,
-    is_hot: string
+    exerciseCid: string,
+    exerciseName: string,
+    exerciseContent: string,
+    isHot: string
   }>
 
   isRecommend(course): boolean {
-    return course.is_recommend
+    return course.isRecommend
   }
 
   isHot(course): boolean {
-    return course.is_hot
+    return course.isHot
   }
 
   @action.bound
   getCourseList(): any {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
-        url: 'https://www.algbb.cn/courses',
+        url: 'http://localhost:3000/courses',
         method: 'GET',
       })
       this.courseList = data;
@@ -53,7 +53,7 @@ class studyStore {
   getExerciseList(): any {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
-        url: 'https://www.algbb.cn/exercises',
+        url: 'http://localhost:3000/exercises',
         method: 'GET',
       })
       this.exerciseList = data;

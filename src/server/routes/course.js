@@ -4,8 +4,17 @@ const { QUERY_TABLE, INSERT_TABLE, UPDATE_TABLE, DELETE_TABLE } = require('../ut
 const parse = require('../utils/parse')
 
 router.get('/courses', async (ctx) => {
+  const response = []
   const res = await query(QUERY_TABLE('course_list'));
-  ctx.response.body = parse(res);
+  res.map((item, index) => {
+    const { course_cid, course_name, is_recommend } = item
+    response[index] = {
+      courseCid: course_cid,
+      courseName: course_name,
+      isRecommend: is_recommend
+    }
+  })
+  ctx.response.body = parse(response);
 })
 
 router.put('/courses', async (ctx) => {

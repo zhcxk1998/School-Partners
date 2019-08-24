@@ -39,10 +39,10 @@ class Banner extends Component<IProps, IState> {
         scrollWithAnimation
       >
         {recommendCourseList.map((item, index) => {
-          const { course_name } = item;
+          const { courseCid, courseName } = item;
           return (
-            <View className='banner-item' key={index}>
-              <View className='title'>{course_name}</View>
+            <View className='banner-item' key={courseCid}>
+              <View className='title'>{courseName}</View>
               <Image className='bg' src={`http://cdn.algbb.cn/study/banner/${index + 1}.svg`} lazyLoad />
             </View>
           )
