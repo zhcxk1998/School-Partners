@@ -4,8 +4,10 @@ import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
 import studyStore from '../../store/studyStore'
+import chatStore from '../../store/chatStore'
 
 import Study from '../study/index'
+import ChatRoom from '../chatroom/index'
 import DashBoard from '../dashboard';
 import Tabbar from '../../components/Tabbar/index'
 
@@ -13,7 +15,8 @@ import './index.scss'
 
 
 interface IProps {
-  studyStore: studyStore
+  studyStore: studyStore,
+  chatStore: chatStore
 }
 
 interface IState {
@@ -21,7 +24,7 @@ interface IState {
   current: number,
 }
 
-@inject('studyStore')
+@inject('studyStore','chatStore')
 @observer
 class Index extends Component<IProps, IState> {
 
@@ -45,6 +48,11 @@ class Index extends Component<IProps, IState> {
     }
   }
 
+  async componentDidMount() {
+    const { chatStore: { socketConnect } } = this.props
+    socketConnect()
+  }
+
   onReachBottom() {
     /* 触摸底部加载更多题库 */
   }
@@ -61,10 +69,6 @@ class Index extends Component<IProps, IState> {
     Taro.stopPullDownRefresh()
   }
 
-  async componentDidShow() {
-
-  }
-
   switchTab(index: number): void {
     this.setState({ current: index })
   }
@@ -74,8 +78,9 @@ class Index extends Component<IProps, IState> {
     return (
       <View className='index-container'>
         {current === 0 ? <Study />
-          : current === 2 ? <DashBoard />
-            : null}
+          : current === 1 ? <ChatRoom />
+            : current === 3 ? <DashBoard />
+              : null}
         <Tabbar onSwitchTab={this.switchTab.bind(this)} current={current} />
       </View>
     )
