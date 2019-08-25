@@ -1,3 +1,4 @@
+import { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View, ScrollView, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
@@ -56,4 +57,4 @@ class Banner extends Component<IProps, IState> {
   }
 }
 
-export default Banner 
+export default Banner as ComponentType

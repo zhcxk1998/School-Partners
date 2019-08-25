@@ -28,4 +28,4 @@ class Topic extends Component<IProps, {}> {
   }
 }
 
-export default Topic
+export default Topic 

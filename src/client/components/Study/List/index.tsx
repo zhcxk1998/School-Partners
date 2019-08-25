@@ -1,3 +1,4 @@
+import { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtActivityIndicator } from 'taro-ui'
@@ -58,4 +59,4 @@ class List extends Component<IProps, IState> {
   }
 }
 
-export default List 
+export default List as ComponentType

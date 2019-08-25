@@ -72,7 +72,7 @@ class Exam extends Component<IProps, {}> {
             )
           })}
         </AtTabs>
-        <Status exerciseStore={new exerciseStore()} />
+        <Status />
       </View>
     )
   }

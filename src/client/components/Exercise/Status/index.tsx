@@ -1,3 +1,4 @@
+import { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { AtSlider } from 'taro-ui'
@@ -87,4 +88,4 @@ class Status extends Component<IProps, {}> {
   }
 }
 
-export default Status
+export default Status as ComponentType

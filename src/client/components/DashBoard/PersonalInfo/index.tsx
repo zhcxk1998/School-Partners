@@ -1,3 +1,4 @@
+import { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
@@ -50,4 +51,4 @@ class PersonalInfo extends Component<IProps, {}> {
   }
 }
 
-export default PersonalInfo
+export default PersonalInfo as ComponentType

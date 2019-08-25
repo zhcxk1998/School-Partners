@@ -57,7 +57,7 @@ class DashBoard extends Component<IProps, IState> {
     const { isLoading } = this.state
     return !isLoading ? (
       <View className='dashboard-container'>
-        <PersonalInfo infoStore={new infoStore()} />
+        <PersonalInfo />
         <Recoomend />
         <FeatureList />
       </View>

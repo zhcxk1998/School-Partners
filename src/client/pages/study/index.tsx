@@ -4,7 +4,6 @@ import { View, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
 import studyStore from '../../store/studyStore';
-import exerciseStore from '../../store/exerciseStore'
 
 import List from '../../components/Study/List/index'
 import Navigation from '../../components/Study/Navigation/index'
@@ -61,15 +60,14 @@ class Study extends Component<IProps, IState> {
           <Image className='bg' src={'http://cdn.algbb.cn/study/banner-bg.svg'}></Image>
           <View className='slogan'>
             <View><View className='title'>Hey Guys</View >come to study !</View>
-
             <View className='button'>Let's start</View>
           </View>
         </View>
         <Navigation />
         <Title>推荐课程</Title>
-        <Banner studyStore={new studyStore()} />
+        <Banner />
         <Title>热门题库</Title>
-        <List studyStore={new studyStore()} exerciseStore={new exerciseStore()} />
+        <List />
         {/* <View>illustration by Ouch.picshttps://icons8.com</View> */}
       </View>
     )
