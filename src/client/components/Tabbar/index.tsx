@@ -19,6 +19,7 @@ class Tabbar extends Component<IProps, {}> {
           selectedColor='#1890ff'
           tabList={[
             { title: '首页', iconType: 'bullet-list' },
+            { title: '聊天', iconType: 'message' },
             { title: '对战', iconType: 'lightning-bolt' },
             { title: '个人', iconType: 'home' }
           ]}
