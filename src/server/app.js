@@ -3,9 +3,12 @@ const Router = require('koa-router');
 const bodyParser = require('koa-bodyparser')
 const cors = require('koa2-cors');
 
-const app = new Koa()
 const router = new Router()
-const route = require('./routes/index')
+const app = new Koa();
+
+const routes = require('./routes/routes')
+const course = require('./routes/course')
+const exercise = require('./routes/exercise')
 
 /* app.use(async (ctx, next) => {
   // 允许来自所有域名请求
@@ -58,6 +61,6 @@ app.use(cors({
 
 app.use(cors())
 app.use(bodyParser())
-app.use(route.routes())
+app.use(routes(router, { course, exercise }))
 
 module.exports = app
