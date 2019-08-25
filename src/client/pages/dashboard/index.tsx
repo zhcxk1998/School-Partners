@@ -43,14 +43,19 @@ class DashBoard extends Component<IProps, IState> {
   }
 
   async componentWillMount() {
-    const { infoStore: { handleUserLogin, getUserInfo } } = this.props
-    Taro.showLoading({
-      title: '加载中...'
-    })
-    await handleUserLogin()
-    await getUserInfo()
-    this.setState({ isLoading: false })
-    Taro.hideLoading()
+    const { infoStore: { handleUserLogin, getUserInfo, userInfo } } = this.props
+    if (userInfo.avatarUrl !== '') {
+      this.setState({ isLoading: false })
+    }
+    else {
+      Taro.showLoading({
+        title: '加载中...'
+      })
+      await handleUserLogin()
+      await getUserInfo()
+      this.setState({ isLoading: false })
+      Taro.hideLoading()
+    }
   }
 
   render() {
