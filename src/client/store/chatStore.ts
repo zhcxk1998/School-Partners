@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
 
-import { MessageInfo,LoginInfo } from '../modals/chat'
+import { SendMessageInfo, ReceiveMessageInfo, LoginInfo } from '../modals/chat'
 
 class chatStore {
   @observable socketTask: any = null
@@ -9,7 +9,8 @@ class chatStore {
   @observable userName: string = ''
   @observable userAvatar: string = ''
 
-  @observable messageList: Array<string> = []
+  @observable messageList: ReceiveMessageInfo[] = []
+  @observable scrollViewId: string = ''
 
   generateSocketId(): void {
     this.socketId = new Date().getTime() + '' + Math.ceil(Math.random() * 100)
@@ -31,7 +32,10 @@ class chatStore {
   handleSocketMessage(): void {
     const socketTask: any = this.socketTask
     socketTask.onMessage(({ data }) => {
-      this.messageList.push(data)
+      const messageInfo: ReceiveMessageInfo = JSON.parse(data)
+      this.messageList.push(messageInfo)
+      console.log(messageInfo)
+      this.scrollViewId = messageInfo.messageId
     })
   }
 
@@ -51,10 +55,11 @@ class chatStore {
 
   @action.bound
   handleMessageSend(type: string = 'text', to: string = 'all', message: string) {
-    const messageInfo: MessageInfo = {
+    const messageInfo: SendMessageInfo = {
       type,
       to,
-      message
+      message,
+      socketId: this.socketId
     }
     const socketTask: any = this.socketTask
     socketTask.send({ data: JSON.stringify(messageInfo) })

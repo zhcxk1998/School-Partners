@@ -1,6 +1,6 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, ScrollView } from '@tarojs/components'
+import { View, Button, ScrollView, Input } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
 import chatStore from '../../store/chatStore'
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 interface IState {
-  count: number
+  value: string,
 }
 
 @inject('chatStore')
@@ -32,7 +32,7 @@ class ChatRoom extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0
+      value: ''
     }
   }
 
@@ -40,27 +40,38 @@ class ChatRoom extends Component<IProps, IState> {
 
   }
 
-  async handleMessageSend() {
+  handleMessageSend() {
     const { chatStore: { handleMessageSend } } = this.props
-    handleMessageSend('text', 'all', this.state.count + '')
-    this.setState({ count: this.state.count + 1 })
+    const { value } = this.state;
+    handleMessageSend('text', 'all', value)
+
+  }
+
+  handleChange({ detail: { value } }) {
+    this.setState({ value })
   }
 
   render() {
-    const { chatStore: { messageList } } = this.props
+    const { chatStore: { messageList, scrollViewId } } = this.props
     return (
       <View>
         <ScrollView
           scrollY
           scrollWithAnimation
-          style={{ height: '300px' }}
-          scrollIntoView={'a10'}
+          style={{ height: '100px' }}
+          scrollIntoView={scrollViewId}
         >
-          {messageList.slice().map((message, index) => {
-            return <View id={'a' + index} key={index}>{message}</View>
+          {messageList.slice().map(messageInfo => {
+            const { message, messageId } = messageInfo
+            return <View id={messageId} key={messageId}>{message}</View>
           })}
-        </ScrollView>
 
+          {/* {messageList.slice().map((messageInfo, index) =>
+            (<View id={messageInfo.messageId} key={messageInfo.messageId}>{messageInfo.message}</View>))} */}
+
+        </ScrollView>
+        <View>|--this.state.message: {this.state.message}</View>
+        <Input type='text' onInput={this.handleChange.bind(this)} />
         <Button type='primary' onClick={this.handleMessageSend.bind(this)}>send</Button>
       </View>
     )

@@ -1,10 +1,16 @@
+const generateTime = require('../utils/generateTime')
+
 let onlineUserSocket = {}
 let onlineUserInfo = {}
 
 // 广播消息
 const broadcast = (message) => {
+  const { socketId } = message
   Object.values(onlineUserSocket).forEach((socket) => {
-    socket.send(message)
+    socket.send(JSON.stringify({
+      ...message,
+      isMyself: socketId === socket.socketId
+    }))
   })
 }
 
@@ -28,15 +34,42 @@ const handleLogout = (socketId) => {
   console.log('\n---------------------------------------------------\n\n')
 }
 
+/* 要处理离线用户消息发送的问题（找不到此用户的id，导致报错） */
 const handleTextMessage = (ws, socketMessage) => {
-  const { to, message } = socketMessage
+  const { to, message, socketId } = socketMessage
+  const currentTime = generateTime()
+  const messageId = `msg${message}${new Date().getTime()}`
   if (to === 'all') {
     // 群发
-    broadcast(message)
+    broadcast({
+      ...onlineUserInfo[ws.socketId],
+      currentTime,
+      message,
+      messageId,
+      socketId: ws.socketId,
+    })
   } else {
-    // 私发
-    ws.send(message)
-    onlineUserSocket[to].send(message)
+    const isMyself = socketId === ws.socketId
+
+    /* 为自己发送信息 */
+    ws.send(JSON.stringify({
+      ...onlineUserInfo[ws.socketId],
+      currentTime,
+      message,
+      messageId,
+      socketId: ws.socketId,
+      isMyself
+    }))
+
+    /* 为对方发送信息 */
+    onlineUserSocket[to].send(JSON.stringify({
+      ...onlineUserInfo[ws.socketId],
+      currentTime,
+      message,
+      messageId,
+      socketId: ws.socketId,
+      isMyself
+    }))
   }
 }
 
