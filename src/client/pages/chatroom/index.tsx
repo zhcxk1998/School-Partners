@@ -3,19 +3,19 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button, ScrollView, Input } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
-import chatStore from '../../store/chatStore'
+import chatroomStore from '../../store/chatroomStore'
 
 import './index.scss'
 
 interface IProps {
-  chatStore: chatStore
+  chatroomStore: chatroomStore
 }
 
 interface IState {
   value: string,
 }
 
-@inject('chatStore')
+@inject('chatroomStore')
 @observer
 class ChatRoom extends Component<IProps, IState> {
   /**
@@ -37,13 +37,22 @@ class ChatRoom extends Component<IProps, IState> {
   }
 
   async componentWillMount() {
-
+    const { title } = this.$router.params
+    Taro.setNavigationBarTitle({
+      title
+    })
   }
 
   handleMessageSend() {
-    const { chatStore: { handleMessageSend } } = this.props
+    const { chatroomStore: { handleMessageSend, socketId } } = this.props
     const { value } = this.state;
-    handleMessageSend('text', 'all', value)
+    const { to } = this.$router.params
+    handleMessageSend({
+      type: 'text',
+      from: socketId,
+      to,
+      message: value
+    })
     this.setState({
       value: ''
     })
@@ -54,8 +63,9 @@ class ChatRoom extends Component<IProps, IState> {
   }
 
   render() {
-    const { chatStore: { messageList, scrollViewId } } = this.props
+    const { chatroomStore: { messageList, scrollViewId } } = this.props
     const { value } = this.state
+    const { to } = this.$router.params
     return (
       <View>
         <ScrollView
@@ -64,16 +74,11 @@ class ChatRoom extends Component<IProps, IState> {
           style={{ height: '100px' }}
           scrollIntoView={scrollViewId}
         >
-          {messageList.slice().map(messageInfo => {
+          {messageList[to] && messageList[to].map(messageInfo => {
             const { message, messageId } = messageInfo
             return <View id={messageId} key={messageId}>{message}</View>
           })}
-
-          {/* {messageList.slice().map((messageInfo, index) =>
-            (<View id={messageInfo.messageId} key={messageInfo.messageId}>{messageInfo.message}</View>))} */}
-
         </ScrollView>
-        <View>|--this.state.message: {value}</View>
         <Input type='text' value={value} onInput={this.handleChange.bind(this)} />
         <Button type='primary' onClick={this.handleMessageSend.bind(this)}>send</Button>
       </View>
