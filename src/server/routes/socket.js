@@ -38,7 +38,7 @@ const handleLogout = (socketId) => {
 const handleTextMessage = (ws, socketMessage) => {
   const { to, message, socketId } = socketMessage
   const currentTime = generateTime()
-  const messageId = `msg${message}${new Date().getTime()}`
+  const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
   if (to === 'all') {
     // 群发
     broadcast({

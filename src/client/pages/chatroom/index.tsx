@@ -44,7 +44,9 @@ class ChatRoom extends Component<IProps, IState> {
     const { chatStore: { handleMessageSend } } = this.props
     const { value } = this.state;
     handleMessageSend('text', 'all', value)
-
+    this.setState({
+      value: ''
+    })
   }
 
   handleChange({ detail: { value } }) {
@@ -53,6 +55,7 @@ class ChatRoom extends Component<IProps, IState> {
 
   render() {
     const { chatStore: { messageList, scrollViewId } } = this.props
+    const { value } = this.state
     return (
       <View>
         <ScrollView
@@ -70,8 +73,8 @@ class ChatRoom extends Component<IProps, IState> {
             (<View id={messageInfo.messageId} key={messageInfo.messageId}>{messageInfo.message}</View>))} */}
 
         </ScrollView>
-        <View>|--this.state.message: {this.state.message}</View>
-        <Input type='text' onInput={this.handleChange.bind(this)} />
+        <View>|--this.state.message: {value}</View>
+        <Input type='text' value={value} onInput={this.handleChange.bind(this)} />
         <Button type='primary' onClick={this.handleMessageSend.bind(this)}>send</Button>
       </View>
     )
