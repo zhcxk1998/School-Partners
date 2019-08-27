@@ -4,10 +4,11 @@ import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
 import studyStore from '../../store/studyStore'
-import chatStore from '../../store/chatStore'
+import chatroomStore from '../../store/chatroomStore'
 
 import Study from '../study/index'
-import ChatRoom from '../chatroom/index'
+import Contacts from '../contacts/index'
+import Battle from '../battle/index'
 import DashBoard from '../dashboard';
 import Tabbar from '../../components/Tabbar/index'
 
@@ -16,7 +17,7 @@ import './index.scss'
 
 interface IProps {
   studyStore: studyStore,
-  chatStore: chatStore
+  chatroomStore: chatroomStore
 }
 
 interface IState {
@@ -24,7 +25,7 @@ interface IState {
   current: number,
 }
 
-@inject('studyStore','chatStore')
+@inject('studyStore', 'chatroomStore')
 @observer
 class Index extends Component<IProps, IState> {
 
@@ -49,7 +50,7 @@ class Index extends Component<IProps, IState> {
   }
 
   async componentDidMount() {
-    const { chatStore: { socketConnect } } = this.props
+    const { chatroomStore: { socketConnect } } = this.props
     socketConnect()
   }
 
@@ -70,7 +71,11 @@ class Index extends Component<IProps, IState> {
   }
 
   switchTab(index: number): void {
+    const navigationTitle: Array<string> = [
+      '首页', '聊天室', '对战', '个人中心'
+    ]
     this.setState({ current: index })
+    Taro.setNavigationBarTitle({ title: navigationTitle[index] })
   }
 
   render() {
@@ -78,9 +83,10 @@ class Index extends Component<IProps, IState> {
     return (
       <View className='index-container'>
         {current === 0 ? <Study />
-          : current === 1 ? <ChatRoom />
-            : current === 3 ? <DashBoard />
-              : null}
+          : current === 1 ? <Contacts />
+            : current === 2 ? <Battle />
+              : current === 3 ? <DashBoard />
+                : null}
         <Tabbar onSwitchTab={this.switchTab.bind(this)} current={current} />
       </View>
     )
