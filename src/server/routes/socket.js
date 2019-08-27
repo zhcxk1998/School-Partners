@@ -5,11 +5,11 @@ let onlineUserInfo = {}
 
 // 广播消息
 const broadcast = (message) => {
-  const { socketId } = message
+  const { from } = message
   Object.values(onlineUserSocket).forEach((socket) => {
     socket.send(JSON.stringify({
       ...message,
-      isMyself: socketId === socket.socketId
+      isMyself: from === socket.socketId
     }))
   })
 }
@@ -34,11 +34,24 @@ const handleLogout = (socketId) => {
   console.log('\n---------------------------------------------------\n\n')
 }
 
-/* 要处理离线用户消息发送的问题（找不到此用户的id，导致报错） */
+/* 要处理离线用户消息发送的问题（找不到此用户的id，导致报错）需要从数据库开一个数组存取用户离线时收到的消息 */
 const handleTextMessage = (ws, socketMessage) => {
-  const { to, message, socketId } = socketMessage
+  const { to, message, from } = socketMessage
   const currentTime = generateTime()
   const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
+
+  broadcast({
+    ...onlineUserInfo[ws.socketId],
+    currentTime,
+    message,
+    messageId,
+    from,
+    to,
+  })
+
+  /*
+  因目前采用固定群组的方式，不提供私聊，所以不需要判断私发还是群发
+  
   if (to === 'all') {
     // 群发
     broadcast({
@@ -51,7 +64,7 @@ const handleTextMessage = (ws, socketMessage) => {
   } else {
     const isMyself = socketId === ws.socketId
 
-    /* 为自己发送信息 */
+    // 为自己发送信息
     ws.send(JSON.stringify({
       ...onlineUserInfo[ws.socketId],
       currentTime,
@@ -61,7 +74,7 @@ const handleTextMessage = (ws, socketMessage) => {
       isMyself
     }))
 
-    /* 为对方发送信息 */
+    // 为对方发送信息
     onlineUserSocket[to].send(JSON.stringify({
       ...onlineUserInfo[ws.socketId],
       currentTime,
@@ -70,7 +83,7 @@ const handleTextMessage = (ws, socketMessage) => {
       socketId: ws.socketId,
       isMyself
     }))
-  }
+  } */
 }
 
 const websocket = (ctx) => {
