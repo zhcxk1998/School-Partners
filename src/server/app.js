@@ -10,6 +10,7 @@ const app = websockify(new Koa());
 const routes = require('./routes/routes')
 const course = require('./routes/course')
 const exercise = require('./routes/exercise')
+const contact = require('./routes/contact')
 const websocket = require('./routes/socket')
 
 /* app.use(async (ctx, next) => {
@@ -63,7 +64,7 @@ app.use(cors({
 
 app.use(cors())
 app.use(bodyParser())
-app.use(routes(router, { course, exercise }))
+app.use(routes(router, { course, exercise, contact }))
 app.ws.use(websocket);
 
 module.exports = app
