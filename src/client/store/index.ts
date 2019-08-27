@@ -1,11 +1,11 @@
 import exerciseStore from './exerciseStore'
 import studyStore from './studyStore'
 import infoStore from './infoStore'
-import chatStore from './chatStore'
+import chatroomStore from './chatroomStore'
 
 export default {
   exerciseStore: new exerciseStore(),
   studyStore: new studyStore(),
   infoStore: new infoStore(),
-  chatStore: new chatStore()
+  chatroomStore: new chatroomStore()
 }
