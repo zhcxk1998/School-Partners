@@ -36,15 +36,26 @@ class chatroomStore {
 
   handleSocketMessage(): void {
     const socketTask: any = this.socketTask
-    socketTask.onMessage(({ data }) => {
+    socketTask.onMessage(async ({ data }) => {
       const messageInfo: ReceiveMessageInfo = JSON.parse(data)
-      const { to, messageId, isMyself, userName, currentTime, message } = messageInfo
+      const { to, messageId, isMyself, userName, userAvatar, currentTime, message } = messageInfo
       this.messageList[to].push(messageInfo)
       /* 设置群组最新消息 */
       this.contactsList.filter(contacts => contacts.contactsId === to)[0].latestMessage = {
         userName, message, currentTime
       }
       this.scrollViewId = isMyself ? messageId : ''
+      await Taro.request({
+        url: 'http://localhost:3000/chatlog',
+        method: 'PUT',
+        data: {
+          to,
+          userName,
+          userAvatar,
+          currentTime,
+          message,
+        }
+      })
     })
   }
 
@@ -62,23 +73,39 @@ class chatroomStore {
     })
   }
 
-  // async setMessageList() {
-  //   return new Promise((resolve, reject) => {
-
-  //     resolve()
-  //   })
-  // }
+  async setMessageList(contacts: ContactsInfo[]): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const asyncQueue: Array<any> = []
+      contacts.forEach(async contactsInfo => {
+        asyncQueue.push(new Promise(async (resolve, reject) => {
+          const { data } = await Taro.request({
+            url: `http://localhost:3000/chatlog/${contactsInfo.contactsId}`,
+            method: 'GET'
+          })
+          this.messageList[contactsInfo.contactsId] = data.map(messageInfo => {
+            const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
+            return {
+              ...messageInfo,
+              messageId,
+            }
+          })
+          resolve()
+        }))
+      })
+      await Promise.all(asyncQueue)
+      resolve()
+    })
+  }
 
   async setContactsList() {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
         url: 'http://localhost:3000/contacts',
+        // url: 'https://www.algbb.cn/contacts',
         method: 'GET'
       })
       /* 初始化消息列表 */
-      data.forEach(contactsInfo => {
-        this.messageList[contactsInfo.contactsId] = []
-      })
+      await this.setMessageList(data)
 
       /* 初始化群组信息 */
       this.contactsList = data.map(contactsInfo => {
@@ -105,6 +132,13 @@ class chatroomStore {
   handleMessageSend(messageInfo: SendMessageInfo): void {
     const socketTask: any = this.socketTask
     socketTask.send({ data: JSON.stringify(messageInfo) })
+  }
+
+  @action.bound
+  setLatestScrollViewId(to: string) {
+    const messageInfo = this.messageList[to]
+    const { messageId } = messageInfo[messageInfo.length - 1]
+    this.scrollViewId = messageId
   }
 
   @action.bound
