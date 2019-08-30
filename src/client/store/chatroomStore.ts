@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
 
+import formatTime from '../utils/formatTime'
+
 import { SendMessageInfo, ReceiveMessageInfo, LoginInfo, MessageList, ContactsInfo } from '../modals/chatroom'
 
 class chatroomStore {
@@ -39,7 +41,10 @@ class chatroomStore {
     socketTask.onMessage(async ({ data }) => {
       const messageInfo: ReceiveMessageInfo = JSON.parse(data)
       const { to, messageId, isMyself, userName, userAvatar, currentTime, message } = messageInfo
-      this.messageList[to].push(messageInfo)
+      this.messageList[to].push({
+        ...messageInfo,
+        currentTime: formatTime(currentTime)
+      })
       /* 设置群组最新消息 */
       this.contactsList.filter(contacts => contacts.contactsId === to)[0].latestMessage = {
         userName, message, currentTime
@@ -83,10 +88,12 @@ class chatroomStore {
             method: 'GET'
           })
           this.messageList[contactsInfo.contactsId] = data.map(messageInfo => {
+            const { currentTime } = messageInfo
             const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
             return {
               ...messageInfo,
               messageId,
+              currentTime: formatTime(currentTime)
             }
           })
           resolve()
