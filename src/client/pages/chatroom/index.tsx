@@ -43,10 +43,11 @@ class ChatRoom extends Component<IProps, IState> {
     })
   }
 
-  handleMessageSend() {
+  onMessageSend() {
     const { chatroomStore: { handleMessageSend, socketId } } = this.props
     const { value } = this.state;
     const { to } = this.$router.params
+
     handleMessageSend({
       type: 'text',
       from: socketId,
@@ -63,7 +64,7 @@ class ChatRoom extends Component<IProps, IState> {
   }
 
   render() {
-    const { chatroomStore: { messageList, scrollViewId } } = this.props
+    const { chatroomStore: { messageList, scrollViewId, userName } } = this.props
     const { value } = this.state
     const { to } = this.$router.params
     return (
@@ -78,7 +79,7 @@ class ChatRoom extends Component<IProps, IState> {
           {messageList[to] && messageList[to].map(messageInfo => {
             const { message, messageId, currentTime, userName, userAvatar, isMyself } = messageInfo
             return (
-              <View className={`message-wrap ${isMyself ? 'myself' : ''}`} id={messageId} key={messageId}>
+              <View className={`message-wrap ${isMyself || messageInfo.userName === userName ? 'myself' : ''}`} id={messageId} key={messageId}>
                 <Image className='avatar' src={userAvatar} />
                 <View className='info'>
                   <View className='header'>
@@ -96,59 +97,11 @@ class ChatRoom extends Component<IProps, IState> {
               </View>
             )
           })}
-          <View className='message-wrap'>
-            <Image className='avatar' src='http://cdn.algbb.cn/emoji/32.png' />
-            <View className='info'>
-              <View className='header'>
-                <View className='username'>
-                  BB小天使玩哒瓦达瓦大娃娃
-                </View>
-                <View className='time'>
-                  21:40
-                </View>
-              </View>
-              <View className='content'>
-                嗷呜哦啊
-              </View>
-            </View>
-          </View>
-          <View className='message-wrap myself'>
-            <Image className='avatar' src='http://cdn.algbb.cn/emoji/32.png' />
-            <View className='info'>
-              <View className='header'>
-                <View className='username'>
-                  BB小天使
-                </View>
-                <View className='time'>
-                  21:40
-                </View>
-              </View>
-              <View className='content'>
-                嗷呜哦啊无嗷呜21312312312312321323123123123啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
-              </View>
-            </View>
-          </View>
-          <View className='message-wrap'>
-            <Image className='avatar' src='http://cdn.algbb.cn/emoji/32.png' />
-            <View className='info'>
-              <View className='header'>
-                <View className='username'>
-                  BB小天使
-                </View>
-                <View className='time'>
-                  21:40
-                </View>
-              </View>
-              <View className='content'>
-                啊我打完
-              </View>
-            </View>
-          </View>
         </ScrollView>
         <View className='chat-input-wrap'>
           <Image className='emoji' src='http://cdn.algbb.cn/chatroom/emoji.png'></Image>
           <Input className='input' type='text' value={value} onInput={this.handleChange.bind(this)} placeholder='来吹吹水吧~' />
-          <View className='button' onClick={this.handleMessageSend.bind(this)} >发送</View>
+          <View className='button' onClick={this.onMessageSend.bind(this)} >发送</View>
         </View>
       </View>
     )
