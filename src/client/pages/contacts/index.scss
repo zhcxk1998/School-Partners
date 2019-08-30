@@ -10,11 +10,16 @@
     padding: 20px 0;
 
     .avatar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 120px;
       height: 120px;
       margin: 0 30px;
-      background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+      background-image: linear-gradient(120deg, #edf3fc 0%, #f3f8fa 100%);
       border-radius: 50%;
+      box-shadow: 0 0 12px .1px #66a6ffa4;
+      // border: #66a6ff 1px solid;
     }
 
     .info {

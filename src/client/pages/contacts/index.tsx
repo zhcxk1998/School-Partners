@@ -49,7 +49,7 @@ class Contacts extends Component<IProps, IState> {
                   <View className='title'>{title}</View>
                   <View className='time'>{currentTime}</View>
                 </View>
-                <View className='content'>{userName}:{message}</View>
+                <View className='content'>{userName}: {message}</View>
               </View>
             </View>
           )
