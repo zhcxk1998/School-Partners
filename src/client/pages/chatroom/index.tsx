@@ -13,6 +13,7 @@ interface IProps {
 
 interface IState {
   value: string,
+  scrollAnimation: boolean
 }
 
 @inject('chatroomStore')
@@ -32,14 +33,25 @@ class ChatRoom extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      scrollAnimation: false
     }
   }
 
-  async componentWillMount() {
-    const { title } = this.$router.params
+  componentWillMount() {
+    const { title, to } = this.$router.params
+    const { chatroomStore: { setLatestScrollViewId } } = this.props
+    /* 加载记录无需动画，直接跳转到最新消息 */
+    setLatestScrollViewId(to)
     Taro.setNavigationBarTitle({
       title
+    })
+  }
+
+  componentDidShow() {
+    /* 添加消息发送滚动动画 */
+    this.setState({
+      scrollAnimation: true
     })
   }
 
@@ -66,14 +78,14 @@ class ChatRoom extends Component<IProps, IState> {
 
   render() {
     const { chatroomStore: { messageList, scrollViewId, userName } } = this.props
-    const { value } = this.state
+    const { value, scrollAnimation } = this.state
     const { to } = this.$router.params
     return (
       <View>
         <ScrollView
           className='chat-message-container'
           scrollY
-          scrollWithAnimation
+          scrollWithAnimation={scrollAnimation}
           scrollIntoView={scrollViewId}
           style={{ height: 'calc(100vh - 16vw)' }}
         >
