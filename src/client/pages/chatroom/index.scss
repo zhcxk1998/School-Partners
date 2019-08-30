@@ -1,0 +1,118 @@
+.myself {
+  justify-content: flex-end;
+
+  .avatar {
+    order: 1;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    .header {
+      justify-content: flex-end;
+
+      .username {
+        order: 1;
+        margin-right: 0 !important;
+        margin-left: .5em;
+      }
+    }
+
+    .content {
+      color: #333 !important;
+      background: #fff !important;
+    }
+  }
+}
+
+.chat {
+  &-message-container {
+    background: #e7e7e7;
+
+    .message-wrap {
+      display: flex;
+      margin: 10px 0;
+
+      .avatar {
+        width: 14vw;
+        height: 14vw;
+        margin: 10px;
+        border-radius: 50%;
+      }
+
+      .info {
+
+        .header {
+          display: flex;
+          align-items: center;
+          max-width: 40vw;
+          padding: 10px 0;
+          color: #666;
+          font-size: .8em;
+
+          .username {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 40vw;
+            margin-right: .5em;
+            color: #555;
+            font-size: 1.2em;
+            font-weight: bold;
+          }
+        }
+
+        .content {
+          display: inline-block;
+          max-width: 60vw;
+          padding: 10px 20px;
+          color: #fff;
+          word-break: break-all;
+          border-radius: 20px;
+          background: #66a6ff;
+        }
+      }
+    }
+  }
+
+  &-input-wrap {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96vw;
+    height: 12vw;
+    padding: 2vw;
+    border-top: #d7d7d7 1px solid;
+
+    .emoji {
+      width: 8vw;
+      height: 8vw;
+      border-radius: 50%;
+    }
+
+    .input {
+      width: 66vw;
+      padding: 0 2vw;
+      height: 10vw;
+      border: #c7c7c7 1px solid;
+      border-radius: 20px;
+    }
+
+    .button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 15vw;
+      height: 10vw;
+      color: #fff;
+      font-size: 1em;
+      border-radius: 20px;
+      background: #66a6ff;
+    }
+  }
+}

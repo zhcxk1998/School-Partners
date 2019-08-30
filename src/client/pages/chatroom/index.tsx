@@ -1,6 +1,6 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
-import { View, Button, ScrollView, Input } from '@tarojs/components'
+import { View, ScrollView, Input, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
 import chatroomStore from '../../store/chatroomStore'
@@ -69,18 +69,87 @@ class ChatRoom extends Component<IProps, IState> {
     return (
       <View>
         <ScrollView
+          className='chat-message-container'
           scrollY
           scrollWithAnimation
-          style={{ height: '100px' }}
           scrollIntoView={scrollViewId}
+          style={{ height: 'calc(100vh - 16vw)' }}
         >
           {messageList[to] && messageList[to].map(messageInfo => {
-            const { message, messageId } = messageInfo
-            return <View id={messageId} key={messageId}>{message}</View>
+            const { message, messageId, currentTime, userName, userAvatar, isMyself } = messageInfo
+            return (
+              <View className={`message-wrap ${isMyself ? 'myself' : ''}`} id={messageId} key={messageId}>
+                <Image className='avatar' src={userAvatar} />
+                <View className='info'>
+                  <View className='header'>
+                    <View className='username'>
+                      {userName}
+                    </View>
+                    <View className='time'>
+                      {currentTime}
+                    </View>
+                  </View>
+                  <View className='content'>
+                    {message}
+                  </View>
+                </View>
+              </View>
+            )
           })}
+          <View className='message-wrap'>
+            <Image className='avatar' src='http://cdn.algbb.cn/emoji/32.png' />
+            <View className='info'>
+              <View className='header'>
+                <View className='username'>
+                  BB小天使玩哒瓦达瓦大娃娃
+                </View>
+                <View className='time'>
+                  21:40
+                </View>
+              </View>
+              <View className='content'>
+                嗷呜哦啊
+              </View>
+            </View>
+          </View>
+          <View className='message-wrap myself'>
+            <Image className='avatar' src='http://cdn.algbb.cn/emoji/32.png' />
+            <View className='info'>
+              <View className='header'>
+                <View className='username'>
+                  BB小天使
+                </View>
+                <View className='time'>
+                  21:40
+                </View>
+              </View>
+              <View className='content'>
+                嗷呜哦啊无嗷呜21312312312312321323123123123啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+              </View>
+            </View>
+          </View>
+          <View className='message-wrap'>
+            <Image className='avatar' src='http://cdn.algbb.cn/emoji/32.png' />
+            <View className='info'>
+              <View className='header'>
+                <View className='username'>
+                  BB小天使
+                </View>
+                <View className='time'>
+                  21:40
+                </View>
+              </View>
+              <View className='content'>
+                啊我打完
+              </View>
+            </View>
+          </View>
         </ScrollView>
-        <Input type='text' value={value} onInput={this.handleChange.bind(this)} />
-        <Button type='primary' onClick={this.handleMessageSend.bind(this)}>send</Button>
+        <View className='chat-input-wrap'>
+          <Image className='emoji' src='http://cdn.algbb.cn/chatroom/emoji.png'></Image>
+          <Input className='input' type='text' value={value} onInput={this.handleChange.bind(this)} placeholder='来吹吹水吧~' />
+          <View className='button' onClick={this.handleMessageSend.bind(this)} >发送</View>
+        </View>
       </View>
     )
   }
