@@ -47,6 +47,7 @@ class ChatRoom extends Component<IProps, IState> {
     const { chatroomStore: { handleMessageSend, socketId } } = this.props
     const { value } = this.state;
     const { to } = this.$router.params
+    if (value === '') return
 
     handleMessageSend({
       type: 'text',
