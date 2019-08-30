@@ -5,11 +5,11 @@ let onlineUserInfo = {}
 
 // 广播消息
 const broadcast = (message) => {
-  const { from } = message
+  const { from, userName } = message
   Object.values(onlineUserSocket).forEach((socket) => {
     socket.send(JSON.stringify({
       ...message,
-      isMyself: from === socket.socketId
+      isMyself: userName === onlineUserInfo[socket.socketId].userName
     }))
   })
 }

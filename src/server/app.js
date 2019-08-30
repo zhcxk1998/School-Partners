@@ -11,6 +11,7 @@ const routes = require('./routes/routes')
 const course = require('./routes/course')
 const exercise = require('./routes/exercise')
 const contact = require('./routes/contact')
+const chatroom = require('./routes/chatroom')
 const websocket = require('./routes/socket')
 
 /* app.use(async (ctx, next) => {
@@ -64,7 +65,7 @@ app.use(cors({
 
 app.use(cors())
 app.use(bodyParser())
-app.use(routes(router, { course, exercise, contact }))
+app.use(routes(router, { course, exercise, contact, chatroom }))
 app.ws.use(websocket);
 
 module.exports = app
