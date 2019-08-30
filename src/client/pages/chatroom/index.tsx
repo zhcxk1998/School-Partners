@@ -78,7 +78,7 @@ class ChatRoom extends Component<IProps, IState> {
           style={{ height: 'calc(100vh - 16vw)' }}
         >
           {messageList[to] && messageList[to].map(messageInfo => {
-            const { message, messageId, currentTime, userName, userAvatar, isMyself } = messageInfo
+            const { message, messageId, currentTime, userAvatar, isMyself } = messageInfo
             return (
               <View className={`message-wrap ${isMyself || messageInfo.userName === userName ? 'myself' : ''}`} id={messageId} key={messageId}>
                 <Image className='avatar' src={userAvatar} />
