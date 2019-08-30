@@ -97,7 +97,7 @@ class ChatRoom extends Component<IProps, IState> {
                 <View className='info'>
                   <View className='header'>
                     <View className='username'>
-                      {userName}
+                      {messageInfo.userName}
                     </View>
                     <View className='time'>
                       {currentTime}
