@@ -1,6 +1,7 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, ScrollView, Input, Image } from '@tarojs/components'
+import { AtFloatLayout } from "taro-ui"
 import { observer, inject } from '@tarojs/mobx'
 
 import chatroomStore from '../../store/chatroomStore'
@@ -13,7 +14,8 @@ interface IProps {
 
 interface IState {
   value: string,
-  scrollAnimation: boolean
+  scrollAnimation: boolean,
+  emojiOpened: boolean
 }
 
 @inject('chatroomStore')
@@ -34,7 +36,8 @@ class ChatRoom extends Component<IProps, IState> {
     super(props);
     this.state = {
       value: '',
-      scrollAnimation: false
+      scrollAnimation: false,
+      emojiOpened: false
     }
   }
 
@@ -55,7 +58,7 @@ class ChatRoom extends Component<IProps, IState> {
     })
   }
 
-  onMessageSend() {
+  onMessageSend(): void {
     const { chatroomStore: { handleMessageSend, socketId } } = this.props
     const { value } = this.state;
     const { to } = this.$router.params
@@ -72,22 +75,25 @@ class ChatRoom extends Component<IProps, IState> {
     })
   }
 
-  handleChange({ detail: { value } }) {
+  handleChange({ detail: { value } }): void {
     this.setState({ value })
+  }
+
+  handleEmojiOpen(): void {
+    this.setState({ emojiOpened: !this.state.emojiOpened })
   }
 
   render() {
     const { chatroomStore: { messageList, scrollViewId, userName } } = this.props
-    const { value, scrollAnimation } = this.state
+    const { value, scrollAnimation, emojiOpened } = this.state
     const { to } = this.$router.params
     return (
-      <View>
+      <View className='chat'>
         <ScrollView
-          className='chat-message-container'
+          className={`chat-message-container ${emojiOpened ? 'emoji-open' : ''}`}
           scrollY
           scrollWithAnimation={scrollAnimation}
           scrollIntoView={scrollViewId}
-          style={{ height: 'calc(100vh - 16vw)' }}
         >
           {messageList[to] && messageList[to].map(messageInfo => {
             const { message, messageId, currentTime, userAvatar, isMyself } = messageInfo
@@ -111,10 +117,19 @@ class ChatRoom extends Component<IProps, IState> {
             )
           })}
         </ScrollView>
-        <View className='chat-input-wrap'>
-          <Image className='emoji' src='http://cdn.algbb.cn/chatroom/emoji.png'></Image>
-          <Input className='input' type='text' value={value} onInput={this.handleChange.bind(this)} placeholder='来吹吹水吧~' />
-          <View className='button' onClick={this.onMessageSend.bind(this)} >发送</View>
+        <View className={`chat-input-container ${emojiOpened ? 'emoji-open' : ''}`}>
+          <View className='chat-input-wrap'>
+            <Image className='emoji' src='http://cdn.algbb.cn/chatroom/emoji.png' onClick={this.handleEmojiOpen.bind(this)} />
+            <Input className='input' type='text' value={value} onInput={this.handleChange.bind(this)} placeholder='来吹吹水吧~' cursorSpacing={10} confirmType='发送' />
+            <View className='button' onClick={this.onMessageSend.bind(this)} >发送</View>
+          </View>
+          <View className='emoji-container'>
+            {Array.from({ length: 20 }).map(_ => {
+              return (
+                <Image className='emoji' src='http://cdn.algbb.cn/emoji/32.png' />
+              )
+            })}
+          </View>
         </View>
       </View>
     )

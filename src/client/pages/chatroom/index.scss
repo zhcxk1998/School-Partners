@@ -22,14 +22,23 @@
 
     .content {
       color: #333 !important;
+      border: #e7e7e7 1px solid;
       background: #fff !important;
+      box-shadow: 0 8px 20px -8px #d7d7d7;
     }
   }
 }
 
+.emoji-open {
+  transform: translateY(-30vh);
+  transition: all .2s ease;
+}
+
 .chat {
   &-message-container {
-    background: #e7e7e7;
+    height: 90vh;
+    background: #f7f7f7;
+    transition: all .2s ease;
 
     .message-wrap {
       display: flex;
@@ -78,42 +87,61 @@
     }
   }
 
-  &-input-wrap {
+  &-input-container {
     position: fixed;
     left: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 96vw;
-    height: 12vw;
-    padding: 2vw;
-    border-top: #d7d7d7 1px solid;
+    bottom: -30vh;
+    width: 100vw;
+    height: 40vh;
+    background: #fff;
+    z-index: 1;
+    transition: all .2s ease;
 
-    .emoji {
-      width: 8vw;
-      height: 8vw;
-      border-radius: 50%;
-    }
-
-    .input {
-      width: 66vw;
-      padding: 0 2vw;
-      height: 10vw;
-      border: #c7c7c7 1px solid;
-      border-radius: 20px;
-    }
-
-    .button {
+    .chat-input-wrap {
       display: flex;
-      justify-content: center;
       align-items: center;
-      width: 15vw;
-      height: 10vw;
-      color: #fff;
-      font-size: 1em;
-      border-radius: 20px;
-      background: #66a6ff;
+      justify-content: space-between;
+      height: 10vh;
+      padding: 0 2vw;
+      border-top: #d7d7d7 1px solid;
+
+      .emoji {
+        width: 8vw;
+        height: 8vw;
+        border-radius: 50%;
+      }
+
+      .input {
+        width: 66vw;
+        padding: 0 2vw;
+        height: 10vw;
+        border: #c7c7c7 1px solid;
+        border-radius: 20px;
+      }
+
+      .button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 15vw;
+        height: 10vw;
+        color: #fff;
+        font-size: 1em;
+        border-radius: 20px;
+        background: #66a6ff;
+      }
+    }
+
+    .emoji-container {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 0 1vw;
+
+      .emoji {
+        width: 10vw;
+        height: 10vw;
+        margin: 2vw;
+      }
     }
   }
 }
