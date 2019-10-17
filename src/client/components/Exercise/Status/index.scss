@@ -23,7 +23,7 @@
 }
 
 .setting-open {
-  bottom: 0 !important;
+  transform: translate3d(0, -16em, 0);  
 }
 
 .exam-status {
@@ -32,12 +32,11 @@
   bottom: -16em;
   width: 100vw;
   height: 19em;
-  transition: bottom .25s ease;
+  transition: transform .25s ease;
 
   .exam-footer {
     @extend .flex;
     justify-content: space-between;
-
     height: 3em;
     padding: 0 .5em;
     color: #666;
