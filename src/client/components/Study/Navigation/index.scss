@@ -8,12 +8,10 @@
 
 .navigation {
 
-
   .navigation-container {
     @extend .flex;
     justify-content: space-evenly;
-    width: 650px;
-    margin: -100px auto 0 auto;
+    margin: -100px 1em 0 1em;
     padding: 30px 0;
     border-radius: 20px;
     box-shadow: 0 6px 12px #d7d7d7;
