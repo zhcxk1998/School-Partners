@@ -41,13 +41,15 @@ class chatroomStore {
     socketTask.onMessage(async ({ data }) => {
       const messageInfo: ReceiveMessageInfo = JSON.parse(data)
       const { to, messageId, isMyself, userName, userAvatar, currentTime, message } = messageInfo
+      const time: string = formatTime(currentTime)
+      
       this.messageList[to].push({
         ...messageInfo,
-        currentTime: formatTime(currentTime)
+        currentTime: time
       })
       /* 设置群组最新消息 */
       this.contactsList.filter(contacts => contacts.contactsId === to)[0].latestMessage = {
-        userName, message, currentTime
+        userName, message, currentTime: time
       }
       this.scrollViewId = isMyself ? messageId : ''
       await Taro.request({
@@ -108,7 +110,7 @@ class chatroomStore {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
         url: 'http://localhost:3000/contacts',
-        // url: 'https://www.algbb.cn/contacts',
+        // url: 'http://localhost:3000/contacts',
         method: 'GET'
       })
       /* 初始化消息列表 */
@@ -165,6 +167,7 @@ class chatroomStore {
     await this.setContactsList()
     this.socketTask = await Taro.connectSocket({
       url: 'ws://localhost:3000',
+      // url:'wss://www.algbb.cn'
     })
     this.handleSocketOpen()
     this.handleSocketMessage()
