@@ -2,6 +2,7 @@ const router = require('koa-router')()
 const { query } = require('../utils/query')
 const { QUERY_TABLE, INSERT_TABLE, UPDATE_TABLE, DELETE_TABLE } = require('../utils/sql');
 const parse = require('../utils/parse')
+const formatTime = require('../utils/formatTime')
 
 router.get('/chatlog', async (ctx) => {
   const response = []
@@ -29,8 +30,9 @@ router.get('/chatlog/:to', async (ctx) => {
       to: room_name,
       userName: user_name,
       userAvatar: user_avatar,
-      currentTime: current_time,
-      message
+      currentTime: formatTime(current_time),
+      message,
+      messageId: `msg${current_time}${Math.ceil(Math.random() * 100)}`
     }
   })
   ctx.response.body = parse(response)
@@ -39,7 +41,7 @@ router.get('/chatlog/:to', async (ctx) => {
 router.put('/chatlog', async (ctx) => {
   const { to, userName, userAvatar, currentTime, message } = ctx.request.body
   const data = {
-    room_name:to,
+    room_name: to,
     user_name: userName,
     user_avatar: userAvatar,
     current_time: currentTime,
