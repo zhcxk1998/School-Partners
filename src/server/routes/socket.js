@@ -39,7 +39,6 @@ const handleTextMessage = (ws, socketMessage) => {
   const { to, message, from } = socketMessage
   const currentTime = generateTime()
   const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
-
   broadcast({
     ...onlineUserInfo[ws.socketId],
     currentTime,

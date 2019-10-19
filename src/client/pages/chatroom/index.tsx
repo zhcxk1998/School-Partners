@@ -70,9 +70,7 @@ class ChatRoom extends Component<IProps, IState> {
       to,
       message: value
     })
-    this.setState({
-      value: ''
-    })
+    this.resetInput()
   }
 
   handleChange({ detail: { value } }): void {
@@ -81,6 +79,12 @@ class ChatRoom extends Component<IProps, IState> {
 
   handleEmojiOpen(): void {
     this.setState({ emojiOpened: !this.state.emojiOpened })
+  }
+
+  resetInput(): void {
+    this.setState({
+      value: ''
+    })
   }
 
   render() {

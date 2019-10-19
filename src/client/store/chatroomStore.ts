@@ -42,7 +42,7 @@ class chatroomStore {
       const messageInfo: ReceiveMessageInfo = JSON.parse(data)
       const { to, messageId, isMyself, userName, userAvatar, currentTime, message } = messageInfo
       const time: string = formatTime(currentTime)
-      
+
       this.messageList[to].push({
         ...messageInfo,
         currentTime: time
@@ -81,58 +81,24 @@ class chatroomStore {
   }
 
   async setMessageList(contacts: ContactsInfo[]): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      const asyncQueue: Array<any> = []
-      contacts.forEach(async contactsInfo => {
-        asyncQueue.push(new Promise(async (resolve, reject) => {
-          const { data } = await Taro.request({
-            url: `http://localhost:3000/chatlog/${contactsInfo.contactsId}`,
-            method: 'GET'
-          })
-          this.messageList[contactsInfo.contactsId] = data.map(messageInfo => {
-            const { currentTime } = messageInfo
-            const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
-            return {
-              ...messageInfo,
-              messageId,
-              currentTime: formatTime(currentTime)
-            }
-          })
-          resolve()
-        }))
+    await Promise.all(contacts.map(async contactInfo => {
+      const { contactsId } = contactInfo
+      const { data } = await Taro.request({
+        url: `http://localhost:3000/chatlog/${contactsId}`,
+        method: 'GET'
       })
-      await Promise.all(asyncQueue)
-      resolve()
-    })
+      this.messageList[contactsId] = data
+    }))
   }
 
   async setContactsList() {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
         url: 'http://localhost:3000/contacts',
-        // url: 'http://localhost:3000/contacts',
         method: 'GET'
       })
-      /* 初始化消息列表 */
-      await this.setMessageList(data)
-
-      /* 初始化群组信息 */
-      this.contactsList = data.map(contactsInfo => {
-        const { contactsId } = contactsInfo
-        const contactsMessageList = this.messageList[contactsId]
-        /* 设定最新消息 */
-        const { userName, message, currentTime } = contactsMessageList[contactsMessageList.length - 1]
-          && contactsMessageList[contactsMessageList.length - 1]
-          || { userName: '无', message: '...', currentTime: '00:00' }
-        return {
-          ...contactsInfo,
-          latestMessage: {
-            userName,
-            currentTime,
-            message
-          }
-        }
-      })
+      this.contactsList = data
+      this.setMessageList(data)
       resolve()
     })
   }
