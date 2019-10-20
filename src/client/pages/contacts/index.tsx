@@ -25,7 +25,7 @@ class Contacts extends Component<IProps, IState> {
   }
 
   async componentWillMount() {
-
+    
   }
 
   handleGroupClick(contactsId: string, title: string): void {

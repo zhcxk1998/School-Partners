@@ -24,20 +24,20 @@ class chatroomStore {
   }
 
   handleSocketOpen(): void {
+    const { socketTask } = this
     const loginInfo: LoginInfo = {
       type: 'login',
       socketId: this.socketId,
       userName: this.userName,
       userAvatar: this.userAvatar,
     }
-    const socketTask: any = this.socketTask
     socketTask.onOpen(function () {
       socketTask.send({ data: JSON.stringify(loginInfo) })
     })
   }
 
   handleSocketMessage(): void {
-    const socketTask: any = this.socketTask
+    const { socketTask } = this
     socketTask.onMessage(async ({ data }) => {
       const messageInfo: ReceiveMessageInfo = JSON.parse(data)
       const { to, messageId, isMyself, userName, userAvatar, currentTime, message } = messageInfo
@@ -67,14 +67,14 @@ class chatroomStore {
   }
 
   handleSocketClose(): void {
-    const socketTask: any = this.socketTask
+    const { socketTask } = this
     socketTask.onClose(function (msg) {
       console.log('onClose: ', msg)
     })
   }
 
   handleSocketError(): void {
-    const socketTask: any = this.socketTask
+    const { socketTask } = this
     socketTask.onError(function () {
       console.log('Error!')
     })
@@ -131,14 +131,17 @@ class chatroomStore {
     this.generateSocketId()
     await this.setUserInfo()
     await this.setContactsList()
-    this.socketTask = await Taro.connectSocket({
+
+    /* 使用then的方法才能正确触发onOpen的方法，暂时不知道原因 */
+    Taro.connectSocket({
       url: 'ws://localhost:3000',
-      // url:'wss://www.algbb.cn'
+    }).then(task => {
+      this.socketTask = task
+      this.handleSocketOpen()
+      this.handleSocketMessage()
+      this.handleSocketClose()
+      this.handleSocketError()
     })
-    this.handleSocketOpen()
-    this.handleSocketMessage()
-    this.handleSocketClose()
-    this.handleSocketError()
   }
 }
 
