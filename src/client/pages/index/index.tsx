@@ -50,7 +50,9 @@ class Index extends Component<IProps, IState> {
   }
 
   async componentDidMount() {
-    const { chatroomStore: { socketConnect } } = this.props
+    const { chatroomStore: { socketConnect, setUserInfo, setContactsList } } = this.props
+    await setUserInfo()
+    await setContactsList()
     await socketConnect()
   }
 
