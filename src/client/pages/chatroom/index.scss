@@ -35,6 +35,8 @@
 }
 
 .chat {
+  position: relative;
+
   &-message-container {
     height: 90vh;
     background: #f7f7f7;

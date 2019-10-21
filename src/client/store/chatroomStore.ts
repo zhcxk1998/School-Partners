@@ -7,10 +7,12 @@ import { SendMessageInfo, ReceiveMessageInfo, LoginInfo, MessageList, ContactsIn
 
 class chatroomStore {
   /* socket部分 */
+  timer: any = null
   @observable socketTask: any = null
   @observable socketId: string = ''
   @observable userName: string = ''
   @observable userAvatar: string = ''
+  @observable isReconnected: boolean = false
 
   /* 消息部分 */
   @observable messageList: MessageList = {}
@@ -31,8 +33,10 @@ class chatroomStore {
       userName: this.userName,
       userAvatar: this.userAvatar,
     }
-    socketTask.onOpen(function () {
+    socketTask.onOpen(() => {
       socketTask.send({ data: JSON.stringify(loginInfo) })
+      /* 在成功登陆之后，重置重连标识 */
+      this.isReconnected = false
     })
   }
 
@@ -68,14 +72,18 @@ class chatroomStore {
 
   handleSocketClose(): void {
     const { socketTask } = this
-    socketTask.onClose(function (msg) {
+    socketTask.onClose((msg) => {
+      this.socketTask = null
+      this.socketReconnect()
       console.log('onClose: ', msg)
     })
   }
 
   handleSocketError(): void {
     const { socketTask } = this
-    socketTask.onError(function () {
+    socketTask.onError(() => {
+      this.socketTask = null
+      this.socketReconnect()
       console.log('Error!')
     })
   }
@@ -91,6 +99,7 @@ class chatroomStore {
     }))
   }
 
+  @action.bound
   async setContactsList() {
     return new Promise(async (resolve, reject) => {
       const { data } = await Taro.request({
@@ -126,11 +135,19 @@ class chatroomStore {
     })
   }
 
+  socketReconnect(): void {
+    this.isReconnected = true
+    clearTimeout(this.timer)
+
+    /* 3s延迟重连，减轻压力 */
+    this.timer = setTimeout(() => {
+      this.socketConnect()
+    }, 3000)
+  }
+
   @action.bound
   async socketConnect() {
     this.generateSocketId()
-    await this.setUserInfo()
-    await this.setContactsList()
 
     /* 使用then的方法才能正确触发onOpen的方法，暂时不知道原因 */
     Taro.connectSocket({

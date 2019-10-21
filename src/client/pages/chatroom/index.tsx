@@ -1,7 +1,7 @@
 import { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, ScrollView, Input, Image } from '@tarojs/components'
-import { AtFloatLayout } from "taro-ui"
+import { AtActivityIndicator } from "taro-ui"
 import { observer, inject } from '@tarojs/mobx'
 
 import chatroomStore from '../../store/chatroomStore'
@@ -88,11 +88,14 @@ class ChatRoom extends Component<IProps, IState> {
   }
 
   render() {
-    const { chatroomStore: { messageList, scrollViewId, userName } } = this.props
+    const { chatroomStore: { messageList, scrollViewId, userName, isReconnected } } = this.props
     const { value, scrollAnimation, emojiOpened } = this.state
     const { to } = this.$router.params
     return (
       <View className='chat'>
+        <View hidden={!isReconnected}>
+          <AtActivityIndicator mode='center' content='重连中...' size={36}></AtActivityIndicator>
+        </View>
         <ScrollView
           className={`chat-message-container ${emojiOpened ? 'emoji-open' : ''}`}
           scrollY
@@ -128,9 +131,9 @@ class ChatRoom extends Component<IProps, IState> {
             <View className='button' onClick={this.onMessageSend.bind(this)} >发送</View>
           </View>
           <View className='emoji-container'>
-            {Array.from({ length: 20 }).map(_ => {
+            {Array.from({ length: 20 }).map((_, index) => {
               return (
-                <Image className='emoji' src='http://cdn.algbb.cn/emoji/32.png' />
+                <Image className='emoji' key={index} src='http://cdn.algbb.cn/emoji/32.png' />
               )
             })}
           </View>
