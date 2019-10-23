@@ -32,10 +32,11 @@ class App extends Component {
       'client/pages/index/index',
       'client/pages/exercise/index',
       'client/pages/chatroom/index',
+      'client/pages/course/index'
     ],
     window: {
       backgroundTextStyle: 'dark',
-      backgroundColor:'#f7f7f7',
+      backgroundColor: '#f7f7f7',
       navigationBarBackgroundColor: '#66a6ff',
       navigationBarTitleText: '学校の伴侣',
       navigationBarTextStyle: 'white',
