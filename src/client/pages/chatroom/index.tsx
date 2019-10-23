@@ -130,13 +130,14 @@ class ChatRoom extends Component<IProps, IState> {
             <Input className='input' type='text' value={value} onInput={this.handleChange.bind(this)} placeholder='来吹吹水吧~' cursorSpacing={10} confirmType='发送' />
             <View className='button' onClick={this.onMessageSend.bind(this)} >发送</View>
           </View>
-          <View className='emoji-container'>
-            {Array.from({ length: 20 }).map((_, index) => {
+          <ScrollView scrollY className='emoji-container'>
+            {Array.from({ length: 33 }).map((_, index) => {
+              const imgSrc = `http://cdn.algbb.cn/emoji/${(index + 1).toString().padStart(2, '0')}.png`
               return (
-                <Image className='emoji' key={index} src='http://cdn.algbb.cn/emoji/32.png' />
+                <Image className='emoji' key={index} src={imgSrc} />
               )
             })}
-          </View>
+          </ScrollView>
         </View>
       </View>
     )
