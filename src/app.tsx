@@ -38,7 +38,7 @@ class App extends Component {
       backgroundTextStyle: 'dark',
       backgroundColor: '#f7f7f7',
       navigationBarBackgroundColor: '#66a6ff',
-      navigationBarTitleText: '学校の伴侣',
+      navigationBarTitleText: '',
       navigationBarTextStyle: 'white',
     }
   }

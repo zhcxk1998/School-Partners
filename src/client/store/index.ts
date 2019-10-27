@@ -2,7 +2,7 @@ import exerciseStore from './exerciseStore'
 import studyStore from './studyStore'
 import infoStore from './infoStore'
 import chatroomStore from './chatroomStore'
-import courseStore from './course'
+import courseStore from './courseStore'
 
 export default {
   exerciseStore: new exerciseStore(),

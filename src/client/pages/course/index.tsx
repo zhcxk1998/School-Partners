@@ -4,7 +4,7 @@ import { View, Image } from '@tarojs/components'
 import { AtRate } from 'taro-ui'
 import { observer, inject } from '@tarojs/mobx'
 
-import courseStore from '../../store/course'
+import courseStore from '../../store/courseStore'
 
 import './index.scss'
 
@@ -27,7 +27,6 @@ class Course extends Component<IProps, IState> {
   }
 
   async componentWillMount() {
-
   }
 
   render() {

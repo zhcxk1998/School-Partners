@@ -5,7 +5,7 @@ import { observer, inject } from '@tarojs/mobx'
 import { AtActivityIndicator } from 'taro-ui'
 
 import studyStore from '../../../store/studyStore'
-import courseStore from '../../../store/course'
+import courseStore from '../../../store/courseStore'
 
 import './index.scss'
 
@@ -44,7 +44,7 @@ class Banner extends Component<IProps, IState> {
         {recommendCourseList.map((item, index) => {
           const { courseCid, courseName } = item;
           return (
-            <View className='banner-item' key={courseCid} onClick={() => { getCourseDetail(courseCid) }}>
+            <View className='banner-item' key={courseCid} onClick={() => { getCourseDetail(courseCid, courseName) }}>
               <View className='title'>{courseName}</View>
               <Image className='bg' src={`http://cdn.algbb.cn/study/banner/${index + 1}.svg`} lazyLoad />
             </View>
