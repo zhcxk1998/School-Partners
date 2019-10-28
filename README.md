@@ -23,13 +23,22 @@
 ## 运行截图
 
 ### 1. 主页
-![](http://cdn.algbb.cn/screenshots/1.gif)
+![](http://cdn.algbb.cn/screenshots/index.png)
 
-### 2. 做题模块
-![](http://cdn.algbb.cn/screenshots/2.gif)
+### 2. 个人中心
+![](http://cdn.algbb.cn/screenshots/dashboard.png)
 
-### 3. 个人中心
-![](http://cdn.algbb.cn/screenshots/3.gif)
+### 3. 课程详情
+![](http://cdn.algbb.cn/screenshots/course.png)
+
+### 4. 做题练习
+![](http://cdn.algbb.cn/screenshots/exercise.png)
+
+### 5. 学习交流群
+![](http://cdn.algbb.cn/screenshots/contacts.png)
+
+### 6. 聊天室
+![](http://cdn.algbb.cn/screenshots/chatroom.png)
 
 ## 安装运行
 
