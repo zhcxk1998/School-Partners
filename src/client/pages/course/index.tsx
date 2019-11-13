@@ -70,17 +70,7 @@ class Course extends Component<IProps, IState> {
                     <View className='path__name'>{name}</View>
                     <View className='path__description'>{stepDetail[index]}</View>
                   </View>
-                  <View className='path__decoration'>{index.toString().padStart(2, '0')}</View>
-                </View>
-              ))}
-              {stepName.map((name, index) => (
-                <View className='path__wrap' key={index}>
-                  <Image src='http://cdn.algbb.cn/course/read.png' className='path__icon' />
-                  <View className='path__info'>
-                    <View className='path__name'>{name}</View>
-                    <View className='path__description'>{stepDetail[index]}</View>
-                  </View>
-                  <View className='path__decoration'>{index.toString().padStart(2, '0')}</View>
+                  <View className='path__decoration'>{(index + 1).toString().padStart(2, '0')}</View>
                 </View>
               ))}
             </View>
