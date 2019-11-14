@@ -64,11 +64,10 @@ class Study extends Component<IProps, IState> {
           </View>
         </View>
         <Navigation />
-        <Title>推荐课程</Title>
+        <Title link='courseList'>推荐课程</Title>
         <Banner />
-        <Title>热门题库</Title>
+        <Title link='exerciseList'>热门题库</Title>
         <List />
-        {/* <View>illustration by Ouch.picshttps://icons8.com</View> */}
       </View>
     )
   }

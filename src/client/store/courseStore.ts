@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
 
-import { CourseDetail } from '../modals/course'
+import { CourseDetail } from '../modals/courseDetail'
 
 class courseStore {
   @observable courseDetail: CourseDetail = {
@@ -26,7 +26,7 @@ class courseStore {
       })
       this.courseDetail = data[0]
       await Taro.navigateTo({
-        url: `/client/pages/course/index`
+        url: `/client/pages/courseDetail/index`
       })
       Taro.setNavigationBarTitle({
         title

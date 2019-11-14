@@ -18,7 +18,7 @@ interface IState {
 
 @inject('courseStore')
 @observer
-class Course extends Component<IProps, IState> {
+class CourseDetail extends Component<IProps, IState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,4 +81,4 @@ class Course extends Component<IProps, IState> {
   }
 }
 
-export default Course as ComponentType
+export default CourseDetail as ComponentType
