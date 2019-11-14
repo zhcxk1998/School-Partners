@@ -1,0 +1,54 @@
+.exercise-list {
+  &__container {
+    padding: 0 3vw;
+  }
+
+  &__wrap {
+    position: relative;
+    padding: 3vw 0;
+    border-bottom: #d7d7d7 1px solid;
+
+    .name {
+      overflow: hidden;
+      max-width: 80vw;
+      margin-bottom: .3em;
+      color: #333;
+      font-size: 1.4em;
+      font-weight: bold;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .status-bar {
+      max-width: 80vw;
+      color: #666;
+
+      .type {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 3em;
+        height: 1.4em;
+        color: #66a6ff;
+        text-align: center;
+        border: #66a6ff 1px solid;
+        border-radius: 12px;
+      }
+
+      .type--charge {
+        color: #fa4b2a;
+        border: #fa4b2a 1px solid;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      right: 3vw;
+      width: 1em;
+      height: 1em;
+      color: #66a6ff;
+      transform: translate(0, -50%);
+    }
+  }
+}
