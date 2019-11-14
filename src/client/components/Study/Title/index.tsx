@@ -5,7 +5,7 @@ import './index.scss'
 
 
 interface IProps {
-
+  link: string
 }
 
 interface IState {
@@ -20,14 +20,15 @@ class Title extends Component<IProps, IState> {
 
 
   async componentDidShow() {
+
   }
 
-
   render() {
+    const { children, link } = this.props
     return (
       <View className='title'>
-        <View>{this.props.children}</View>
-        <View className='link'>更多</View>
+        <View>{children}</View>
+        <View className='link' onClick={() => Taro.navigateTo({ url: `/client/pages/${link}/index` })}>更多</View>
       </View>
     )
   }

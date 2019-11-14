@@ -3,7 +3,6 @@ import { View } from '@tarojs/components'
 
 import './index.scss'
 
-
 interface IProps {
 
 }
@@ -18,26 +17,24 @@ class Navigation extends Component<IProps, IState> {
     }
   }
 
-
   async componentDidShow() {
   }
 
-
   render() {
-    const navigator: Array<{ title: string, icon: string }> = [
-      { title: '课程', icon: 'icon-course' },
-      { title: '做题', icon: 'icon-exam' },
-      { title: '分类', icon: 'icon-type' },
-      { title: '排行', icon: 'icon-rank' }
+    const navigator: Array<{ title: string, icon: string, link: string }> = [
+      { title: '课程', icon: 'icon-course', link: '/client/pages/courseList/index' },
+      { title: '做题', icon: 'icon-exam', link: '' },
+      { title: '分类', icon: 'icon-type', link: '' },
+      { title: '排行', icon: 'icon-rank', link: '' }
     ]
 
     return (
       <View className='navigation'>
         <View className='navigation-container'>
           {navigator.map((item, index) => {
-            const { title, icon } = item;
+            const { title, icon, link } = item;
             return (
-              <View className='link-wrap' key={index} >
+              <View className='link-wrap' key={index} onClick={() => { Taro.navigateTo({ url: link }) }} >
                 <View className='link-icon'>
                   <View className={`iconfont ${icon}`}></View>
                 </View>

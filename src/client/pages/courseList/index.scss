@@ -1,0 +1,40 @@
+.course-list {
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 5vw 3vw;
+
+    /* 一行未满，则左对齐 */
+    &:after {
+      content: '';
+      display: block;
+      width: 28vw;
+      height: 0;
+    }
+  }
+
+  &__wrap {
+    width: 28vw;
+    height: 42vw;
+    margin-bottom: 5vw;
+    
+    .cover {
+      height: 36vw;
+      margin-bottom: 2vw;
+      border-radius: 16px;
+      background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    }
+
+    .name {
+      overflow: hidden;
+      width: 28vw;
+      height: 6vw;
+      color: #333;
+      font-weight: bold;
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
