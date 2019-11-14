@@ -53,7 +53,7 @@ class exerciseStore {
   getExerciseDetail(cid: string): any {
     return new Promise(async (resolve, reject) => {
       await Taro.navigateTo({
-        url: '/client/pages/exercise/index'
+        url: '/client/pages/exerciseDetail/index'
       })
       Taro.showLoading({
         title: '加载中...'
