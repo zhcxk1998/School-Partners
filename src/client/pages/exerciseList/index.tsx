@@ -27,6 +27,9 @@ class CourseList extends Component<IProps, IState>{
   }
 
   async componentDidMount() {
+    Taro.setNavigationBarTitle({
+      title: '习题列表'
+    })
     const { data } = await Taro.request({
       url: 'http://localhost:3000/exercises'
     })
