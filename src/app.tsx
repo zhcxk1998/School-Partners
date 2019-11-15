@@ -34,7 +34,8 @@ class App extends Component {
       'client/pages/chatroom/index',
       'client/pages/courseDetail/index',
       'client/pages/courseList/index',
-      'client/pages/exerciseList/index'
+      'client/pages/exerciseList/index',
+      'client/pages/rankList/index'
     ],
     window: {
       backgroundTextStyle: 'dark',

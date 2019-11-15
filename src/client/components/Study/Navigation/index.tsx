@@ -25,7 +25,7 @@ class Navigation extends Component<IProps, IState> {
       { title: '课程', icon: 'icon-course', link: '/client/pages/courseList/index' },
       { title: '做题', icon: 'icon-exam', link: '/client/pages/exerciseList/index' },
       { title: '分类', icon: 'icon-type', link: '' },
-      { title: '排行', icon: 'icon-rank', link: '' }
+      { title: '排行', icon: 'icon-rank', link: '/client/pages/rankList/index' }
     ]
 
     return (
