@@ -40,6 +40,15 @@
 ### 6. 聊天室
 ![](http://cdn.algbb.cn/screenshots/chatroom.png)
 
+### 7. 课程列表
+![](http://cdn.algbb.cn/screenshots/courseList.png)
+
+### 8. 习题列表
+![](http://cdn.algbb.cn/screenshots/exerciseList.png)
+
+### 9. 排行榜
+![](http://cdn.algbb.cn/screenshots/rank.png)
+
 ## 安装运行
 
 * ##### 第一步
