@@ -49,7 +49,7 @@ class RankList extends Component<IProps, IState>{
         {rankList.slice(1).map((rank, index) => {
           const { avatar, name, score } = rank
           return (
-            <View className="rank-list__wrap">
+            <View className="rank-list__wrap" key={index}>
               <View className="number">{index + 2}</View>
               <Image className="avatar" src={avatar} />
               <View className="name">{name}</View>
