@@ -3,7 +3,7 @@ import { ComponentType } from 'react'
 import { View } from '@tarojs/components'
 import { AtSearchBar, AtIcon } from 'taro-ui'
 
-import { ExerciseList } from '../../modals/exerciseList'
+import { ExerciseInfo} from '../../modals/exerciseList'
 
 import './index.scss'
 
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 interface IState {
-  exerciseList: Array<ExerciseList>
+  exerciseList: Array<ExerciseInfo>
   searchValue: string
 }
 

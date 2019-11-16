@@ -1,10 +1,10 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
 
-import { CourseDetail } from '../modals/courseDetail'
+import { CourseInfo } from '../modals/courseDetail'
 
 class courseStore {
-  @observable courseDetail: CourseDetail = {
+  @observable courseDetail: CourseInfo = {
     courseAuthor: '',
     publishDate: '',
     courseViews: 0,

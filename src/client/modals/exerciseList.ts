@@ -1,4 +1,4 @@
-export interface ExerciseList {
+export interface ExerciseInfo {
   exerciseCid: number,
   exerciseName: string,
   finsihCount: number,

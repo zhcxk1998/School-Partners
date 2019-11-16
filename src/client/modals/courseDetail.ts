@@ -1,4 +1,4 @@
-export interface CourseDetail {
+export interface CourseInfo {
   courseAuthor: string,
   publishDate: string,
   courseViews: number,

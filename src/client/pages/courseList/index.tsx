@@ -3,7 +3,7 @@ import { ComponentType } from 'react'
 import { View } from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
 
-import { CourseInfos } from '../../modals/courseList'
+import { CourseInfo } from '../../modals/courseList'
 
 import './index.scss'
 
@@ -12,7 +12,7 @@ interface IProps {
 }
 
 interface IState {
-  courseList: Array<CourseInfos>,
+  courseList: Array<CourseInfo>,
   searchValue: string
 }
 
