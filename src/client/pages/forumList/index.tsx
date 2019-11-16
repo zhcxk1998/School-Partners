@@ -59,7 +59,7 @@ class ForumList extends Component<IProps, IStates>{
         {forumList.map((forum, index) => {
           const { avatar, author, time, image, title, content, like, comment } = forum
           return (
-            <View className="forum__wrap">
+            <View className="forum__wrap" key={index}>
               <View className="header">
                 <Image className="avatar" src={avatar} mode="aspectFill" />
                 <View className="author">
