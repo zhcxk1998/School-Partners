@@ -49,6 +49,9 @@
 ### 9. 排行榜
 ![](http://cdn.algbb.cn/screenshots/rank.png)
 
+### 10. 论坛
+![](http://cdn.algbb.cn/screenshots/forumList.png)
+
 ## 安装运行
 
 * ##### 第一步
