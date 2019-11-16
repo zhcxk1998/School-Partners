@@ -12,11 +12,12 @@ const course = require('./routes/course')
 const exercise = require('./routes/exercise')
 const contact = require('./routes/contact')
 const chatroom = require('./routes/chatroom')
+const forum = require('./routes/forum')
 const websocket = require('./routes/socket')
 
 app.use(cors())
 app.use(bodyParser())
-app.use(routes(router, { course, exercise, contact, chatroom }))
+app.use(routes(router, { course, exercise, contact, chatroom, forum }))
 app.ws.use(websocket);
 
 module.exports = app
