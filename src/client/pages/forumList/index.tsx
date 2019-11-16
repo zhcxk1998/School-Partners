@@ -29,25 +29,31 @@ class ForumList extends Component<IProps, IStates>{
     })
   }
 
+  navigateTo(forumId: number): void {
+    Taro.navigateTo({
+      url: `/client/pages/forumDetail/index?forumId=${forumId}`
+    })
+  }
+
   render() {
     const { forumList } = this.state
 
     return (
       <View className="forum__container">
         {forumList.map(forum => {
-          const { forumId, forumAvatar, forumAuthor, publishTime, forumImage, forumTitle, forumContent, forumLike, forumComment } = forum
+          const { forumId, forumAvatar, forumAuthor, timeAgo, forumImage, forumTitle, forumContent, forumLike, forumComment } = forum
           return (
             <View className="forum__wrap" key={forumId}>
               <View className="header">
                 <Image className="avatar" src={forumAvatar} mode="aspectFill" />
                 <View className="author">
                   {forumAuthor}
-                  <View className="time">{publishTime === 0 ? 'today' : `${publishTime} days ago`}</View>
+                  <View className="time">{timeAgo === 0 ? 'today' : `${timeAgo} days ago`}</View>
                 </View>
                 <View className="iconfont icon-more more" />
               </View>
-              <Image className="image" src={forumImage} />
-              <View className="content__wrap">
+              <Image className="image" src={forumImage} onClick={() => { this.navigateTo(forumId) }} />
+              <View className="content__wrap" onClick={() => { this.navigateTo(forumId) }}>
                 <View className="title">
                   {forumTitle}
                 </View>
