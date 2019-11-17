@@ -68,7 +68,8 @@ router.post('/forums', async (ctx) => {
   if (!isExist) {
     ctx.response.status = 404
     ctx.response.body = {
-      error: 'forum is not existed'
+      code: 404,
+      errorMsg: 'forum is not existed'
     }
   }
   else {
@@ -94,6 +95,21 @@ router.post('/forums', async (ctx) => {
     })
     ctx.response.body = parse(response);
   }
+})
+
+router.put('/forums', async (ctx) => {
+  const { forumAuthor, forumAvatar, forumTitle, forumContent } = ctx.request.body
+  const data = {
+    forum_author: forumAuthor,
+    forum_avatar: forumAvatar,
+    publish_time: new Date().getTime(),
+    forum_image: 'http://cdn.algbb.cn/emoji/32.png',
+    forum_title: forumTitle,
+    forum_content: forumContent,
+    forum_like: 0,
+    forum_comment: 0
+  }
+  await query(INSERT_TABLE('forum_list'), data)
 })
 
 module.exports = router
