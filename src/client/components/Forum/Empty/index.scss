@@ -1,0 +1,31 @@
+.empty__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  .image {
+    width: 70vw;
+    margin-bottom: 10vw;
+  }
+
+  .title{
+    color: #333;
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+
+  .content{
+    margin: 3vw 0;
+    color: #666;
+    font-size: 1em;
+  }
+
+  .add {
+    width: 15vw;
+    height: 15vw;
+    margin-top: 10vw;
+  }
+}
