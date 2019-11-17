@@ -112,4 +112,9 @@ router.put('/forums', async (ctx) => {
   await query(INSERT_TABLE('forum_list'), data)
 })
 
+router.delete('/forums/:id', async (ctx) => {
+  const { id } = ctx.params
+  await query(DELETE_TABLE('forum_list', { primaryKey: 'forum_id', primaryValue: id }))
+})
+
 module.exports = router
