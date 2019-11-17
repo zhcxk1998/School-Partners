@@ -29,9 +29,9 @@ class ForumList extends Component<IProps, IStates>{
     })
   }
 
-  navigateTo(forumId: number): void {
+  navigateTo(forumId: number, forumTitle: string): void {
     Taro.navigateTo({
-      url: `/client/pages/forumDetail/index?forumId=${forumId}`
+      url: `/client/pages/forumDetail/index?forumId=${forumId}&forumTitle=${forumTitle}`
     })
   }
 
@@ -52,8 +52,8 @@ class ForumList extends Component<IProps, IStates>{
                 </View>
                 <View className="iconfont icon-more more" />
               </View>
-              <Image className="image" src={forumImage} onClick={() => { this.navigateTo(forumId) }} />
-              <View className="content__wrap" onClick={() => { this.navigateTo(forumId) }}>
+              <Image className="image" src={forumImage} onClick={() => { this.navigateTo(forumId, forumTitle) }} />
+              <View className="content__wrap" onClick={() => { this.navigateTo(forumId, forumTitle) }}>
                 <View className="title">
                   {forumTitle}
                 </View>

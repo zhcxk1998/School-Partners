@@ -34,7 +34,8 @@ class ForumDetail extends Component<IProps, IStates>{
   }
 
   async componentDidMount() {
-    const { forumId } = this.$router.params
+    const { forumId, forumTitle } = this.$router.params
+    Taro.setNavigationBarTitle({ title: forumTitle })
     const { data } = await Taro.request({ url: `http://localhost:3000/forums/${forumId}` })
     this.setState({
       forumDetail: data
