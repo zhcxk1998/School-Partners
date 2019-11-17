@@ -52,7 +52,7 @@ class ForumList extends Component<IProps, IStates>{
                 </View>
                 <View className="iconfont icon-more more" />
               </View>
-              <Image className="image" src={forumImage} onClick={() => { this.navigateTo(forumId, forumTitle) }} />
+              <Image className="image" src={forumImage} mode="aspectFill" onClick={() => { this.navigateTo(forumId, forumTitle) }} />
               <View className="content__wrap" onClick={() => { this.navigateTo(forumId, forumTitle) }}>
                 <View className="title">
                   {forumTitle}
