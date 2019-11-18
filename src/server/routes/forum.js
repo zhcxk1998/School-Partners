@@ -115,6 +115,16 @@ router.put('/forums', async (ctx) => {
   }
 })
 
+router.put('/forums/:id', async (ctx) => {
+  const id = ctx.params.id
+  const { forumTitle, forumContent } = ctx.request.body
+  await query(UPDATE_TABLE('forum_list', { primaryKey: 'forum_id', primaryValue: id }, { key: 'forum_title', value: forumTitle }))
+  await query(UPDATE_TABLE('forum_list', { primaryKey: 'forum_id', primaryValue: id }, { key: 'forum_content', value: forumContent }))
+  ctx.response.body = {
+    msg: '修改成功'
+  }
+})
+
 router.delete('/forums/:id', async (ctx) => {
   const { id } = ctx.params
   await query(DELETE_TABLE('forum_list', { primaryKey: 'forum_id', primaryValue: id }))
