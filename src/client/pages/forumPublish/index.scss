@@ -1,0 +1,49 @@
+.forum-publish {
+  &__container {
+    padding: 2vw;
+
+    .title__wrap {
+      .label {
+        color: #333;
+        font-size: 1.2em;
+      }
+
+      .input {
+        padding: 2vw 3vw;
+        margin: 2vw 0;
+        border: #999 1px solid;
+        border-radius: 10px;
+        background: #fff;
+      }
+    }
+
+    .content__wrap {
+      .label {
+        color: #333;
+        font-size: 1.2em;
+      }
+
+      .content {
+        width: 90vw;
+        height: 60vh;
+        padding: 2vw 3vw;
+        border: #999 1px solid;
+        border-radius: 10px;
+        background: #fff;
+      }
+    }
+
+    .submit {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 94vw;
+      height: 100px;
+      margin-top: 5vw;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 12px;
+      background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    }
+  }
+}

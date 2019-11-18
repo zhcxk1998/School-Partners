@@ -5,6 +5,7 @@ import { observer, inject } from '@tarojs/mobx'
 
 import studyStore from '../../store/studyStore'
 import chatroomStore from '../../store/chatroomStore'
+import infoStore from '../../store/infoStore'
 
 import Study from '../study/index'
 import Contacts from '../contacts/index'
@@ -17,7 +18,8 @@ import './index.scss'
 
 interface IProps {
   studyStore: studyStore,
-  chatroomStore: chatroomStore
+  chatroomStore: chatroomStore,
+  infoStore: infoStore
 }
 
 interface IState {
@@ -25,7 +27,7 @@ interface IState {
   current: number,
 }
 
-@inject('studyStore', 'chatroomStore')
+@inject('studyStore', 'chatroomStore', 'infoStore')
 @observer
 class Index extends Component<IProps, IState> {
 
@@ -50,7 +52,9 @@ class Index extends Component<IProps, IState> {
   }
 
   async componentDidMount() {
-    const { chatroomStore: { socketConnect, setUserInfo, setContactsList } } = this.props
+    const { chatroomStore: { socketConnect, setUserInfo, setContactsList }, infoStore: { getUserInfo, handleUserLogin } } = this.props
+    await handleUserLogin()
+    await getUserInfo()
     await setUserInfo()
     await setContactsList()
     await socketConnect()
