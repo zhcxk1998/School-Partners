@@ -25,6 +25,7 @@ class MyForums extends Component<IProps, IStates>{
     this.state = {
       forumList: []
     }
+    this.handleDeleteClick = this.handleDeleteClick.bind(this)
   }
 
   async componentDidMount() {
@@ -42,6 +43,24 @@ class MyForums extends Component<IProps, IStates>{
     })
     if (data.code === 404) return
     this.setState({ forumList: data })
+  }
+
+  async handleDeleteClick(forumId: number) {
+    await Taro.request({
+      url: `http://localhost:3000/forums/${forumId}`,
+      method: 'DELETE'
+    })
+    Taro.showToast({
+      title: '删除成功',
+      icon: 'success',
+      duration: 1000
+    })
+    const { forumList } = this.state
+    const deleteIndex = forumList.findIndex(forum => forum.forumId === forumId)
+    forumList.splice(deleteIndex, 1)
+    this.setState({
+      forumList
+    })
   }
 
   render() {
@@ -66,7 +85,7 @@ class MyForums extends Component<IProps, IStates>{
               <View className="wrap__footer">
                 <View className="time">{publishTime}</View>
                 <View className="action">已发布</View>
-                <View className="action action--delete">删除</View>
+                <View className="action action--delete" onClick={() => { this.handleDeleteClick(forumId) }}>删除</View>
               </View>
             </View>
           )
