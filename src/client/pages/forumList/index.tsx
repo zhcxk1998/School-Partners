@@ -40,6 +40,10 @@ class ForumList extends Component<IProps, IStates>{
 
     return (
       <View className="forum__container">
+        <View className="forum__publish">
+          <View className="forum__publish--background"></View>
+          <Image className="icon" src="http://cdn.algbb.cn/forum/add.png" mode="aspectFill" onClick={() => { Taro.navigateTo({ url: '/client/pages/forumPublish/index' }) }} />
+        </View>
         {forumList.map(forum => {
           const { forumId, forumAvatar, forumAuthor, timeAgo, forumImage, forumTitle, forumContent, forumLike, forumComment } = forum
           return (

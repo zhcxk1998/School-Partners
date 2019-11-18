@@ -3,6 +3,38 @@
 .forum {
   &__container {}
 
+  &__publish {
+    display: flex;
+    position: relative;
+    align-items: center;
+    position: fixed;
+    bottom: 20vw;
+    right: 0;
+    width: 12vw;
+    height: 12vw;
+    background: #fff;
+
+    .icon {
+      position: absolute;
+      left: -3vw;
+      width: 10vw;
+      height: 10vw;
+      border-radius: 50%;
+      z-index: 2;
+    }
+
+    &--background {
+      position: absolute;
+      left: -6vw;
+      top: 0;
+      width: 12vw;
+      height: 12vw;
+      border-radius: 50%;
+      background: #fff;
+      z-index: 1;
+    }
+  }
+
   &__wrap {
     padding: 2vw 0;
     border-bottom: #d7d7d7 2px solid;

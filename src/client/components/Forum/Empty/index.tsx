@@ -25,7 +25,7 @@ class Empty extends Component<IProps, IStates>{
         <Image className="image" src="http://cdn.algbb.cn/forum/empty.svg" />
         <View className="title">No Forums Here</View>
         <View className="content">赶快前往论坛社区中发表新的贴子吧</View>
-        <Image className="add" src="http://cdn.algbb.cn/forum/add.png" />
+        <Image className="add" src="http://cdn.algbb.cn/forum/add.png" mode="aspectFill" onClick={() => { Taro.navigateTo({ url: '/client/pages/forumPublish/index' }) }} />
       </View>
     )
   }
