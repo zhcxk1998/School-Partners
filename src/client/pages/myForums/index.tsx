@@ -16,7 +16,6 @@ interface IProps {
 }
 
 interface IStates {
-  forumList: Array<ForumInfo>
 }
 
 @inject('infoStore', 'forumStore')
@@ -25,7 +24,7 @@ class MyForums extends Component<IProps, IStates>{
   constructor(props) {
     super(props)
     this.state = {
-      forumList: []
+
     }
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
     this.handleModifyClick = this.handleModifyClick.bind(this)
@@ -40,6 +39,8 @@ class MyForums extends Component<IProps, IStates>{
   }
 
   async handleDeleteClick(forumId: number) {
+    const { infoStore: { userInfo }, forumStore: { getForumList } } = this.props
+    const { nickName } = userInfo
     await Taro.request({
       url: `http://localhost:3000/forums/${forumId}`,
       method: 'DELETE'
@@ -49,12 +50,7 @@ class MyForums extends Component<IProps, IStates>{
       icon: 'success',
       duration: 1000
     })
-    const { forumList } = this.state
-    const deleteIndex = forumList.findIndex(forum => forum.forumId === forumId)
-    forumList.splice(deleteIndex, 1)
-    this.setState({
-      forumList
-    })
+    getForumList(nickName)
   }
 
   handleModifyClick(forumId: number): void {

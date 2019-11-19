@@ -16,8 +16,7 @@ class forumStore {
           forumAuthor
         }
       })
-      if (data.code === 404) return
-      this.myForumList = data
+      this.myForumList = data.code === 404 ? [] : data
       resolve()
     })
   }
