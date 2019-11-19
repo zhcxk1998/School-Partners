@@ -1,32 +1,33 @@
 import Taro, { Component } from '@tarojs/taro'
 import { ComponentType } from 'react'
 import { View, Image } from '@tarojs/components'
+import { inject, observer } from '@tarojs/mobx'
 
-import { ForumInfo } from '../../modals/forumList'
+import forumStore from '../../store/forumStore'
 
 import './index.scss'
 
 interface IProps {
-
+  forumStore: forumStore
 }
 
 interface IStates {
-  forumList: Array<ForumInfo>
+
 }
 
+@inject('forumStore')
+@observer
 class ForumList extends Component<IProps, IStates>{
   constructor(props) {
     super(props)
     this.state = {
-      forumList: []
+
     }
   }
 
   async componentDidMount() {
-    const { data } = await Taro.request({ url: 'http://localhost:3000/forums' })
-    this.setState({
-      forumList: data
-    })
+    const { forumStore: { getForumList } } = this.props
+    getForumList()
   }
 
   navigateTo(forumId: number, forumTitle: string): void {
@@ -36,7 +37,7 @@ class ForumList extends Component<IProps, IStates>{
   }
 
   render() {
-    const { forumList } = this.state
+    const { forumStore: { forumList } } = this.props
 
     return (
       <View className="forum__container">

@@ -53,6 +53,7 @@ class ForumPublish extends Component<IProps, IStates>{
       title: data.msg,
     })
 
+    getForumList()
     getForumList(nickName)
     Taro.navigateBack({ delta: 1 })
   }
