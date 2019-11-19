@@ -6,18 +6,20 @@ import { observer, inject } from '@tarojs/mobx'
 import Empty from '../../components/Forum/Empty'
 import { ForumInfo } from '../../modals/forumList'
 import infoStore from '../../store/infoStore'
+import forumStore from '../../store/forumStore'
 
 import './index.scss'
 
 interface IProps {
-  infoStore: infoStore
+  infoStore: infoStore,
+  forumStore: forumStore
 }
 
 interface IStates {
   forumList: Array<ForumInfo>
 }
 
-@inject('infoStore')
+@inject('infoStore', 'forumStore')
 @observer
 class MyForums extends Component<IProps, IStates>{
   constructor(props) {
@@ -26,23 +28,15 @@ class MyForums extends Component<IProps, IStates>{
       forumList: []
     }
     this.handleDeleteClick = this.handleDeleteClick.bind(this)
+    this.handleModifyClick = this.handleModifyClick.bind(this)
   }
 
-  async componentDidMount() {
+  async componentWillMount() {
     const { title } = this.$router.params
-    const { infoStore: { userInfo } } = this.props
+    const { infoStore: { userInfo }, forumStore: { getForumList } } = this.props
     const { nickName } = userInfo
     Taro.setNavigationBarTitle({ title })
-
-    const { data } = await Taro.request({
-      url: `http://localhost:3000/forums/`,
-      method: 'POST',
-      data: {
-        forumAuthor: nickName
-      }
-    })
-    if (data.code === 404) return
-    this.setState({ forumList: data })
+    getForumList(nickName)
   }
 
   async handleDeleteClick(forumId: number) {
@@ -63,11 +57,17 @@ class MyForums extends Component<IProps, IStates>{
     })
   }
 
+  handleModifyClick(forumId: number): void {
+    Taro.navigateTo({
+      url: `/client/pages/forumModify/index?forumId=${forumId}`
+    })
+  }
+
   render() {
-    const { forumList } = this.state
+    const { forumStore: { myForumList } } = this.props
     return (
       <View className="myforum-list__container">
-        {forumList.length === 0 ? <Empty /> : forumList.map(forum => {
+        {myForumList.slice().length === 0 ? <Empty /> : myForumList.slice().map(forum => {
           const { forumImage, forumTitle, forumContent, forumLike, forumComment, forumId, publishTime } = forum
           return (
             <View className="myforum-list__wrap" key={forumId}>
@@ -84,7 +84,7 @@ class MyForums extends Component<IProps, IStates>{
               </View>
               <View className="wrap__footer">
                 <View className="time">{publishTime}</View>
-                <View className="action">已发布</View>
+                <View className="action" onClick={() => { this.handleModifyClick(forumId) }}>修改</View>
                 <View className="action action--delete" onClick={() => { this.handleDeleteClick(forumId) }}>删除</View>
               </View>
             </View>

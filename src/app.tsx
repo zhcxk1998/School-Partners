@@ -38,7 +38,8 @@ class App extends Component {
       'client/pages/rankList/index',
       'client/pages/forumDetail/index',
       'client/pages/myForums/index',
-      'client/pages/forumPublish/index'
+      'client/pages/forumPublish/index',
+      'client/pages/forumModify/index'
     ],
     window: {
       backgroundTextStyle: 'dark',
