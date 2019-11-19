@@ -1,22 +1,23 @@
 import Taro, { Component } from '@tarojs/taro'
 import { ComponentType } from 'react'
-import { View, Form, Textarea, Button, Input, Label } from '@tarojs/components'
-import { AtInput, AtForm, AtTextarea, AtButton } from 'taro-ui'
+import { View, Form, Textarea, Button, Input } from '@tarojs/components'
 import { inject, observer } from '@tarojs/mobx'
 
 import infoStore from '../../store/infoStore'
+import forumStore from '../../store/forumStore'
 
 import './index.scss'
 
 interface IProps {
-  infoStore: infoStore
+  infoStore: infoStore,
+  forumStore: forumStore
 }
 
 interface IStates {
   forumTitle: string
 }
 
-@inject('infoStore')
+@inject('infoStore', 'forumStore')
 @observer
 class ForumPublish extends Component<IProps, IStates>{
   constructor(props) {
@@ -33,7 +34,7 @@ class ForumPublish extends Component<IProps, IStates>{
 
   async handleSubmit(e) {
     const { detail: { value } } = e
-    const { infoStore: { userInfo } } = this.props
+    const { infoStore: { userInfo }, forumStore: { getForumList } } = this.props
     const { forumTitle, forumContent } = value
     const { nickName, avatarUrl } = userInfo
 
@@ -51,6 +52,9 @@ class ForumPublish extends Component<IProps, IStates>{
     Taro.showToast({
       title: data.msg,
     })
+
+    getForumList(nickName)
+    Taro.navigateBack({ delta: 1 })
   }
 
   render() {
