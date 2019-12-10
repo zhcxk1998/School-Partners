@@ -20,6 +20,7 @@ class FeatureList extends Component<IProps, {}> {
     const featureList: Array<{ icon: string, feature: string, link: string }> = [
       { icon: 'http://cdn.algbb.cn/dashboard/history.png', feature: '历史足迹', link: '' },
       { icon: 'http://cdn.algbb.cn/dashboard/forums.png', feature: '我的帖子', link: '/client/pages/myForums/index' },
+      { icon: 'http://cdn.algbb.cn/dashboard/calender.png', feature: '我的日程', link: '/client/pages/mySchedule/index' }
       { icon: 'http://cdn.algbb.cn/dashboard/heart.png', feature: '我的订阅', link: '' },
       { icon: 'http://cdn.algbb.cn/dashboard/star.png', feature: '我的收藏', link: '' },
       { icon: 'http://cdn.algbb.cn/dashboard/score.png', feature: '我的成绩', link: '' },
