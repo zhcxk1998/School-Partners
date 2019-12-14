@@ -155,6 +155,20 @@
         }
       }
     }
+
+    &__video{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: .5em 1em 2em 1em;
+      height: 2.2em;
+      color: #fff;
+      font-size: 1.4em;
+      font-weight: bold;
+      letter-spacing: .3em;
+      border-radius: 20px;
+      background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+    }
   }
 }
 

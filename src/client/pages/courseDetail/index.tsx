@@ -24,9 +24,16 @@ class CourseDetail extends Component<IProps, IState> {
     this.state = {
 
     }
+    this.handleVideoClick = this.handleVideoClick.bind(this)
   }
 
   async componentWillMount() {
+  }
+
+  handleVideoClick() {
+    Taro.navigateTo({
+      url: `/client/pages/courseVideo/index`
+    })
   }
 
   render() {
@@ -75,6 +82,7 @@ class CourseDetail extends Component<IProps, IState> {
               ))}
             </View>
           </View>
+          <View className="course-container__video" onClick={this.handleVideoClick}>播放课程视频</View>
         </View>
       </View>
     )
