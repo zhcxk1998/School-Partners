@@ -40,7 +40,8 @@ class App extends Component {
       'client/pages/myForums/index',
       'client/pages/forumPublish/index',
       'client/pages/forumModify/index',
-      'client/pages/mySchedule/index'
+      'client/pages/mySchedule/index',
+      'client/pages/courseVideo/index'
     ],
     window: {
       backgroundTextStyle: 'dark',
