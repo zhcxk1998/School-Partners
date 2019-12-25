@@ -1,5 +1,7 @@
 # School-Partners学习小伴侣:sunny:~
 
+Language: [简体中文](README.md) | [English](README-EN.md)
+
 **本项目采用Taro技术框架，可将React代码编译为微信小程序、安卓APP、IOS程序、H5页面等**
 
 ## 介绍
