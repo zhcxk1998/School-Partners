@@ -1,98 +1,99 @@
-# School-Partners学习小伴侣:sunny:~
+# School-Partners Learning applets:sunny:~
 
-Language: [简体中文](README.md) | [English](README-EN.md)
+**Language**: [简体中文](README-CH.md) | [English](README.md)
 
-**本项目采用Taro技术框架，可将React代码编译为微信小程序、安卓APP、IOS程序、H5页面等**
+**This project adopts the Taro technology framework, which can compile React code into WeChat small program, android APP, IOS program, H5 page and so on**
 
-## 介绍
-当代大学生上课缺少积极性，学习缺乏效率。同为大学生的我深有体会。所以特别开发出这样一款学习类的微信小程序帮助学生进行学习、巩固知识，同时增加对战PK模块来加强学生们的学习积极性。:sparkles:这是一个为学生提供在线学习课程、题库练习、考试答题、做题PK、上课签到、资料查阅、成绩分析等功能的微信小程序:pig:
+## Introduce
+Contemporary college students lack enthusiasm in class and efficiency in learning. As a college student, I have deep experience. So specially developed such a learning WeChat small program to help students to learn, consolidate knowledge, at the same time to increase the PK module to strengthen students' learning enthusiasm. :sparkles:This is a WeChat small program that provides students with online learning courses, question bank exercises, exam questions, do questions PK, class check-in, data search, score analysis and other functions:pig:
 
-具体使用请参考本人博客,将持续更新分析项目技术
+
+For specific use, please refer to my blog, will continue to update the analysis of project technology
 > https://juejin.im/post/5dd161675188254efb3bceea
 
-## 技术选型
+## Technology Selection
 
-前端：Taro + 微信小程序 + Echarts
+The Front End：Taro + WeChat Applet + Echarts
 
-后端：Node.js + MySql + websocket
+The Back End：Node.js + MySql + websocket
 
-其他：七牛云存储
+Other：Qiniu Cloud
 
-## 功能
-1. 在线学习课程
-2. 专项题库练习
-3. 课程考试答题
-4. 知识趣味竞赛
-5. 上课签到系统
-6. 专业资料查阅
-7. 学生成绩分析
-8. 活动日程安排
-9. 学习分享论坛
+## Function
+1. Online learning course
+2. Special question bank exercises
+3. Answer questions on the course exam
+4. Fun contest for knowledge
+5. Class check-in system
+6. Professional data search
+7. Student performance analysis
+8. Schedule of activities
+9. Learning sharing forum
 
-## 运行截图
+## Screenshot
 
-### 1. 主页
+### 1. Index
 ![](http://cdn.algbb.cn/screenshots/index.png)
 
-### 2. 个人中心
+### 2. DashBoard
 ![](http://cdn.algbb.cn/screenshots/dashboard.png)
 
-### 3. 课程详情
+### 3. Course details
 ![](http://cdn.algbb.cn/screenshots/course.png)
 
-### 4. 做题练习
+### 4. Practice
 ![](http://cdn.algbb.cn/screenshots/exercise.png)
 
-### 5. 学习交流群
+### 5. Learning communication group
 ![](http://cdn.algbb.cn/screenshots/contacts.png)
 
-### 6. 聊天室
+### 6. The chat room
 ![](http://cdn.algbb.cn/screenshots/chatroom.png)
 
-### 7. 课程列表
+### 7. Course list
 ![](http://cdn.algbb.cn/screenshots/courseList.png)
 
-### 8. 习题列表
+### 8. Problem sets list
 ![](http://cdn.algbb.cn/screenshots/exerciseList.png)
 
-### 9. 排行榜
+### 9. Ranking list
 ![](http://cdn.algbb.cn/screenshots/rank.png)
 
-### 10. 论坛
+### 10. Forum
 ![](http://cdn.algbb.cn/screenshots/forumList.png)
 
-### 11. 日程管理
+### 11. Schedule management
 ![](http://cdn.algbb.cn/screenshots/schedule.png)
 
-## 安装运行
+## Installation operation
 
-* ##### 第一步
-    * 克隆项目到本地`git clone http://github.com/zhcxk1998/School-Partners
-* #### 第二步
-    * `cnpm i`安装依赖
-* #### 第三步
-    * 构建运行服务`npm run dev:weapp`
-* #### 第四部
-    * 在微信小程序开发工具中预览
+* ##### First
+    * Clone the project locally `git clone http://github.com/zhcxk1998/School-Partners
+* #### second
+    * `cnpm i` Install dependencies
+* #### third
+    * Build run services `npm run dev:weapp`
+* #### fourth
+    * Preview in the WeChat applet development tool
 
-## 目录结构
+## The directory structure
 
-    |-- [config]                  // 项目配置文件
-    |-- [dist]                    // 项目打包文件
-    |-- [src]                     // 项目代码
-        -- [client]               // 客户端代码
-           -- [assets]            // 静态文件
-           -- [components]        // 组件文件
-           -- [pages]             // 页面文件
-           -- [store]             // 状态管理
-           -- [styles]            // 样式文件
-           -- [utils]             // 工具包函数
-        -- [server]               // 服务端代码
-           -- [config]            // 服务端配置文件
-           -- [routes]            // 路由目录
-           -- [utils]             // 工具函数
-           -- [middlewares]       // 中间件
-    |-- .gitignore                // git忽略配置
+    |-- [config]                  // Project profile
+    |-- [dist]                    // Project package file
+    |-- [src]                     // Project code
+        -- [client]               // Client code
+           -- [assets]            // Static files
+           -- [components]        // Component files
+           -- [pages]             // Page file
+           -- [store]             // State management
+           -- [styles]            // The style file
+           -- [utils]             // Toolkit function
+        -- [server]               // Server code
+           -- [config]            // Server configuration file
+           -- [routes]            // Routing directory
+           -- [utils]             // Tool function
+           -- [middlewares]       // The middleware
+    |-- .gitignore                // Git ignore configuration
     |-- package-lock.json         // npm
     |-- package.json              // npm
     ...
