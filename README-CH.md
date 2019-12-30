@@ -10,6 +10,9 @@ Language: [简体中文](README-CH.md) | [English](README.md)
 具体使用请参考本人博客,将持续更新分析项目技术
 > https://juejin.im/post/5dd161675188254efb3bceea
 
+## 视频演示
+http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
+
 ## 技术选型
 
 前端：Taro + 微信小程序 + Echarts
