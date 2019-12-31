@@ -4,6 +4,8 @@
 
 **This project adopts the Taro technology framework, which can compile React code into WeChat small program, android APP, IOS program, H5 page and so on**
 
+> At present, due to the heavy academic task, there is no perfect access to the database only exercises, courses, forums, chat rooms. There are still many functions are not perfect, and we will continue to improve them after the holiday.
+
 ## Introduce
 Contemporary college students lack enthusiasm in class and efficiency in learning. As a college student, I have deep experience. So specially developed such a learning WeChat small program to help students to learn, consolidate knowledge, at the same time to increase the PK module to strengthen students' learning enthusiasm. :sparkles:This is a WeChat small program that provides students with online learning courses, question bank exercises, exam questions, do questions PK, class check-in, data search, score analysis and other functions:pig:
 
