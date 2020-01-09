@@ -17,7 +17,7 @@ interface IState {
 @inject('chatroomStore')
 @observer
 class Contacts extends Component<IProps, IState> {
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       value: ''
@@ -25,7 +25,7 @@ class Contacts extends Component<IProps, IState> {
   }
 
   async componentWillMount() {
-    
+
   }
 
   handleGroupClick(contactsId: string, title: string): void {

@@ -20,7 +20,7 @@ interface IStates {
 @inject('infoStore', 'forumStore')
 @observer
 class MyForums extends Component<IProps, IStates>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
 

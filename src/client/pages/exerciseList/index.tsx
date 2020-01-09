@@ -3,7 +3,7 @@ import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtSearchBar, AtIcon } from 'taro-ui'
 
-import { ExerciseInfo} from '../../modals/exerciseList'
+import { ExerciseInfo } from '../../modals/exerciseDetail'
 
 import './index.scss'
 
@@ -17,7 +17,7 @@ interface IState {
 }
 
 class CourseList extends Component<IProps, IState>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       exerciseList: [],
@@ -38,7 +38,7 @@ class CourseList extends Component<IProps, IState>{
     })
   }
 
-  handleSearchChange(searchValue) {
+  handleSearchChange(searchValue: string) {
     this.setState({ searchValue })
   }
 

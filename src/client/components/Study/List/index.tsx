@@ -20,7 +20,7 @@ interface IState {
 @inject('studyStore', 'exerciseStore')
 @observer
 class List extends Component<IProps, IState> {
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
     }

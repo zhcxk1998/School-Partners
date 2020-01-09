@@ -43,7 +43,7 @@ class Index extends Component<IProps, IState> {
     enablePullDownRefresh: true, // 允许下拉加载
   }
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       count: 1,

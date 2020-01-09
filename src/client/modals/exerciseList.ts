@@ -1,8 +1,6 @@
 export interface ExerciseInfo {
-  exerciseCid: number,
+  exerciseCid: string,
   exerciseName: string,
-  finsihCount: number,
-  totalCount: number,
-  difficultyDegree: string,
-  exerciseType: string
+  exerciseContent: string,
+  isHot: boolean
 }

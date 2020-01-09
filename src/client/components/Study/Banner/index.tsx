@@ -22,7 +22,7 @@ interface IState {
 @inject('studyStore', 'courseStore')
 @observer
 class Banner extends Component<IProps, IState> {
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
 

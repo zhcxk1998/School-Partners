@@ -24,7 +24,7 @@ class Exam extends Component<IProps, {}> {
     navigationBarTitleText: '刷题'
   }
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
   }
 

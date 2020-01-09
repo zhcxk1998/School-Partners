@@ -21,18 +21,11 @@ interface IState {
 @inject('chatroomStore')
 @observer
 class ChatRoom extends Component<IProps, IState> {
-  /**
-   * 指定config的类型声明为: Taro.Config
-   *
-   * 由于 typescript 对于 object 类型推导只能推出 Key 的基本类型
-   * 对于像 navigationBarTextStyle: 'black' 这样的推导出的类型是 string
-   * 提示和声明 navigationBarTextStyle: 'black' | 'white' 类型冲突, 需要显示声明类型
-   */
   config: Config = {
     navigationBarTitleText: '聊天室',
   }
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       value: '',
@@ -73,7 +66,7 @@ class ChatRoom extends Component<IProps, IState> {
     this.resetInput()
   }
 
-  handleChange({ detail: { value } }): void {
+  handleChange({ detail: { value } }: { detail: { value: string } }): void {
     this.setState({ value })
   }
 
@@ -127,7 +120,7 @@ class ChatRoom extends Component<IProps, IState> {
         <View className={`chat-input-container ${emojiOpened ? 'emoji-open' : ''}`}>
           <View className='chat-input-wrap'>
             <Image className='emoji' src='http://cdn.algbb.cn/chatroom/emoji.png' onClick={this.handleEmojiOpen.bind(this)} />
-            <Input className='input' type='text' value={value} onInput={this.handleChange.bind(this)} placeholder='来吹吹水吧~' cursorSpacing={10} confirmType='发送' />
+            <Input className='input' type='text' value={value} onInput={this.handleChange.bind(this)} placeholder='来吹吹水吧~' cursorSpacing={10} confirmType='send' />
             <View className='button' onClick={this.onMessageSend.bind(this)} >发送</View>
           </View>
           <ScrollView scrollY className='emoji-container'>

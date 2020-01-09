@@ -22,7 +22,7 @@ class Status extends Component<IProps, {}> {
     setSettingOpened()
   }
 
-  handleSliderChange({ value }): void {
+  handleSliderChange({ value }: { value: number }): void {
     const { exerciseStore: { setFontSize } } = this.props;
     setFontSize(value - 1);
   }

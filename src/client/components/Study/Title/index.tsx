@@ -12,7 +12,7 @@ interface IState {
 
 }
 class Title extends Component<IProps, IState> {
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
     }

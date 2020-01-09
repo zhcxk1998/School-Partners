@@ -11,7 +11,7 @@ interface IState {
 }
 
 class Battle extends Component<IProps, IState> {
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       value: ''

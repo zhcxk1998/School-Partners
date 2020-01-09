@@ -17,7 +17,7 @@ interface IState {
 }
 
 class CourseList extends Component<IProps, IState>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       courseList: [],
@@ -37,7 +37,7 @@ class CourseList extends Component<IProps, IState>{
     })
   }
 
-  handleSearchChange(searchValue) {
+  handleSearchChange(searchValue: string) {
     this.setState({ searchValue })
   }
 

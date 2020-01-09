@@ -15,7 +15,7 @@ class CourseVideo extends Component<IProps, IState> {
     navigationBarTitleText: '课程视频',
   }
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
 

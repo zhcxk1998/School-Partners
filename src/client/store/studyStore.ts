@@ -1,44 +1,29 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
 
+import { CourseInfo } from '../modals/courseList'
+import { ExerciseInfo } from '../modals/exerciseList'
+
 class studyStore {
-  @observable courseList: Array<{
-    courseCid: string,
-    courseName: string,
-    isRecommend: string
-  }> = [];
+  @observable courseList: Array<CourseInfo> = [];
 
-  @observable recommendCourseList: Array<{
-    courseCid: string,
-    courseName: string,
-    isRecommend: string
-  }> = [];
+  @observable recommendCourseList: Array<CourseInfo> = [];
 
-  @observable exerciseList: Array<{
-    exerciseCid: string,
-    exerciseName: string,
-    exerciseContent: string,
-    isHot: string
-  }>
+  @observable exerciseList: Array<ExerciseInfo>
 
-  @observable hotExerciseList: Array<{
-    exerciseCid: string,
-    exerciseName: string,
-    exerciseContent: string,
-    isHot: string
-  }>
+  @observable hotExerciseList: Array<ExerciseInfo>
 
-  isRecommend(course): boolean {
+  isRecommend(course: CourseInfo): boolean {
     return course.isRecommend
   }
 
-  isHot(course): boolean {
+  isHot(course: ExerciseInfo): boolean {
     return course.isHot
   }
 
   @action.bound
   getCourseList(): any {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const { data } = await Taro.request({
         url: 'http://localhost:3000/courses',
         method: 'GET',
@@ -51,7 +36,7 @@ class studyStore {
 
   @action.bound
   getExerciseList(): any {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const { data } = await Taro.request({
         url: 'http://localhost:3000/exercises',
         method: 'GET',

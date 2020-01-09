@@ -28,7 +28,7 @@ class Study extends Component<IProps, IState> {
     navigationBarTitleText: '学习',
   }
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
 

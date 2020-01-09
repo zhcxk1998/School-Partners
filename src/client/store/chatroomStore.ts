@@ -42,7 +42,7 @@ class chatroomStore {
 
   handleSocketMessage(): void {
     const { socketTask } = this
-    socketTask.onMessage(async ({ data }) => {
+    socketTask.onMessage(async ({ data }: { data: any }) => {
       const messageInfo: ReceiveMessageInfo = JSON.parse(data)
       const { to, messageId, isMyself, userName, userAvatar, currentTime, message } = messageInfo
       const time: string = formatTime(currentTime)
@@ -72,7 +72,7 @@ class chatroomStore {
 
   handleSocketClose(): void {
     const { socketTask } = this
-    socketTask.onClose((msg) => {
+    socketTask.onClose((msg: string) => {
       this.socketTask = null
       this.socketReconnect()
       console.log('onClose: ', msg)
@@ -101,7 +101,7 @@ class chatroomStore {
 
   @action.bound
   async setContactsList() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const { data } = await Taro.request({
         url: 'http://localhost:3000/contacts',
         method: 'GET'
@@ -127,7 +127,7 @@ class chatroomStore {
 
   @action.bound
   setUserInfo() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       const { userInfo: { nickName, avatarUrl } } = await Taro.getUserInfo()
       this.userName = nickName
       this.userAvatar = avatarUrl

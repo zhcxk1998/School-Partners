@@ -9,7 +9,7 @@ class forumStore {
 
   @action.bound
   getForumList(forumAuthor?: string) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       if (forumAuthor) {
         const { data } = await Taro.request({
           url: `http://localhost:3000/forums/`,

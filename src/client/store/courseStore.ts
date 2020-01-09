@@ -16,7 +16,7 @@ class courseStore {
 
   @action.bound
   getCourseDetail(cid: string, title: string): any {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
       Taro.showLoading({
         title: '加载中...'
       })

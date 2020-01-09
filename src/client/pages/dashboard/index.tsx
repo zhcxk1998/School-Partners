@@ -34,7 +34,7 @@ class DashBoard extends Component<IProps, IState> {
     navigationBarTitleText: '个人中心',
   }
 
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       isLoading: true

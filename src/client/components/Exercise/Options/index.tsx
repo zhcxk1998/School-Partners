@@ -15,7 +15,7 @@ interface IProps {
 @inject('exerciseStore')
 @observer
 class Options extends Component<IProps, {}> {
-  constructor(props) {
+  constructor(props: IProps) {
     super(props);
   }
 

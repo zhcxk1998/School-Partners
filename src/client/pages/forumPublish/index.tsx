@@ -20,7 +20,7 @@ interface IStates {
 @inject('infoStore', 'forumStore')
 @observer
 class ForumPublish extends Component<IProps, IStates>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       forumTitle: ''
@@ -32,7 +32,7 @@ class ForumPublish extends Component<IProps, IStates>{
     Taro.setNavigationBarTitle({ title: '发布帖子' })
   }
 
-  async handleSubmit(e) {
+  async handleSubmit(e: any) {
     const { detail: { value } } = e
     const { infoStore: { userInfo }, forumStore: { getForumList } } = this.props
     const { forumTitle, forumContent } = value

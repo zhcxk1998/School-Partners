@@ -13,7 +13,7 @@ interface IState {
 }
 
 class RankList extends Component<IProps, IState>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
 

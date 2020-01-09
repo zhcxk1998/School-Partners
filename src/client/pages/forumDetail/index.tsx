@@ -15,7 +15,7 @@ interface IStates {
 }
 
 class ForumDetail extends Component<IProps, IStates>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       forumDetail: {

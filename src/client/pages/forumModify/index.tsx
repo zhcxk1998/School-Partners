@@ -1,4 +1,4 @@
-import React, { ComponentType } from 'react'
+import React, { ComponentType, FormEvent } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View, Form, Textarea, Button, Input } from '@tarojs/components'
 import { inject, observer } from '@tarojs/mobx'
@@ -21,7 +21,7 @@ interface IStates {
 @inject('infoStore', 'forumStore')
 @observer
 class ForumPublish extends Component<IProps, IStates>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
       forumTitle: '',
@@ -43,7 +43,7 @@ class ForumPublish extends Component<IProps, IStates>{
     })
   }
 
-  async handleSubmit(e) {
+  async handleSubmit(e: any) {
     const { forumId } = this.$router.params
     const { detail: { value } } = e
     const { forumTitle, forumContent } = value

@@ -13,7 +13,7 @@ interface IStates {
 }
 
 class Empty extends Component<IProps, IStates>{
-  constructor(props) {
+  constructor(props: IProps) {
     super(props)
     this.state = {
 

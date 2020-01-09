@@ -6,7 +6,7 @@ import { AtTabBar } from 'taro-ui'
 import './index.scss'
 
 interface IProps {
-  onSwitchTab: (object) => void,
+  onSwitchTab: (index: number) => void,
   current: number
 }
 
