@@ -1,9 +1,8 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
-import Index from './client/pages/index'
+import Index from './pages/index/index'
 
-import store from './client/store/index'
-
+import store from './store/index'
 
 import './app.scss'
 import 'taro-ui/dist/style/index.scss'
@@ -29,19 +28,19 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'client/pages/index/index',
-      'client/pages/exerciseDetail/index',
-      'client/pages/chatroom/index',
-      'client/pages/courseDetail/index',
-      'client/pages/courseList/index',
-      'client/pages/exerciseList/index',
-      'client/pages/rankList/index',
-      'client/pages/forumDetail/index',
-      'client/pages/myForums/index',
-      'client/pages/forumPublish/index',
-      'client/pages/forumModify/index',
-      'client/pages/mySchedule/index',
-      'client/pages/courseVideo/index'
+      'pages/index/index',
+      'pages/exerciseDetail/index',
+      'pages/chatroom/index',
+      'pages/courseDetail/index',
+      'pages/courseList/index',
+      'pages/exerciseList/index',
+      'pages/rankList/index',
+      'pages/forumDetail/index',
+      'pages/myForums/index',
+      'pages/forumPublish/index',
+      'pages/forumModify/index',
+      'pages/mySchedule/index',
+      'pages/courseVideo/index'
     ],
     window: {
       backgroundTextStyle: 'dark',

@@ -7,7 +7,7 @@ const config = {
     '750': 1,
     '828': 1.81 / 2
   },
-  sourceRoot: 'src',
+  sourceRoot: 'src/client',
   outputRoot: 'dist',
   plugins: {
     babel: {
