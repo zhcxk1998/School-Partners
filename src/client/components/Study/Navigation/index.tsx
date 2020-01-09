@@ -1,3 +1,4 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 
@@ -48,4 +49,4 @@ class Navigation extends Component<IProps, IState> {
   }
 }
 
-export default Navigation 
+export default Navigation as ComponentType

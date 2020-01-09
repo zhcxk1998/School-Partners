@@ -1,5 +1,5 @@
-import { ComponentType } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
+import React, { ComponentType } from 'react'
+import { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 import { AtTabs, AtTabsPane } from 'taro-ui'
@@ -11,7 +11,6 @@ import Status from '../../components/Exercise/Status/index'
 import exerciseStore from '../../store/exerciseStore';
 
 import './index.scss'
-
 
 interface IProps {
   exerciseStore: exerciseStore

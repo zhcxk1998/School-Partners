@@ -1,5 +1,5 @@
-import Taro, { Component, Config } from '@tarojs/taro'
-import { ComponentType } from 'react'
+import React, { ComponentType } from 'react'
+import { Component, Config } from '@tarojs/taro'
 import { View, Image, Button } from '@tarojs/components'
 import { AtCalendar, AtModal, AtModalHeader, AtModalContent, AtModalAction, AtInput } from "taro-ui"
 

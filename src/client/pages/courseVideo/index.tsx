@@ -1,9 +1,8 @@
-import { ComponentType } from 'react'
-import Taro, { Component, Config } from '@tarojs/taro'
+import React, { ComponentType } from 'react'
+import { Component, Config } from '@tarojs/taro'
 import { View, Video } from '@tarojs/components'
 
 import './index.scss'
-
 
 interface IProps {
 }

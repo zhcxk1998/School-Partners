@@ -1,4 +1,4 @@
-import { ComponentType } from 'react'
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { AtRate } from 'taro-ui'

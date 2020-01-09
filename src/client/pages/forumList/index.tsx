@@ -1,5 +1,5 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
-import { ComponentType } from 'react'
 import { View, Image } from '@tarojs/components'
 import { inject, observer } from '@tarojs/mobx'
 

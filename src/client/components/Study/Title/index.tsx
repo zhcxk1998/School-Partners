@@ -1,8 +1,8 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 
 import './index.scss'
-
 
 interface IProps {
   link: string
@@ -34,4 +34,4 @@ class Title extends Component<IProps, IState> {
   }
 }
 
-export default Title 
+export default Title as ComponentType<IProps>

@@ -1,5 +1,5 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
-import { ComponentType } from 'react'
 import { View, Form, Textarea, Button, Input } from '@tarojs/components'
 import { inject, observer } from '@tarojs/mobx'
 

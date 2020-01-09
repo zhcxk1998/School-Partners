@@ -1,4 +1,4 @@
-import { ComponentType } from 'react'
+import React, { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'

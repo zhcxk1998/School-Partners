@@ -1,4 +1,4 @@
-import { ComponentType } from 'react'
+import React, { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, ScrollView, Input, Image } from '@tarojs/components'
 import { AtActivityIndicator } from "taro-ui"

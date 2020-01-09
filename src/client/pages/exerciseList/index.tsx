@@ -1,5 +1,5 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
-import { ComponentType } from 'react'
 import { View } from '@tarojs/components'
 import { AtSearchBar, AtIcon } from 'taro-ui'
 

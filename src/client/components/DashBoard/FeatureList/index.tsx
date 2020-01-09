@@ -1,7 +1,7 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
-
 
 import './index.scss'
 
@@ -43,4 +43,4 @@ class FeatureList extends Component<IProps, {}> {
   }
 }
 
-export default FeatureList
+export default FeatureList as ComponentType

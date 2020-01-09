@@ -1,10 +1,9 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
-import { ComponentType } from 'react'
 import { View, Image } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
 import Empty from '../../components/Forum/Empty'
-import { ForumInfo } from '../../modals/forumList'
 import infoStore from '../../store/infoStore'
 import forumStore from '../../store/forumStore'
 

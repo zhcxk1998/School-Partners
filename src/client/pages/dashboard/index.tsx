@@ -1,4 +1,4 @@
-import { ComponentType } from 'react'
+import React, { ComponentType } from 'react'
 import Taro, { Component, Config } from '@tarojs/taro'
 import { View, Button } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
@@ -10,7 +10,6 @@ import FeatureList from '../../components/DashBoard/FeatureList/index'
 import infoStore from '../../store/infoStore'
 
 import './index.scss'
-
 
 interface IProps {
   infoStore: infoStore

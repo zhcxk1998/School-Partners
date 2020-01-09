@@ -1,4 +1,5 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { ComponentType } from 'react'
+import { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtTabBar } from 'taro-ui'
 
@@ -31,4 +32,4 @@ class Tabbar extends Component<IProps, {}> {
   }
 }
 
-export default Tabbar
+export default Tabbar as ComponentType<IProps>

@@ -1,3 +1,4 @@
+import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View, Image } from '@tarojs/components'
 
@@ -31,4 +32,4 @@ class Empty extends Component<IProps, IStates>{
   }
 }
 
-export default Empty
+export default Empty as ComponentType

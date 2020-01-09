@@ -1,4 +1,5 @@
-import Taro, { Component } from '@tarojs/taro'
+import React, { ComponentType } from 'react'
+import { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { observer, inject } from '@tarojs/mobx'
 
@@ -14,7 +15,6 @@ interface IProps {
 @inject('exerciseStore')
 @observer
 class Options extends Component<IProps, {}> {
-
   constructor(props) {
     super(props);
   }
@@ -62,4 +62,4 @@ class Options extends Component<IProps, {}> {
   }
 }
 
-export default Options
+export default Options as ComponentType<IProps>
