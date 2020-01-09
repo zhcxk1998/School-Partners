@@ -32,7 +32,7 @@ class ForumList extends Component<IProps, IStates>{
 
   navigateTo(forumId: number, forumTitle: string): void {
     Taro.navigateTo({
-      url: `/client/pages/forumDetail/index?forumId=${forumId}&forumTitle=${forumTitle}`
+      url: `/pages/forumDetail/index?forumId=${forumId}&forumTitle=${forumTitle}`
     })
   }
 
@@ -43,7 +43,7 @@ class ForumList extends Component<IProps, IStates>{
       <View className="forum__container">
         <View className="forum__publish">
           <View className="forum__publish--background"></View>
-          <Image className="icon" src="http://cdn.algbb.cn/forum/add.png" mode="aspectFill" onClick={() => { Taro.navigateTo({ url: '/client/pages/forumPublish/index' }) }} />
+          <Image className="icon" src="http://cdn.algbb.cn/forum/add.png" mode="aspectFill" onClick={() => { Taro.navigateTo({ url: '/pages/forumPublish/index' }) }} />
         </View>
         {forumList.map(forum => {
           const { forumId, forumAvatar, forumAuthor, timeAgo, forumImage, forumTitle, forumContent, forumLike, forumComment } = forum

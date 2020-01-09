@@ -28,7 +28,7 @@ class Title extends Component<IProps, IState> {
     return (
       <View className='title'>
         <View>{children}</View>
-        <View className='link' onClick={() => Taro.navigateTo({ url: `/client/pages/${link}/index` })}>更多</View>
+        <View className='link' onClick={() => Taro.navigateTo({ url: `/pages/${link}/index` })}>更多</View>
       </View>
     )
   }

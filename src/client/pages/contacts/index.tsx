@@ -30,7 +30,7 @@ class Contacts extends Component<IProps, IState> {
 
   handleGroupClick(contactsId: string, title: string): void {
     Taro.navigateTo({
-      url: `/client/pages/chatroom/index?to=${contactsId}&title=${title}`
+      url: `/pages/chatroom/index?to=${contactsId}&title=${title}`
     })
   }
 

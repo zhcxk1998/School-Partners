@@ -32,7 +32,7 @@ class CourseDetail extends Component<IProps, IState> {
 
   handleVideoClick() {
     Taro.navigateTo({
-      url: `/client/pages/courseVideo/index`
+      url: `/pages/courseVideo/index`
     })
   }
 

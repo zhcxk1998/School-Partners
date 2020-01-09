@@ -26,7 +26,7 @@ class courseStore {
       })
       this.courseDetail = data[0]
       await Taro.navigateTo({
-        url: `/client/pages/courseDetail/index`
+        url: `/pages/courseDetail/index`
       })
       Taro.setNavigationBarTitle({
         title

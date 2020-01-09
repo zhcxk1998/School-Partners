@@ -22,10 +22,10 @@ class Navigation extends Component<IProps, IState> {
 
   render() {
     const navigator: Array<{ title: string, icon: string, link: string }> = [
-      { title: '课程', icon: 'icon-course', link: '/client/pages/courseList/index' },
-      { title: '做题', icon: 'icon-exam', link: '/client/pages/exerciseList/index' },
+      { title: '课程', icon: 'icon-course', link: '/pages/courseList/index' },
+      { title: '做题', icon: 'icon-exam', link: '/pages/exerciseList/index' },
       { title: '分类', icon: 'icon-type', link: '' },
-      { title: '排行', icon: 'icon-rank', link: '/client/pages/rankList/index' }
+      { title: '排行', icon: 'icon-rank', link: '/pages/rankList/index' }
     ]
 
     return (

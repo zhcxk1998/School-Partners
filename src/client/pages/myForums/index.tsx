@@ -55,7 +55,7 @@ class MyForums extends Component<IProps, IStates>{
 
   handleModifyClick(forumId: number): void {
     Taro.navigateTo({
-      url: `/client/pages/forumModify/index?forumId=${forumId}`
+      url: `/pages/forumModify/index?forumId=${forumId}`
     })
   }
 
