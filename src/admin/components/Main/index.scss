@@ -1,0 +1,34 @@
+.index {
+  &__container {
+    width: 100%;
+    min-width: 1200px;
+
+    // &::-webkit-scrollbar {
+    //   width: 15px;
+    //   height: 15px;
+    // }
+
+    // &::-webkit-scrollbar-track-piece {
+    //   background: #fff;
+    // }
+
+    // &::-webkit-scrollbar-thumb {
+    //   background: #d7d7d7;
+    //   border-radius: 20px;
+    // }
+  }
+}
+
+::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d7d7d7;
+  border-radius: 20px;
+}
