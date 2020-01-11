@@ -8,16 +8,22 @@ const router = new Router()
 const app = websockify(new Koa());
 
 const routes = require('./routes/routes')
-const course = require('./routes/course')
-const exercise = require('./routes/exercise')
-const contact = require('./routes/contact')
-const chatroom = require('./routes/chatroom')
-const forum = require('./routes/forum')
-const websocket = require('./routes/socket')
+const {
+  course,
+  exercise,
+  contact,
+  chatroom,
+  forum,
+  websocket
+} = require('./routes/client')
+const {
+  login
+} = require('./routes/admin')
 
 app.use(cors())
 app.use(bodyParser())
 app.use(routes(router, { course, exercise, contact, chatroom, forum }))
+app.use(routes(router, { login }))
 app.ws.use(websocket);
 
 module.exports = app
