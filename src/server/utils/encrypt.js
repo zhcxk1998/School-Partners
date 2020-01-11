@@ -6,6 +6,11 @@ const getRandomSalt = () => {
   return crypto.randomBytes(10).toString('hex').slice(start, count)
 }
 
+const getEncrypt = (password) => {
+  return crypto.createHash('md5').update(password).digest('hex')
+}
+
 module.exports = {
-  getRandomSalt
+  getRandomSalt,
+  getEncrypt
 }

@@ -1,15 +1,10 @@
 const router = require('koa-router')()
-const crypto = require('crypto')
-const encrypt = require('../../utils/encrypt')
 const parse = require('../../utils/parse')
 const { query } = require('../../utils/query')
+const { getEncrypt } = require('../../utils/encrypt')
 
 router.post('/login', async (ctx) => {
   const { username, password } = ctx.request.body
-  const md5 = crypto.createHash('md5')
-  md5.update(password + encrypt)
-
-  const sign = md5.digest('hex')
   const responseBody = {
     code: 0,
     data: {}
@@ -17,7 +12,9 @@ router.post('/login', async (ctx) => {
 
   try {
     const { id: userId } = parse(await query(`select id from user_info where username = '${username}'`))[0]
-    const { password: verifySign } = parse(await query(`select password from user_password where user_id = '${userId}'`))[0]
+    const { password: verifySign, salt } = parse(await query(`select password, salt from user_password where user_id = '${userId}'`))[0]
+
+    const sign = getEncrypt(password + salt)
     if (sign === verifySign) {
       responseBody.data.msg = '登陆成功'
       responseBody.code = 200
