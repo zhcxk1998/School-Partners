@@ -1,4 +1,4 @@
-const generateTime = require('../utils/generateTime')
+const generateTime = require('../../utils/generateTime')
 
 let onlineUserSocket = {}
 let onlineUserInfo = {}
