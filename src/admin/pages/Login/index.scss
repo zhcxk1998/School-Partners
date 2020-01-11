@@ -12,7 +12,7 @@
   &__wrap {
     display: flex;
     border-radius: 20px;
-    box-shadow: 0 8px 16px #666;
+    box-shadow: 0 4px 8px #d7d7d7;
 
     &--left {
       width: 400px;
@@ -25,6 +25,8 @@
     }
 
     &--right {
+      overflow: hidden;
+      position: relative;
       width: 600px;
       height: 600px;
       background: #fff;
@@ -37,7 +39,7 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
-    background: rgba(51, 51, 51, 0.6);
+    background: rgba(51, 51, 51, 0.8);
     z-index: 2;
 
     &__container {
@@ -45,7 +47,6 @@
       top: 50%;
       left: 50%;
       width: 300px;
-      height: 330px;
       transform: translate(-50%, -50%);
       z-index: 3;
 
@@ -56,14 +57,38 @@
 
       .tips {
         height: 30px;
+        margin-bottom: 15px;
         color: #fff;
+        font-size: 24px;
         font-weight: bold;
+        line-height: 24px;
+        letter-spacing: 4px;
       }
     }
   }
 }
 
 .form {
+  &__decoration {
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+
+    .logo {
+      position: absolute;
+      bottom: 45px;
+      left: 55px;
+      color: #fff;
+      font-size: 50px;
+      font-weight: bold;
+      line-height: 50px;
+    }
+  }
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -136,12 +161,13 @@
     justify-content: flex-end;
     align-items: center;
     width: 80%;
+    margin-top: 20px;
 
     img {
       cursor: pointer;
       width: 28px;
       height: 28px;
-      margin: 15px 0 15px 10px;
+      margin: 0 0 0 10px;
     }
   }
 }

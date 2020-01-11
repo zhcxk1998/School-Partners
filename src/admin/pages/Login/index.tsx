@@ -25,6 +25,9 @@ const Login = () => {
       <div className="login__wrap">
         <div className="login__wrap--left" />
         <div className="login__wrap--right">
+          <div className="form__decoration">
+            <div className="logo">S</div>
+          </div>
           <div className="form__container">
             <div className="form__title">School-Partners<br />题库后台管理中心</div>
             <div className="form__wrap">
