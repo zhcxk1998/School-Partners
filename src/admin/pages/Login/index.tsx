@@ -1,10 +1,18 @@
-import React, { ComponentType, useState, useCallback, MouseEvent } from 'react'
-import { Checkbox } from 'antd'
+import React, { ComponentType, useState, useCallback, MouseEvent, FC, FormEvent } from 'react'
+import { Checkbox, Form, message } from 'antd'
+import { FormComponentProps } from 'antd/lib/form'
+import { RouteComponentProps } from 'react-router-dom'
+
+import LinkIcon from '@/admin/components/LinkIcon'
+import http from '@/admin/utils/http'
 
 import './index.scss'
 
-const Login = () => {
+type LoginProps = RouteComponentProps & FormComponentProps
+
+const Login: FC<LoginProps> = (props: LoginProps) => {
   const [isModalOpened, setIsModalOpened] = useState(false)
+  const { getFieldDecorator } = props.form
 
   const handleMaskClick = useCallback(
     (e: MouseEvent) => {
@@ -13,6 +21,22 @@ const Login = () => {
     },
     [isModalOpened]
   )
+
+  const handleFormSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    const { form } = props
+    form.validateFields(async (err, values) => {
+      if (!err) {
+        const { username, password } = values
+        const { data: { msg } } = await http.post('/login', {
+          username,
+          password
+        })
+        message.success(msg)
+        props.history.push('/')
+      }
+    })
+  }
 
   return (
     <div className="login__container">
@@ -30,21 +54,42 @@ const Login = () => {
           </div>
           <div className="form__container">
             <div className="form__title">School-Partners<br />题库后台管理中心</div>
-            <div className="form__wrap">
-              <i className="form__icon iconfont icon-yonghu" />
-              <input className="form__input" placeholder="用户名" />
-            </div>
-            <div className="form__wrap">
-              <i className="form__icon iconfont icon-mima" />
-              <input className="form__input" type="password" placeholder="密码" />
-            </div>
-            <Checkbox className="form__remember">记住密码</Checkbox>
-            <button className="form__button">立即登录</button>
+            <Form onSubmit={handleFormSubmit}>
+              <Form.Item>
+                {getFieldDecorator('username', {
+                  rules: [{ required: true, message: '请输入用户名!' }],
+                })(
+                  <div className="form__wrap">
+                    <i className="form__icon iconfont icon-yonghu" />
+                    <input className="form__input" placeholder="用户名" />
+                  </div>
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator('password', {
+                  rules: [{ required: true, message: '请输入密码!' }],
+                })(
+                  <div className="form__wrap">
+                    <i className="form__icon iconfont icon-mima" />
+                    <input className="form__input" type="password" placeholder="密码" />
+                  </div>
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator('isRemember', {
+                  valuePropName: 'checked',
+                  initialValue: false
+                })(
+                  <Checkbox className="form__remember">记住密码</Checkbox>
+                )}
+              </Form.Item>
+              <button className="form__button" type="submit">立即登录</button>
+            </Form>
             <div className="form__link">
               其他登录方式
-              <img src={require('../../assets/img/wechat.png')} onClick={() => setIsModalOpened(true)} />
-              <img src={require('../../assets/img/qq.png')} onClick={() => setIsModalOpened(true)} />
-              <img src={require('../../assets/img/weibo.png')} onClick={() => setIsModalOpened(true)} />
+              <LinkIcon icon="wechat.png" onClick={() => setIsModalOpened(true)} />
+              <LinkIcon icon="qq.png" onClick={() => setIsModalOpened(true)} />
+              <LinkIcon icon="weibo.png" onClick={() => setIsModalOpened(true)} />
             </div>
           </div>
         </div>
@@ -53,4 +98,4 @@ const Login = () => {
   )
 }
 
-export default Login as ComponentType
+export default Form.create({ name: 'loginForm' })(Login) as ComponentType
