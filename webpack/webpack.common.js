@@ -5,6 +5,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const tsImportPluginFactory = require('ts-import-plugin')
 
 const devMode = process.env.NODE_ENV !== 'production'
+const resolve = dir => path.join(__dirname, dir)
+
 module.exports = {
   entry: path.join(__dirname, '../src/admin/index.tsx'),
   plugins: [
@@ -18,59 +20,62 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['.js', '.jsx', 'json', '.ts', '.tsx']
+    extensions: ['.js', '.jsx', 'json', '.ts', '.tsx'],
+    alias: {
+      '@': resolve('../src')
+    }
   },
   module: {
     rules: [{
-        test: /\.(jsx|tsx|js|ts)$/,
-        loader: 'ts-loader',
-        options: {
-          transpileOnly: true,
-          getCustomTransformers: () => ({
-            before: [tsImportPluginFactory(
-              {
-                libraryName: 'antd',
-                libraryDirectory: 'es',
-                style: "css"
-              }
-            )]
-          }),
-          compilerOptions: {
-            module: 'es2015'
+      test: /\.(jsx|tsx|js|ts)$/,
+      loader: 'ts-loader',
+      options: {
+        transpileOnly: true,
+        getCustomTransformers: () => ({
+          before: [tsImportPluginFactory(
+            {
+              libraryName: 'antd',
+              libraryDirectory: 'es',
+              style: "css"
+            }
+          )]
+        }),
+        compilerOptions: {
+          module: 'es2015'
+        }
+      },
+      exclude: /node_modules/
+    }, {
+      test: /\.(sa|sc|c)ss$/,
+      use: [
+        devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+        'css-loader',
+        {
+          loader: "postcss-loader",
+          options: {
+            plugins: (loader) => []
           }
         },
-        exclude: /node_modules/
-      },{
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: "postcss-loader",
-            options: {
-              plugins: (loader) => []
-            }
-          },
-          'sass-loader',
-        ],
-      }, {
-        test: /\.html$/,
-        use: [
-          {
-            loader: 'html-loader',
-            options: { minimize: true },
-          },
-        ],
-      },{
-        test: /\.(png|jpg|gif|jpeg|svg)/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            limit: 500,
-            outputPath: 'images/',
-          }
-        }]
-      }
+        'sass-loader',
+      ],
+    }, {
+      test: /\.html$/,
+      use: [
+        {
+          loader: 'html-loader',
+          options: { minimize: true },
+        },
+      ],
+    }, {
+      test: /\.(png|jpg|gif|jpeg|svg)/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 500,
+          outputPath: 'images/',
+        }
+      }]
+    }
     ]
   },
   output: {
