@@ -99,14 +99,15 @@
   }
 
   &__title {
-    margin-bottom: 30px;
+    margin: 20px 0 30px 0;
     color: #333;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
   }
 
   &__wrap {
     position: relative;
+    margin-bottom: 5px;
   }
 
   &__icon {
@@ -122,7 +123,6 @@
   &__input {
     width: 80%;
     height: 40px;
-    margin: 15px 0;
     padding: 3px 10px 3px 30px;
     outline: none;
     color: #666;
@@ -137,8 +137,6 @@
   }
 
   &__remember {
-    display: inline;
-    margin: 20px 0;
     color: #999;
   }
 
