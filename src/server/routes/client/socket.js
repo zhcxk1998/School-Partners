@@ -115,4 +115,6 @@ const websocket = (ctx) => {
   })
 }
 
-module.exports = websocket
+module.exports = () => (
+  websocket
+)
