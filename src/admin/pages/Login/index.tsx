@@ -27,11 +27,14 @@ const Login: FC<LoginProps> = (props: LoginProps) => {
     const { form } = props
     form.validateFields(async (err, values) => {
       if (!err) {
-        const { username, password } = values
-        const { data: { msg } } = await http.post('/login', {
+        const { username, password, isRemember } = values
+        const { data: { msg, token } } = await http.post('/login', {
           username,
           password
         })
+        if (isRemember) {
+          localStorage.setItem('token', token)
+        }
         message.success(msg)
         props.history.push('/')
       }
