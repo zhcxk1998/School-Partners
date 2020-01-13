@@ -2,6 +2,7 @@ const router = require('koa-router')()
 const parse = require('../../utils/parse')
 const { query } = require('../../utils/query')
 const { getEncrypt } = require('../../utils/encrypt')
+const { generateToken } = require('../../utils/token')
 
 router.post('/login', async (ctx) => {
   const { username, password } = ctx.request.body
@@ -17,6 +18,7 @@ router.post('/login', async (ctx) => {
     const sign = getEncrypt(password + salt)
     if (sign === verifySign) {
       responseBody.data.msg = '登陆成功'
+      responseBody.data.token = generateToken({ username })
       responseBody.code = 200
     } else {
       responseBody.data.msg = '用户名或密码错误'
