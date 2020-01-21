@@ -22,7 +22,8 @@ const {
 } = require('./routes/client')
 const {
   login,
-  info
+  info,
+  register
 } = require('./routes/admin')
 
 app.use(cors())
@@ -34,6 +35,6 @@ app.use(verifyToken())
 app.use(routes(router, { course, exercise, contact, chatroom, forum }))
 app.ws.use(websocket());
 /* 管理端 */
-app.use(routes(router, { login, info }))
+app.use(routes(router, { login, info, register }))
 
 module.exports = app
