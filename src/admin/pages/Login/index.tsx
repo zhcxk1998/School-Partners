@@ -1,7 +1,7 @@
 import React, { ComponentType, useState, useCallback, MouseEvent, FC, FormEvent } from 'react'
 import { Checkbox, Form, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, Link } from 'react-router-dom'
 
 import LinkIcon from '@/admin/components/LinkIcon'
 import http from '@/admin/utils/http'
@@ -27,14 +27,12 @@ const Login: FC<LoginProps> = (props: LoginProps) => {
     const { form } = props
     form.validateFields(async (err, values) => {
       if (!err) {
-        const { username, password, isRemember } = values
+        const { username, password } = values
         const { data: { msg, token } } = await http.post('/login', {
           username,
           password
         })
-        if (isRemember) {
-          localStorage.setItem('token', token)
-        }
+        localStorage.setItem('token', token)
         message.success(msg)
         props.history.push('/')
       }
@@ -88,11 +86,14 @@ const Login: FC<LoginProps> = (props: LoginProps) => {
               </Form.Item>
               <button className="form__button" type="submit">立即登录</button>
             </Form>
-            <div className="form__link">
-              其他登录方式
-              <LinkIcon icon="wechat.png" onClick={() => setIsModalOpened(true)} />
-              <LinkIcon icon="qq.png" onClick={() => setIsModalOpened(true)} />
-              <LinkIcon icon="weibo.png" onClick={() => setIsModalOpened(true)} />
+            <div className="form__footer">
+              <Link to="/register">立即注册</Link>
+              <div className="form__link">
+                其他登录方式
+                <LinkIcon icon="wechat.png" onClick={() => setIsModalOpened(true)} />
+                <LinkIcon icon="qq.png" onClick={() => setIsModalOpened(true)} />
+                <LinkIcon icon="weibo.png" onClick={() => setIsModalOpened(true)} />
+              </div>
             </div>
           </div>
         </div>

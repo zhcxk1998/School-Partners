@@ -154,12 +154,27 @@
     background-image: linear-gradient(120deg, #66a6ff 0%, #6c62f8 100%);
   }
 
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    margin-top: 20px;
+    color: #666;
+
+    a {
+      color: #666;
+
+      &:hover {
+        color: #1890ff;
+      }
+    }
+  }
+
   &__link {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 80%;
-    margin-top: 20px;
 
     img {
       cursor: pointer;
