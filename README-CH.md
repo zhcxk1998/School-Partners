@@ -17,9 +17,11 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
 ## 技术选型
 
-前端：Taro + 微信小程序 + Echarts
+客户端：Taro + 微信小程序 + Echarts
 
-后端：Node.js + MySql + websocket
+服务端：Node.js + MySql + websocket
+
+管理端：React + TypeScript
 
 其他：七牛云存储
 
@@ -36,6 +38,7 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
 ## 运行截图
 
+> 客户端
 ### 1. 主页
 ![](http://cdn.algbb.cn/screenshots/index.png)
 
@@ -69,14 +72,20 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 ### 11. 日程管理
 ![](http://cdn.algbb.cn/screenshots/schedule.png)
 
+> 管理端
+
+### 1. 登录界面
+![](http://cdn.algbb.cn/screenshots/school-partners/管理端登录.png)
+
 ## 安装运行
 
-* ##### 第一步
+* #### 第一步
     * 克隆项目到本地`git clone http://github.com/zhcxk1998/School-Partners
 * #### 第二步
     * `cnpm i`安装依赖
 * #### 第三步
-    * 构建运行服务`npm run dev:weapp`
+    * 构建小程序运行服务`npm run dev:weapp`
+    * 构建管理端 `npm run dev`
 * #### 第四部
     * 在微信小程序开发工具中预览
 
@@ -97,6 +106,13 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
            -- [routes]            // 路由目录
            -- [utils]             // 工具函数
            -- [middlewares]       // 中间件
+        -- [admin]                // 管理端代码
+           -- [assets]            // 静态文件
+           -- [components]        // 组件文件
+           -- [pages]             // 页面文件
+           -- [store]             // 状态管理
+           -- [styles]            // 样式文件
+           -- [utils]             // 工具包函数
     |-- .gitignore                // git忽略配置
     |-- package-lock.json         // npm
     |-- package.json              // npm

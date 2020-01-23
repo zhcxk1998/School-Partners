@@ -18,9 +18,11 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
 ## Technology Selection
 
-The Front End：Taro + WeChat Applet + Echarts
+The Client：Taro + WeChat Applet + Echarts
 
 The Back End：Node.js + MySql + websocket
+
+The Admin：React + TypeScript
 
 Other：Qiniu Cloud
 
@@ -37,6 +39,7 @@ Other：Qiniu Cloud
 
 ## Screenshot
 
+> Client
 ### 1. Index
 ![](http://cdn.algbb.cn/screenshots/index.png)
 
@@ -70,6 +73,11 @@ Other：Qiniu Cloud
 ### 11. Schedule management
 ![](http://cdn.algbb.cn/screenshots/schedule.png)
 
+> Admin
+
+### 1. Login Page
+![](http://cdn.algbb.cn/screenshots/school-partners/管理端登录.png)
+
 ## Installation operation
 
 * ##### First
@@ -78,6 +86,7 @@ Other：Qiniu Cloud
     * `cnpm i` Install dependencies
 * #### third
     * Build run services `npm run dev:weapp`
+    * Build run admin `npm run dev`
 * #### fourth
     * Preview in the WeChat applet development tool
 
@@ -98,6 +107,13 @@ Other：Qiniu Cloud
            -- [routes]            // Routing directory
            -- [utils]             // Tool function
            -- [middlewares]       // The middleware
+        -- [client]               // Admin code
+           -- [assets]            // Static files
+           -- [components]        // Component files
+           -- [pages]             // Page file
+           -- [store]             // State management
+           -- [styles]            // The style file
+           -- [utils]             // Toolkit function
     |-- .gitignore                // Git ignore configuration
     |-- package-lock.json         // npm
     |-- package.json              // npm
