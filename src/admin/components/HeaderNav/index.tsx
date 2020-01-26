@@ -1,91 +1,44 @@
-import React, { Component } from 'react'
-import { Icon } from 'antd'
-import { Link, withRouter, RouteComponentProps } from 'react-router-dom'
+import React, { FC } from 'react'
+import { withRouter, RouteComponentProps } from 'react-router-dom'
+import { Menu, Dropdown, Icon } from 'antd'
 
 import './index.scss'
 
-interface IProps extends RouteComponentProps {
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <Icon type="user" />
+      个人信息
+    </Menu.Item>
+    <Menu.Item>
+      <Icon type="setting" />
+      管理设置
+    </Menu.Item>
+    <Menu.Divider />
+    <Menu.Item>
+      <Icon type="poweroff" />
+      退出登录
+    </Menu.Item>
+  </Menu>
+)
 
-}
-
-interface IStates {
-  currentPageIndex: number
-}
-
-const linkList: Array<{ name: string, link: string }> = [{
-  name: '城市', link: '#'
-}, {
-  name: '首页', link: '#'
-}, {
-  name: '课程', link: '#'
-}, {
-  name: '圈子', link: '#'
-}, {
-  name: 'APP', link: '#'
-}, {
-  name: '资讯', link: '#'
-}, {
-  name: '关于我们', link: '#'
-}]
-
-class Header extends Component<IProps, IStates>{
-  constructor(props: IProps) {
-    super(props)
-    this.state = {
-      currentPageIndex: 1
-    }
-  }
-
-  componentDidMount(): void {
-    const { location: { pathname } } = this.props
-    const currentLinkIndex: number = linkList.findIndex(({ link }) => link === pathname)
-    this.setState({
-      currentPageIndex: currentLinkIndex
-    })
-  }
-
-  componentDidUpdate(preProps: IProps) {
-    const pathIsChanged: boolean = preProps.location.pathname !== this.props.location.pathname
-    if (pathIsChanged) {
-      const { location: { pathname } } = this.props
-      const currentLinkIndex: number = linkList.findIndex(({ link }) => link === pathname)
-      this.setState({
-        currentPageIndex: currentLinkIndex
-      })
-    }
-  }
-
-  handleLinkClick(currentPageIndex: number): void {
-    this.props.history.push(linkList[currentPageIndex].link)
-  }
-
-  render() {
-    const { currentPageIndex } = this.state
-    return (
-      <div className="header__container">
-        <div className="header__wrap">
-          <img className="logo" />
-          <div className="link__container">
-            {linkList.map((item, index) => {
-              const { name, link } = item
-              return (
-                <div className="link__wrap" onClick={() => this.handleLinkClick(index)} key={index}>
-                  <Link className={`link__item ${index === currentPageIndex && 'link__item--active'}`} to={link}>
-                    {name}
-                  </Link>
-                </div>
-              )
-            })}
-          </div>
-          <div className="action__container">
-            <button className="action__button">我要发布</button>
-            <Link to="/register"><button className="action__button action__button--register">注册</button></Link>
-            <Link to="/login"><button className="action__button action__button--login">登录</button></Link>
-          </div>
+const HeaderNav: FC<RouteComponentProps> = () => {
+  return (
+    <div className="header__container">
+      <div className="header__wrap">
+        <div className="logo">
+          School-Partners
         </div>
+        <Dropdown overlay={menu}>
+          <div className="info">
+            <span>zhcxk1998</span>
+            <img src="http://cdn.algbb.cn/avatar" width="35" height="35" />
+          </div>
+        </Dropdown>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-export default withRouter(Header)
+
+export default withRouter(HeaderNav)
