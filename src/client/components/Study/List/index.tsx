@@ -36,9 +36,9 @@ class List extends Component<IProps, IState> {
     return hotExerciseList && hotExerciseList.slice().length !== 0 ? (
       <View className='list-container'>
         {hotExerciseList.map((item, index) => {
-          const { exerciseCid, exerciseName, exerciseContent } = item;
+          const { exerciseId, exerciseName, exerciseContent } = item;
           return (
-            <View className='list-wrap' key={exerciseCid} onClick={() => { getExerciseDetail(exerciseCid) }}>
+            <View className='list-wrap' key={exerciseId} onClick={() => { getExerciseDetail(exerciseId) }}>
               <View className='list-preview'>
                 <View className='iconfont icon-tiku'></View>
               </View>
