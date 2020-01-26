@@ -31,7 +31,7 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   }
 
   return (
-    <Sider width={200} style={{ background: '#fff', height: 'calc(100vh - 50px)' }}>
+    <Sider className="sider-nav__container">
       <Menu
         mode="inline"
         defaultSelectedKeys={['/admin']}
