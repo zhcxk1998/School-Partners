@@ -27,7 +27,7 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   }, [pathname])
 
   const handleMenuChange = (openedKey: Array<string>): void => {
-    setOpenedKeys([openedKey[1]])
+    setOpenedKeys(openedKey)
   }
 
   return (
