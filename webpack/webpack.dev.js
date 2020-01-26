@@ -16,7 +16,7 @@ module.exports = merge(common, {
     historyApiFallback: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000/',
+        target: 'http://localhost:4000/',
         pathRewrite: { '^/api': '' },
         changeOrigin: true,
         secure: false,
