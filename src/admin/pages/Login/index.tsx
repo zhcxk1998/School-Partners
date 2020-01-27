@@ -34,7 +34,7 @@ const Login: FC<LoginProps> = (props: LoginProps) => {
         })
         localStorage.setItem('token', token)
         message.success(msg)
-        props.history.push('/')
+        props.history.push('/admin')
       }
     })
   }
