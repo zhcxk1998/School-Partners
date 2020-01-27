@@ -14,7 +14,8 @@ const {
 const {
   login,
   info,
-  register
+  register,
+  exercises
 } = require('../routes/admin')
 
 admin.use(cors())
@@ -23,6 +24,6 @@ admin.use(bodyParser())
 admin.use(interceptToken())
 admin.use(verifyToken())
 /* 管理端 */
-admin.use(routes(router, { login, info, register }))
+admin.use(routes(router, { login, info, register, exercises }))
 
 module.exports = admin
