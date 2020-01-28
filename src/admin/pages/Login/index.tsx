@@ -1,10 +1,11 @@
 import React, { ComponentType, useState, useCallback, MouseEvent, FC, FormEvent } from 'react'
-import { Checkbox, Form, message } from 'antd'
+import { Checkbox, Form, message, Spin } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { RouteComponentProps, Link } from 'react-router-dom'
+import { useService } from '@/admin/hooks'
+import { FetchConfig } from '@/admin/modals/http'
 
 import LinkIcon from '@/admin/components/LinkIcon'
-import http from '@/admin/utils/http'
 
 import './index.scss'
 
@@ -12,7 +13,20 @@ type LoginProps = RouteComponentProps & FormComponentProps
 
 const Login: FC<LoginProps> = (props: LoginProps) => {
   const [isModalOpened, setIsModalOpened] = useState(false)
+  const [fetchConfig, setFetchConfig] = useState<FetchConfig>({
+    url: '', method: 'GET', params: {}, config: {}
+  })
+  const { response = {} } = useService(fetchConfig)
   const { getFieldDecorator } = props.form
+  const { code = 0, data = {} } = response || {}
+
+  /* 登录成功 */
+  if (code === 200) {
+    const { msg, token } = data
+    localStorage.setItem('token', token)
+    message.success(msg)
+    props.history.push('/admin')
+  }
 
   const handleMaskClick = useCallback(
     (e: MouseEvent) => {
@@ -28,13 +42,13 @@ const Login: FC<LoginProps> = (props: LoginProps) => {
     form.validateFields(async (err, values) => {
       if (!err) {
         const { username, password } = values
-        const { data: { msg, token } } = await http.post('/login', {
-          username,
-          password
-        })
-        localStorage.setItem('token', token)
-        message.success(msg)
-        props.history.push('/admin')
+        const loginConfig: FetchConfig = {
+          url: '/login',
+          method: 'POST',
+          params: { username, password },
+          config: {}
+        }
+        setFetchConfig(Object.assign({}, loginConfig))
       }
     })
   }
