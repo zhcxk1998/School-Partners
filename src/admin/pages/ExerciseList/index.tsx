@@ -1,11 +1,12 @@
 import React, { FC, useState, useEffect, ChangeEvent } from 'react'
-import { Table, Button, Popconfirm, Tag, Input, Empty } from 'antd';
+import { Table, Button, Popconfirm, Tag, Input, Empty, message } from 'antd';
 import { ColumnProps } from 'antd/es/table'
 import { CustomBreadcrumb } from '@/admin/components'
 import { ExerciseListProps } from '@/admin/modals/exerciseList'
 import { generateDifficulty, generateExerciseType } from '@/admin/utils/common'
 import { FetchConfig } from '@/admin/modals/http'
 import { useService } from '@/admin/hooks'
+import http from '@/admin/utils/http'
 
 import './index.scss'
 
@@ -16,9 +17,11 @@ const ExerciseList: FC = () => {
   const [fetchConfig, setFetchConfig] = useState<FetchConfig>({
     url: '', method: 'GET', params: {}, config: {}
   })
+  const [fetchFlag, setFetchFlag] = useState<number>(0)
   const hasSelected: boolean = selectedRowKeys.length > 0
 
   useEffect(() => {
+    console.log('start: ', fetchFlag)
     const fetchConfig: FetchConfig = {
       url: '/exercises',
       method: 'GET',
@@ -26,7 +29,7 @@ const ExerciseList: FC = () => {
       config: {}
     }
     setFetchConfig(Object.assign({}, fetchConfig))
-  }, [])
+  }, [fetchFlag])
 
   const handleSelectedChange = (selectedRowKeys: number[]) => {
     console.log(selectedRowKeys)
@@ -42,8 +45,10 @@ const ExerciseList: FC = () => {
     console.log(exerciseId)
   }
 
-  const handleDeleteClick = (exerciseId: number) => {
-    console.log(exerciseId)
+  const handleDeleteClick = async (exerciseId: number) => {
+    const { data: { msg } } = await http.delete(`/exercises/${exerciseId}`)
+    setFetchFlag(fetchFlag + 1)
+    message.success(msg)
   }
 
   const handleBatchDelete = () => {
@@ -63,7 +68,7 @@ const ExerciseList: FC = () => {
       width: 180,
       filteredValue: [searchValue],
       onFilter: (_, row) => (
-        row.exerciseName.indexOf(searchValue) !== -1
+        row.exerciseName.toString().indexOf(searchValue) !== -1
       )
     }, {
       title: '题目内容',
