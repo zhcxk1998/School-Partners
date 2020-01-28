@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { message } from 'antd'
+import { FetchConfig } from '@/admin/modals/http'
 import axios from 'axios'
 
 const instance = axios.create({
@@ -33,20 +34,39 @@ instance.interceptors.response.use(
   },
   error => {
     const { response: { status } } = error
-    if (status === 401) {
-      localStorage.removeItem('token')
-      window.location.href = './#/login'
+    switch (status) {
+      case 401:
+        localStorage.removeItem('token')
+        window.location.href = './#/login'
+        break;
+      case 504:
+        message.error('代理请求失败')
     }
     return Promise.reject(error)
   }
 )
 
-const useService = (url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GET', params?: object, config?: object) => {
+const useService = (fetchConfig: FetchConfig) => {
+  const preParams = useRef({})
+  const [callback, { isLoading, error, response }] = useServiceCallback(fetchConfig)
+
+  useEffect(() => {
+    if (preParams.current !== fetchConfig && fetchConfig.url !== '') {
+      preParams.current = fetchConfig
+      callback()
+    }
+  })
+
+  return { isLoading, error, response }
+}
+
+const useServiceCallback = (fetchConfig: FetchConfig) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [response, setResponse] = useState<any>(null)
   const [error, setError] = useState<any>(null)
+  const { url, method, params = {}, config = {} } = fetchConfig
 
-  useEffect(
+  const callback = useCallback(
     () => {
       setIsLoading(true)
       setError(null)
@@ -57,18 +77,19 @@ const useService = (url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE' = 'GE
       })
         .then((response: any) => {
           setIsLoading(false)
-          setResponse(response)
+          setResponse(Object.assign({}, response))
         })
         .catch((error: any) => {
           const { response: { data } } = error
           const { data: { msg } } = data
           message.error(msg)
           setIsLoading(false)
-          setError(error)
+          setError(Object.assign({}, error))
         })
-    },
-    [])
-  return { isLoading, error, response }
+    }, [fetchConfig]
+  )
+
+  return [callback, { isLoading, error, response }] as const
 }
 
 export default useService
