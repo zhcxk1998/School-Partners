@@ -32,9 +32,13 @@ instance.interceptors.response.use(
   },
   error => {
     const { response: { status } } = error
-    if (status === 401) {
-      localStorage.removeItem('token')
-      window.location.href = './#/login'
+    switch (status) {
+      case 401:
+        localStorage.removeItem('token')
+        window.location.href = './#/login'
+        break;
+      case 504:
+        message.error('代理请求失败')
     }
     return Promise.reject(error)
   }
@@ -66,5 +70,16 @@ const post = (url: string, params: object, options?: object): Promise<any> => {
 
 export default {
   get,
-  post
+  post,
+  delete: (url: string, options?: object): Promise<any> => {
+    return new Promise(async (resolve, reject) => {
+      instance.delete(url, options).then((data) => {
+        resolve(data)
+      }).catch(({ response }) => {
+        const { data: { data } } = response
+        message.error(data.msg)
+        return reject()
+      })
+    })
+  }
 }
