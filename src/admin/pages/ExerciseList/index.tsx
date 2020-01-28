@@ -1,10 +1,10 @@
-import React, { FC, useState, ChangeEvent } from 'react'
+import React, { FC, useState, useEffect, ChangeEvent } from 'react'
 import { Table, Button, Popconfirm, Tag, Input, Empty } from 'antd';
 import { ColumnProps } from 'antd/es/table'
 import { CustomBreadcrumb } from '@/admin/components'
 import { ExerciseListProps } from '@/admin/modals/exerciseList'
 import { generateDifficulty, generateExerciseType } from '@/admin/utils/common'
-
+import { FetchConfig } from '@/admin/modals/http'
 import { useService } from '@/admin/hooks'
 
 import './index.scss'
@@ -13,7 +13,20 @@ const ExerciseList: FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(0)
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
+  const [fetchConfig, setFetchConfig] = useState<FetchConfig>({
+    url: '', method: 'GET', params: {}, config: {}
+  })
   const hasSelected: boolean = selectedRowKeys.length > 0
+
+  useEffect(() => {
+    const fetchConfig: FetchConfig = {
+      url: '/exercises',
+      method: 'GET',
+      params: {},
+      config: {}
+    }
+    setFetchConfig(Object.assign({}, fetchConfig))
+  }, [])
 
   const handleSelectedChange = (selectedRowKeys: number[]) => {
     console.log(selectedRowKeys)
@@ -114,9 +127,9 @@ const ExerciseList: FC = () => {
       )
     }
   ]
-  const { isLoading = false, response } = useService('/exercises', 'GET')
-  const { exerciseList = [], total: totalPage = 0 } = response || {}
-
+  const { isLoading = false, response } = useService(fetchConfig)
+  const { data = {} } = response || {}
+  const { exerciseList = [], total: totalPage = 0 } = data
   return (
     <div>
       <CustomBreadcrumb list={['内容管理', '题库管理']} />
