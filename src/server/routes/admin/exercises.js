@@ -28,7 +28,7 @@ router.get('/exercises', async (ctx) => {
 
 router.get('/exercises/:id', async (ctx) => {
   const id = ctx.params.id
-  const res = await query(`SELECT * FROM exercise_detail WHERE exercise_cid = ${id}`)
+  const res = await query(`SELECT * FROM exercise_detail WHERE exercise_id = ${id}`)
   const isExist = res.length !== 0
   if (!isExist) {
     ctx.response.status = 404
@@ -41,9 +41,23 @@ router.get('/exercises/:id', async (ctx) => {
   }
 })
 
-router.delete('/exercises:id', async (ctx) => {
+router.delete('/exercises/:id', async (ctx) => {
   const id = ctx.params.id
-  console.log(id)
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    await query(`DELETE FROM exercise_list WHERE id = ${id}`)
+    responseBody.data.msg = '删除成功'
+    responseBody.code = 200
+  } catch (e) {
+    responseBody.data.msg = '无此课程'
+    responseBody.code = 404
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
 })
 
 module.exports = router
