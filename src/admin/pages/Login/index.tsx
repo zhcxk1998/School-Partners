@@ -1,10 +1,9 @@
 import React, { ComponentType, useState, useCallback, MouseEvent, FC, FormEvent } from 'react'
-import { Checkbox, Form, message, Spin } from 'antd'
+import { Checkbox, Form, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { RouteComponentProps, Link } from 'react-router-dom'
 import { useService } from '@/admin/hooks'
 import { FetchConfig } from '@/admin/modals/http'
-
 import LinkIcon from '@/admin/components/LinkIcon'
 
 import './index.scss'

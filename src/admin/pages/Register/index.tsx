@@ -2,8 +2,8 @@ import React, { ComponentType, useState, useCallback, MouseEvent, FC, FormEvent 
 import { Form, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { RouteComponentProps, Link } from 'react-router-dom'
-
-import http from '@/admin/utils/http'
+import { useService } from '@/admin/hooks'
+import { FetchConfig } from '@/admin/modals/http'
 
 import './index.scss'
 
@@ -11,7 +11,19 @@ type RegisterProps = RouteComponentProps & FormComponentProps
 
 const Register: FC<RegisterProps> = (props: RegisterProps) => {
   const [isModalOpened, setIsModalOpened] = useState(false)
+  const [fetchConfig, setFetchConfig] = useState<FetchConfig>({
+    url: '', method: 'GET', params: {}, config: {}
+  })
+  const { response = {} } = useService(fetchConfig)
   const { getFieldDecorator } = props.form
+  const { code = 0, data = {} } = response || {}
+
+  if (code === 200) {
+    const { msg, token } = data
+    localStorage.setItem('token', token)
+    message.success(msg)
+    props.history.push('/admin')
+  }
 
   const handleMaskClick = useCallback(
     (e: MouseEvent) => {
@@ -27,15 +39,13 @@ const Register: FC<RegisterProps> = (props: RegisterProps) => {
     form.validateFields(async (err, values) => {
       if (!err) {
         const { username, password, phone, email } = values
-        const { data: { msg, token } } = await http.post('/register', {
-          username,
-          password,
-          phone,
-          email
-        })
-        localStorage.setItem('token', token)
-        message.success(msg)
-        props.history.push('/')
+        const registerConfig: FetchConfig = {
+          url: '/register',
+          method: 'POST',
+          params: { username, password, phone, email },
+          config: {}
+        }
+        setFetchConfig(Object.assign({}, registerConfig))
       }
     })
   }
