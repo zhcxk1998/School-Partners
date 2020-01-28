@@ -18,8 +18,11 @@ router.get('/exercises', async (ctx) => {
     }
   })
   ctx.response.body = {
-    exerciseList: parse(response),
-    total: response.length
+    code: 200,
+    data: {
+      exerciseList: parse(response),
+      total: response.length
+    }
   };
 })
 
@@ -36,6 +39,11 @@ router.get('/exercises/:id', async (ctx) => {
   else {
     ctx.response.body = parse(res)[0]
   }
+})
+
+router.delete('/exercises:id', async (ctx) => {
+  const id = ctx.params.id
+  console.log(id)
 })
 
 module.exports = router
