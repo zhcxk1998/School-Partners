@@ -3,6 +3,6 @@ export interface ExerciseInfo {
   exerciseName: string,
   finsihCount: number,
   totalCount: number,
-  difficultyDegree: number,
+  exerciseDifficulty: number,
   exerciseType: number
 }

@@ -1,6 +1,7 @@
 import React, { FC, useState, useEffect, ChangeEvent } from 'react'
 import { Table, Button, Popconfirm, Tag, Input, Empty, message } from 'antd';
 import { ColumnProps } from 'antd/es/table'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { CustomBreadcrumb } from '@/admin/components'
 import { ExerciseListProps } from '@/admin/modals/exerciseList'
 import { generateDifficulty, generateExerciseType } from '@/admin/utils/common'
@@ -10,7 +11,7 @@ import http from '@/admin/utils/http'
 
 import './index.scss'
 
-const ExerciseList: FC = () => {
+const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   const [currentPage, setCurrentPage] = useState<number>(0)
   const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([])
   const [searchValue, setSearchValue] = useState<string>('')
@@ -19,6 +20,7 @@ const ExerciseList: FC = () => {
   })
   const [fetchFlag, setFetchFlag] = useState<number>(0)
   const hasSelected: boolean = selectedRowKeys.length > 0
+  const { history } = props
 
   useEffect(() => {
     const fetchConfig: FetchConfig = {
@@ -96,18 +98,18 @@ const ExerciseList: FC = () => {
       sorter: (a, b) => a.exerciseType - b.exerciseType
     }, {
       title: '难易度',
-      dataIndex: 'difficultyDegree',
-      key: 'difficultyDegree',
+      dataIndex: 'exerciseDifficulty',
+      key: 'exerciseDifficulty',
       width: 100,
-      render: difficultyDegree => {
-        const { difficulty, color } = generateDifficulty(difficultyDegree)
+      render: exerciseDifficulty => {
+        const { difficulty, color } = generateDifficulty(exerciseDifficulty)
         return (
           <Tag color={color}>
             {difficulty}
           </Tag>
         )
       },
-      sorter: (a, b) => a.difficultyDegree - b.difficultyDegree
+      sorter: (a, b) => a.exerciseDifficulty - b.exerciseDifficulty
     }, {
       title: '是否热门',
       dataIndex: 'isHot',
@@ -145,7 +147,7 @@ const ExerciseList: FC = () => {
       <CustomBreadcrumb list={['内容管理', '题库管理']} />
       <div className="exercise-list__container">
         <div className="exercise-list__header">
-          <Button type="primary" style={{ marginRight: 10 }}>新增题目</Button>
+          <Button type="primary" style={{ marginRight: 10 }} onClick={() => { history.push('/admin/content/exercise-publish') }}>新增题目</Button>
           <Popconfirm
             disabled={!hasSelected}
             title="确定删除这些课程吗?"
@@ -193,4 +195,4 @@ const ExerciseList: FC = () => {
   )
 }
 
-export default ExerciseList
+export default withRouter(ExerciseList)

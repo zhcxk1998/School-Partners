@@ -7,7 +7,7 @@ router.get('/exercises', async (ctx) => {
   const response = []
   const res = await query(QUERY_TABLE('exercise_list'));
   res.map((item, index) => {
-    const { id, exercise_name, exercise_content, is_hot, finish_count, total_count, difficulty_degree, exercise_type } = item
+    const { id, exercise_name, exercise_content, is_hot, finish_count, total_count, exercise_difficulty, exercise_type } = item
     response[index] = {
       exerciseId: id,
       exerciseName: exercise_name,
@@ -15,7 +15,7 @@ router.get('/exercises', async (ctx) => {
       isHot: is_hot,
       finsihCount: finish_count,
       totalCount: total_count,
-      difficultyDegree: difficulty_degree,
+      exerciseDifficulty: exercise_difficulty,
       exerciseType: exercise_type
     }
   })

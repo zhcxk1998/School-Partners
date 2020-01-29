@@ -3,7 +3,7 @@ interface ExerciseListProps {
   exerciseName: string,
   exerciseContent: string,
   exerciseType: number,
-  difficultyDegree: number,
+  exerciseDifficulty: number,
   isHot: boolean,
   key: string
 }

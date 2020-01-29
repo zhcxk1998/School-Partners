@@ -42,13 +42,13 @@ class CourseList extends Component<IProps, IState>{
     this.setState({ searchValue })
   }
 
-  generateDifficulty(difficultyDegree: number): string {
+  generateDifficulty(exerciseDifficulty: number): string {
     const difficultyList = {
       1: '简单',
       2: '中等',
       3: '困难'
     }
-    return difficultyList[difficultyDegree]
+    return difficultyList[exerciseDifficulty]
   }
 
   generateType(exerciseType: number): string {
@@ -69,12 +69,12 @@ class CourseList extends Component<IProps, IState>{
         />
         <View className="exercise-list__container">
           {exerciseList.map(exercise => {
-            const { exerciseCid, exerciseName, finsihCount, totalCount, difficultyDegree, exerciseType } = exercise
+            const { exerciseCid, exerciseName, finsihCount, totalCount, exerciseDifficulty, exerciseType } = exercise
             return (
               <View className="exercise-list__wrap" key={exerciseCid}>
                 <View className="name">{exerciseName}</View>
                 <View className="status-bar">
-                  {finsihCount}人完成&emsp;共{totalCount}题&emsp;-{this.generateDifficulty(difficultyDegree)}-&emsp;
+                  {finsihCount}人完成&emsp;共{totalCount}题&emsp;-{this.generateDifficulty(exerciseDifficulty)}-&emsp;
                   <View className={`type ${exerciseType === 2 ? 'type--charge' : ''}`}>{this.generateType(exerciseType)}</View>
                 </View>
                 <AtIcon className="icon" value='edit' />
