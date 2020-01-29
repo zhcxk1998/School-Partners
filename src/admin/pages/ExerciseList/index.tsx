@@ -21,7 +21,6 @@ const ExerciseList: FC = () => {
   const hasSelected: boolean = selectedRowKeys.length > 0
 
   useEffect(() => {
-    console.log('start: ', fetchFlag)
     const fetchConfig: FetchConfig = {
       url: '/exercises',
       method: 'GET',
@@ -48,11 +47,17 @@ const ExerciseList: FC = () => {
   const handleDeleteClick = async (exerciseId: number) => {
     const { data: { msg } } = await http.delete(`/exercises/${exerciseId}`)
     setFetchFlag(fetchFlag + 1)
+    setSelectedRowKeys([])
     message.success(msg)
   }
 
-  const handleBatchDelete = () => {
-    console.log(selectedRowKeys)
+  const handleBatchDelete = async () => {
+    const { data: { msg } } = await http.delete(`/exercises`, {
+      data: selectedRowKeys
+    })
+    setFetchFlag(fetchFlag + 1)
+    setSelectedRowKeys([])
+    message.success(msg)
   }
 
   const rowSelection = {
@@ -141,9 +146,16 @@ const ExerciseList: FC = () => {
       <div className="exercise-list__container">
         <div className="exercise-list__header">
           <Button type="primary" style={{ marginRight: 10 }}>新增题目</Button>
-          <Button type="danger"
+          <Popconfirm
             disabled={!hasSelected}
-            onClick={handleBatchDelete}>批量删除</Button>
+            title="确定删除这些课程吗?"
+            onConfirm={handleBatchDelete}
+            okText="确定"
+            cancelText="取消"
+          >
+            <Button type="danger" disabled={!hasSelected}>批量删除</Button>
+          </Popconfirm>
+
           <Input.Search
             className="search__container"
             value={searchValue}
