@@ -147,7 +147,7 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
       <CustomBreadcrumb list={['内容管理', '题库管理']} />
       <div className="exercise-list__container">
         <div className="exercise-list__header">
-          <Button type="primary" style={{ marginRight: 10 }} onClick={() => { history.push('/admin/content/exercise-publish') }}>新增题目</Button>
+          <Button type="primary" style={{ marginRight: 10 }} onClick={() => { history.push('/admin/content/exercise-publish') }}>新增题库</Button>
           <Popconfirm
             disabled={!hasSelected}
             title="确定删除这些课程吗?"
