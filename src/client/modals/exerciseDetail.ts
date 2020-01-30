@@ -6,3 +6,13 @@ export interface ExerciseInfo {
   exerciseDifficulty: number,
   exerciseType: number
 }
+
+export interface TopicList {
+  topicContent: string,
+  topicType: number,
+  topicAnswer: number[],
+  topicOptions: {
+    id: number,
+    option: string
+  }[]
+}

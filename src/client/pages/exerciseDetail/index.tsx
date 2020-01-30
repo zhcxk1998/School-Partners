@@ -43,8 +43,8 @@ class Exam extends Component<IProps, {}> {
   }
 
   generateTab(): Array<{ title: string }> {
-    const { exerciseStore: { exerciseDetail } } = this.props;
-    return Array.from({ length: exerciseDetail.length }).map((_, index) => ({ title: (index + 1).toString() }))
+    const { exerciseStore: { topicList } } = this.props;
+    return Array.from({ length: topicList.length }).map((_, index) => ({ title: (index + 1).toString() }))
   }
 
   switchFontSize(type: number): void {
@@ -53,7 +53,7 @@ class Exam extends Component<IProps, {}> {
   }
 
   render() {
-    const { exerciseStore: { currentPage, exerciseDetail, theme } } = this.props;
+    const { exerciseStore: { currentPage, topicList, theme } } = this.props;
     const tabList = this.generateTab();
     return (
       <View className={`exam-container ${theme}`}>
@@ -62,7 +62,7 @@ class Exam extends Component<IProps, {}> {
           scroll
           tabList={tabList}
           onClick={this.switchPage.bind(this)}>
-          {exerciseDetail.map((_, index) => {
+          {topicList.map((_, index) => {
             return (
               <AtTabsPane current={currentPage} index={index} key={index}>
                 <Topic number={index} exerciseStore={new exerciseStore()} />

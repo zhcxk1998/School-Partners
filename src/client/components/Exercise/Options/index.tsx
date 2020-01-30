@@ -34,21 +34,23 @@ class Options extends Component<IProps, {}> {
   }
 
   render() {
-    const { number, exerciseStore: { exerciseDetail, userAnswers, fontSize, isFinished, isSubmitted } } = this.props;
-    if (!userAnswers[number] || !exerciseDetail[number]) return;
-    const { options } = exerciseDetail[number];
-    const buttonClassName: string = userAnswers[number].some(_ => _ === 1) && !isSubmitted ? 'confirm' : 'confirm hide';
+    const { number, exerciseStore: { topicList, optionStatus, fontSize, isFinished, isSubmitted } } = this.props;
+    if (!optionStatus[number] || !topicList[number]) return;
+    const { topicOptions } = topicList[number];
+    const buttonClassName: string = optionStatus[number].some(_ => _ === 1) && !isSubmitted ? 'confirm' : 'confirm hide';
     const buttonName: string = isFinished ? '完成答题' : '下一题'
-    const optionStatus = {
-      "-1": "number error",
+    const optionClassNames = {
+      "-2": "number error",
+      "-1": "number omit",
       "0": "number",
-      "1": "number active"
+      "1": "number active",
+      "2": "number correct"
     }
     return (
       <View className='exam-options'>
-        {options.map((option, index) => {
-          const optionClassName: string = optionStatus[userAnswers[number][index]]
-
+        {topicOptions.map((topicOption, index) => {
+          const { option, id } = topicOption
+          const optionClassName: string = optionClassNames[optionStatus[number][index]]
           return (
             <View className='wrap' key={index} onClick={this.onOptionClick.bind(this, number, index)}>
               <View className={optionClassName}>{this.formatNumber(index)}</View>

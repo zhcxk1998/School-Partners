@@ -1,5 +1,6 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
+import { TopicList } from '../modals/exerciseDetail'
 
 const themeList: Array<{ theme: string, title: string, icon: string }> = [
   {
@@ -30,17 +31,17 @@ class exerciseStore {
   @observable currentPage: number = 0;
   @observable totalPage: number = 0;
   @observable exerciseCid: string = '';
-  @observable exerciseDetail: Array<{ type: string, topic: string, options: Array<string> }> = [];
+  @observable topicList: TopicList[] = [];
   // 题目的标准答案
   @observable exerciseAnswers: Array<Array<number>> = [];
   // 用户选择的答案
-  @observable userAnswers: Array<Array<number>> = []
+  @observable optionStatus: Array<Array<number>> = []
 
   @action.bound
   resetExerciseDetail(): void {
-    this.exerciseDetail = []
+    this.topicList = []
     this.exerciseAnswers = []
-    this.userAnswers = []
+    this.optionStatus = []
     this.exerciseAnswers = []
     this.currentPage = 0
     this.totalPage = 0
@@ -58,26 +59,17 @@ class exerciseStore {
       Taro.showLoading({
         title: '加载中...'
       })
-      const { data } = await Taro.request({
+      const { data: { data } } = await Taro.request({
         url: `http://localhost:3000/exercises/${cid}`,
         method: 'GET',
       })
-      const detailList = data.detail_list
-      const answerList = Array.from({ length: detailList.length }, (_, index) => Array.from({ length: detailList[index].options.length }, __ => 0))
-
-      this.exerciseDetail = detailList
-      this.userAnswers = answerList
+      const { exerciseName, topicList } = data
+      Taro.setNavigationBarTitle({ title: exerciseName })
+      const answerList = Array.from({ length: topicList.length }, (_, index) => Array.from({ length: topicList[index].topicOptions.length }, __ => 0))
+      this.topicList = topicList
+      this.optionStatus = answerList
       this.exerciseAnswers = [...answerList]
-      // this.exerciseAnswers = JSON.parse(JSON.stringify(this.userAnswers))
-      // Object.assign(this.exerciseAnswers,this.userAnswers)
-      this.exerciseAnswers.map((exercise, index) => {
-        exercise.map((_, idx) => {
-          if (data.detail_answers[index].search(idx + '') !== -1) {
-            exercise[idx] = 1
-          }
-        })
-      })
-      this.totalPage = detailList.length
+      this.totalPage = topicList.length
       Taro.hideLoading()
       resolve()
     })
@@ -108,11 +100,11 @@ class exerciseStore {
   @action.bound
   handleOptionClick(number: number, index: number): void {
     if (this.isSubmitted) return
-    if (this.exerciseDetail[number].type === 'radio') {
-      this.userAnswers[number].fill(0)
+    if (this.topicList[number].topicType === 1) {
+      this.optionStatus[number].fill(0)
     }
-    this.userAnswers[number][index] = this.userAnswers[number][index] === 1 ? 0 : 1
-    this.emptyPage = this.userAnswers.findIndex((answer) => answer.every(option => option === 0));
+    this.optionStatus[number][index] = this.optionStatus[number][index] === 1 ? 0 : 1
+    this.emptyPage = this.optionStatus.findIndex((answer) => answer.every(option => option === 0));
     this.isFinished = this.emptyPage === -1
   }
 
@@ -125,11 +117,23 @@ class exerciseStore {
     else {
       /* 处理答案 */
       this.isSubmitted = true
-      this.userAnswers.map((answer, answerIndex) => {
-        answer.map((option, optionIndex) => {
-          const correctAnswer = this.exerciseAnswers[answerIndex][optionIndex]
-          if (option !== correctAnswer) {
-            this.userAnswers[answerIndex][optionIndex] = correctAnswer - option
+      this.optionStatus.forEach((eachTopic, topicIndex) => {
+        eachTopic.forEach((option, optionIndex) => {
+          const { topicAnswer = [], topicOptions } = this.topicList[topicIndex]
+          const { id: currentId = 0 } = topicOptions[optionIndex]
+
+          if (option === 1 && !topicAnswer.includes(currentId)) {
+            /* 选中，但是选错了 */
+            this.optionStatus[topicIndex][optionIndex] = -2
+          } else if (option === 0 && topicAnswer.includes(currentId) && topicAnswer.length > 1) {
+            /* 没选，但是是正确答案，并且是单选题模式 */
+            this.optionStatus[topicIndex][optionIndex] = -1
+          } else if (option === 0 && topicAnswer.includes(currentId) && topicAnswer.length === 1) {
+            /* 没选，但是是正确答案，并且是多选题模式 */
+            this.optionStatus[topicIndex][optionIndex] = 2
+          } else if (option === 1 && topicAnswer.includes(currentId)) {
+            /* 选了，选对了 */
+            this.optionStatus[topicIndex][optionIndex] = 2
           }
         })
       })

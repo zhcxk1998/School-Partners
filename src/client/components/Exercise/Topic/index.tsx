@@ -16,14 +16,14 @@ interface IProps {
 @observer
 class Topic extends Component<IProps, {}> {
   render() {
-    const { number, exerciseStore: { exerciseDetail, fontSize } } = this.props;
-    if (!exerciseDetail[number]) return;
-    const { type, topic } = exerciseDetail[number];
-    const tag: string = type === 'radio' ? '单选' : '多选';
+    const { number, exerciseStore: { topicList, fontSize } } = this.props;
+    if (!topicList[number]) return;
+    const { topicType, topicContent } = topicList[number];
+    const tag: string = topicType === 1 ? '单选' : '多选';
     return (
       <View className={`exam-topic ${fontSize}`}>
         <View className='type'>{tag}</View>
-        {topic}
+        {topicContent}
       </View>
     )
   }
