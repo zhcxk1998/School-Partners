@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const { query } = require('../../utils/query')
-const { QUERY_TABLE } = require('../../utils/sql');
+const { QUERY_TABLE, INSERT_TABLE } = require('../../utils/sql');
 const parse = require('../../utils/parse')
 
 router.get('/exercises', async (ctx) => {
@@ -75,6 +75,39 @@ router.delete('/exercises', async (ctx) => {
   } catch (e) {
     responseBody.data.msg = '无此课程'
     responseBody.code = 404
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
+
+router.post('/exercises', async (ctx) => {
+  const {
+    exerciseName,
+    exerciseContent,
+    exerciseType,
+    exerciseDifficulty,
+    isHot,
+    topicList
+  } = ctx.request.body
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    await query(INSERT_TABLE('exercise_list'), {
+      exercise_name: exerciseName,
+      exercise_content: exerciseContent,
+      exercise_type: exerciseType,
+      exercise_difficulty: exerciseDifficulty,
+      is_hot: isHot,
+      topic_list: JSON.stringify(topicList)
+    })
+    responseBody.data.msg = '新增成功'
+    responseBody.code = 200
+  } catch (e) {
+    responseBody.data.msg = '异常错误'
+    responseBody.code = 500
   } finally {
     ctx.response.status = responseBody.code
     ctx.response.body = responseBody
