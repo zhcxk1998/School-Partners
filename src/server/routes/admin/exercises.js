@@ -27,17 +27,30 @@ router.get('/exercises', async (ctx) => {
 })
 
 router.get('/exercises/:id', async (ctx) => {
-  const id = ctx.params.id
-  const res = await query(`SELECT * FROM exercise_detail WHERE exercise_id = ${id}`)
-  const isExist = res.length !== 0
-  if (!isExist) {
-    ctx.response.status = 404
-    ctx.response.body = {
-      error: 'exercise is not existed'
-    }
+  const { id: exerciseId } = ctx.params
+  const res = await query(`SELECT * FROM exercise_list WHERE id = ${exerciseId}`)
+  const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type, topic_list } = parse(res)[0]
+  const responseBody = {
+    code: 0,
+    data: {}
   }
-  else {
-    ctx.response.body = parse(res)[0]
+  try {
+    responseBody.data = {
+      id,
+      exerciseName: exercise_name,
+      exerciseContent: exercise_content,
+      exerciseDifficulty: exercise_difficulty,
+      exerciseType: exercise_type,
+      isHot: !!is_hot,
+      topicList: topic_list
+    }
+    responseBody.code = 200
+  } catch (e) {
+    responseBody.data.msg = '异常错误'
+    responseBody.code = 500
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
   }
 })
 
