@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const { query } = require('../../utils/query')
-const { QUERY_TABLE, INSERT_TABLE, UPDATE_TABLE, DELETE_TABLE } = require('../../utils/sql');
+const { QUERY_TABLE } = require('../../utils/sql');
 const parse = require('../../utils/parse')
 
 router.get('/exercises', async (ctx) => {
@@ -24,16 +24,24 @@ router.get('/exercises', async (ctx) => {
 
 router.get('/exercises/:id', async (ctx) => {
   const id = ctx.params.id
-  const res = await query(`SELECT * FROM exercise_detail WHERE exercise_id = ${id}`)
-  const isExist = res.length !== 0
-  if (!isExist) {
-    ctx.response.status = 404
-    ctx.response.body = {
-      error: 'exercise is not existed'
-    }
+  const res = await query(`SELECT exercise_name, topic_list FROM exercise_list WHERE id = ${id}`)
+  const { exercise_name, topic_list } = res[0]
+  const responseBody = {
+    code: 0,
+    data: {}
   }
-  else {
-    ctx.response.body = parse(res)[0]
+  try {
+    responseBody.data = {
+      exerciseName: exercise_name,
+      topicList: JSON.parse(topic_list)
+    }
+    responseBody.code = 200
+  } catch (e) {
+    responseBody.data.msg = '异常错误'
+    responseBody.code = 500
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
   }
 })
 
