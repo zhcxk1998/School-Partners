@@ -89,26 +89,31 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
 
   const setExerciseDetail = async () => {
     const { params: { id } } = match as any
-    const { data } = await http.get(`/exercises/${id}`)
-    const {
-      exerciseName,
-      exerciseContent,
-      exerciseDifficulty,
-      exerciseType,
-      isHot,
-      topicList } = data
-    topicList.forEach((_: any, index: number) => {
-      topicList[index].topicOptions = topicList[index].topicOptions.map((item: any) => item.option)
-    })
-    setModifyExerciseName(exerciseName)
-    setTopicList([...topicList])
-    setExerciseInfo({
-      exerciseName,
-      exerciseContent,
-      exerciseDifficulty,
-      exerciseType,
-      isHot,
-    })
+    try {
+      const { data } = await http.get(`/exercises/${id}`)
+      const {
+        exerciseName,
+        exerciseContent,
+        exerciseDifficulty,
+        exerciseType,
+        isHot,
+        topicList } = data
+      topicList.forEach((_: any, index: number) => {
+        topicList[index].topicOptions = topicList[index].topicOptions.map((item: any) => item.option)
+      })
+      setModifyExerciseName(exerciseName)
+      setTopicList([...topicList])
+      setExerciseInfo({
+        exerciseName,
+        exerciseContent,
+        exerciseDifficulty,
+        exerciseType,
+        isHot,
+      })
+    } catch (e) {
+      /* 当通过url直接访问页面时候，若题库不存在则跳转回列表页面 */
+      history.push('/admin/content/exercise-list')
+    }
   }
 
   const handleFormSubmit = (event: FormEvent) => {
