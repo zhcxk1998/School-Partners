@@ -1,4 +1,4 @@
-import React, { FC, ComponentType, FormEvent, useState, Fragment } from 'react'
+import React, { FC, ComponentType, FormEvent, useState, Fragment, useEffect } from 'react'
 import { CustomBreadcrumb } from '@/admin/components'
 import { RouteComponentProps } from 'react-router-dom';
 import { FormComponentProps } from 'antd/lib/form';
@@ -33,7 +33,7 @@ import http from '@/admin/utils/http'
 import './index.scss'
 const { Option } = Select
 
-type PublishProps = RouteComponentProps & FormComponentProps
+type ModifyProps = RouteComponentProps & FormComponentProps
 
 interface FormLayout {
   labelCol: object,
@@ -48,14 +48,30 @@ interface TopicList {
   topicOptions: any[]
 }
 
-const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
+interface ExerciseInfo {
+  exerciseName: string,
+  exerciseContent: string,
+  exerciseDifficulty: number,
+  exerciseType: number,
+  isHot: boolean
+}
+
+const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
   const [topicList, setTopicList] = useState<TopicList[]>([{
     topicType: 1,
     topicAnswer: [],
     topicContent: '',
     topicOptions: []
   }])
-  const { history, form } = props
+  const [exerciseInfo, setExerciseInfo] = useState<ExerciseInfo>({
+    exerciseName: '',
+    exerciseContent: '',
+    exerciseDifficulty: 1,
+    exerciseType: 1,
+    isHot: false
+  })
+  const [modifyExerciseName, setModifyExerciseName] = useState<string>('')
+  const { history, form, match } = props
   const { getFieldDecorator, getFieldsValue, setFieldsValue } = form
   const formLayout: FormLayout = {
     labelCol: {
@@ -65,6 +81,34 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
       span: 15,
       offset: 1
     }
+  }
+
+  useEffect(() => {
+    setExerciseDetail()
+  }, [])
+
+  const setExerciseDetail = async () => {
+    const { params: { id } } = match as any
+    const { data } = await http.get(`/exercises/${id}`)
+    const {
+      exerciseName,
+      exerciseContent,
+      exerciseDifficulty,
+      exerciseType,
+      isHot,
+      topicList } = data
+    topicList.forEach((_: any, index: number) => {
+      topicList[index].topicOptions = topicList[index].topicOptions.map((item: any) => item.option)
+    })
+    setModifyExerciseName(exerciseName)
+    setTopicList([...topicList])
+    setExerciseInfo({
+      exerciseName,
+      exerciseContent,
+      exerciseDifficulty,
+      exerciseType,
+      isHot,
+    })
   }
 
   const handleFormSubmit = (event: FormEvent) => {
@@ -88,7 +132,8 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
             option
           }))
         })
-        const { data: { msg } } = await http.post('/exercises', {
+        const { params: { id } } = match as any
+        const { data: { msg } } = await http.put(`/exercises/${id}`, {
           exerciseName,
           exerciseContent,
           exerciseType,
@@ -105,7 +150,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
   const handleTopicAddClick = () => {
     setTopicList([...topicList, {
       topicType: 1,
-      topicAnswer: [],
+      topicAnswer: [1],
       topicContent: '',
       topicOptions: [],
     }])
@@ -147,18 +192,20 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
 
   return (
     <div>
-      <CustomBreadcrumb list={['内容管理', '新增题目']} />
-      <div className="exercise-publish__container">
+      <CustomBreadcrumb list={['内容管理', '修改题库', modifyExerciseName]} />
+      <div className="exercise-modify__container">
         <div className="form__title">题库信息</div>
         <Form layout="horizontal" {...formLayout} hideRequiredMark>
           <Form.Item label="题库名称">
             {getFieldDecorator('exerciseName', {
-              rules: ExerciseNameRules
+              rules: ExerciseNameRules,
+              initialValue: exerciseInfo.exerciseName
             })(<Input />)}
           </Form.Item>
           <Form.Item label="题库简介">
             {getFieldDecorator('exerciseContent', {
-              rules: ExerciseContentRules
+              rules: ExerciseContentRules,
+              initialValue: exerciseInfo.exerciseContent
             })(<Input />)}
           </Form.Item>
           <Row>
@@ -171,7 +218,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
               }}>
                 {getFieldDecorator('exerciseDifficulty', {
                   rules: ExerciseDifficultyRules,
-                  initialValue: 1
+                  initialValue: exerciseInfo.exerciseDifficulty
                 })(<Select>
                   <Option value={1}>简单</Option>
                   <Option value={2}>中等</Option>
@@ -188,7 +235,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
               }}>
                 {getFieldDecorator('exerciseType', {
                   rules: ExerciseTypeRules,
-                  initialValue: 1
+                  initialValue: exerciseInfo.exerciseType
                 })(<Select>
                   <Option value={1}>免费</Option>
                   <Option value={2}>会员</Option>
@@ -198,7 +245,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
           </Row>
           <Form.Item label="题库热门">
             {getFieldDecorator('isHot', {
-              initialValue: false,
+              initialValue: exerciseInfo.isHot,
               valuePropName: 'checked'
             })(
               <Switch />
@@ -206,7 +253,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
           </Form.Item>
           <Divider></Divider>
           <Form.Item label="新增题目">
-            {topicList && topicList.map((topic, index) => {
+            {topicList && topicList.map((_: any, index: number) => {
               return (
                 <Fragment key={index}>
                   <div className="form__subtitle">
@@ -222,7 +269,8 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                   </div>
                   <Form.Item label="题目内容" >
                     {getFieldDecorator(`topicList[${index}].topicContent`, {
-                      rules: TopicContentRules
+                      rules: TopicContentRules,
+                      initialValue: topicList[index].topicContent
                     })(<Input.TextArea />)}
                   </Form.Item>
                   <Row gutter={32}>
@@ -237,7 +285,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                       }>
                         {getFieldDecorator(`topicList[${index}].topicType`, {
                           rules: TopicTypeRules,
-                          initialValue: 1
+                          initialValue: topicList[index].topicType
                         })(<Select onChange={(value) => handleTopicTypeChange(value, index)}>
                           <Option value={1}>单选</Option>
                           <Option value={2}>多选</Option>
@@ -245,21 +293,10 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                       </Form.Item>
                     </Col>
                     <Col span={12}>
-                      {/* <Form.Item label="正确答案">
-                        {getFieldDecorator(`topicList[${index}].topicAnswer`, {
-                          rules: TopicAnswerRules,
-                          initialValue: 1
-                        })(<Select mode={isMultiple(index) ? 'multiple' : 'default'}>
-                          <Option value={1}>选项A</Option>
-                          <Option value={2}>选项B</Option>
-                          <Option value={3}>选项C</Option>
-                          <Option value={4}>选项D</Option>
-                        </Select>)}
-                      </Form.Item> */}
                       <Form.Item label="正确答案">
                         {getFieldDecorator(`topicList[${index}].topicAnswer`, {
                           rules: TopicAnswerRules,
-                          initialValue: [1]
+                          initialValue: topicList[index].topicAnswer
                         })(<Checkbox.Group
                           style={{ width: '100%' }}
                           onChange={(values) => handleTopicAnswerChange(values, index)}>
@@ -279,8 +316,8 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                       <Col span={12} key={idx}>
                         <Form.Item label={`选项${option}`}>
                           {getFieldDecorator(`topicList[${index}].topicOptions[${idx}]`, {
-                            rules: TopicOptionRules
-                            // 改用数组形式存储选项，大于两个选项时候则允许提交
+                            rules: TopicOptionRules,
+                            initialValue: topicList[index].topicOptions[idx]
                           })(<Input />)}
                         </Form.Item>
                       </Col>
@@ -302,4 +339,4 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
   )
 }
 
-export default Form.create({ name: 'publishForm' })(ExercisePublish) as ComponentType
+export default Form.create({ name: 'ExerciseModify' })(ExerciseModify) as ComponentType

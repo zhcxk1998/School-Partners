@@ -43,7 +43,7 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   }
 
   const handleEditClick = (exerciseId: number) => {
-    console.log(exerciseId)
+    history.push(`/admin/content/exercise-modify/${exerciseId}`)
   }
 
   const handleDeleteClick = async (exerciseId: number) => {
