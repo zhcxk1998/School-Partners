@@ -1,7 +1,8 @@
 const QUERY_TABLE = (tableName) => `SELECT * FROM ${tableName};`;
 
-// const INSERT_TABLE = (tableName, { key, value }) => `INSERT INTO ${tableName}(${key}) VALUES(${value});`;
 const INSERT_TABLE = (tableName) => `INSERT INTO ${tableName} SET ?`;
+
+const REPLACE_TABLE = (tableName) => `REPLACE INTO ${tableName} SET ?`;
 
 const UPDATE_TABLE = (tableName, { primaryKey, primaryValue }, { key, value }) => `UPDATE ${tableName} SET ${key} = '${value}' WHERE(${primaryKey}=${primaryValue});`
 
@@ -12,4 +13,5 @@ module.exports = {
   INSERT_TABLE,
   UPDATE_TABLE,
   DELETE_TABLE,
+  REPLACE_TABLE
 }
