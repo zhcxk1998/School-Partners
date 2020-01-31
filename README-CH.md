@@ -2,9 +2,9 @@
 
 Language: [简体中文](README-CH.md) | [English](README.md)
 
-**本项目采用Taro技术框架，可将React代码编译为微信小程序、安卓APP、IOS程序、H5页面等**
+**本项目小程序端采用Taro技术框架，可将React代码编译为微信小程序、安卓APP、IOS程序、H5页面等，管理端采用React Hook + TypeScript来进行开发**
 
-> 目前因学业任务比较重，没有好好的完善，目前接入数据库的只有习题，课程，论坛，聊天室。还有许多功能尚未完善，等放假之后再继续完善。
+> 目前因学业任务比较重，没有好好的完善，目前小程序端比较完善的只有习题，课程，论坛，聊天室。管理端也开始进行开发了，现在完成了题库管理，新增题库，修改题库以及登录的功能
 
 ## 介绍
 当代大学生上课缺少积极性，学习缺乏效率。同为大学生的我深有体会。所以特别开发出这样一款学习类的微信小程序帮助学生进行学习、巩固知识，同时增加对战PK模块来加强学生们的学习积极性。:sparkles:这是一个为学生提供在线学习课程、题库练习、考试答题、做题PK、上课签到、资料查阅、成绩分析等功能的微信小程序:pig:
@@ -26,6 +26,7 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 其他：七牛云存储
 
 ## 功能
+### 小程序端
 1. 在线学习课程
 2. 专项题库练习
 3. 课程考试答题
@@ -35,6 +36,10 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 7. 学生成绩分析
 8. 活动日程安排
 9. 学习分享论坛
+
+### 管理端
+1. 登录注册
+2. 题库管理
 
 ## 运行截图
 
@@ -76,6 +81,12 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
 ### 1. 登录界面
 ![](http://cdn.algbb.cn/screenshots/school-partners/管理端登录.png)
+
+### 2. 题库管理
+![](http://cdn.algbb.cn/screenshots/school-partners/题库管理.png)
+
+### 3. 修改题库
+![](http://cdn.algbb.cn/screenshots/school-partners/修改题库.png)
 
 ## 安装运行
 

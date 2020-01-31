@@ -2,9 +2,9 @@
 
 **Language**: [简体中文](README-CH.md) | [English](README.md)
 
-**This project adopts the Taro technology framework, which can compile React code into WeChat small program, android APP, IOS program, H5 page and so on**
+**This project adopts the Taro technology framework, which can compile React code into WeChat small program, android APP, IOS program, H5 page and so on, The management side is developed with React Hook + TypeScript**
 
-> At present, due to the heavy academic task, there is no perfect access to the database only exercises, courses, forums, chat rooms. There are still many functions are not perfect, and we will continue to improve them after the holiday.
+> At present, due to the heavy academic task, there is no good improvement, at present, the small program end is more perfect only exercises, courses, forums, chat rooms. Management side also began to develop, now complete the question bank management, add the question bank, modify the question bank and login functions.
 
 ## Introduce
 Contemporary college students lack enthusiasm in class and efficiency in learning. As a college student, I have deep experience. So specially developed such a learning WeChat small program to help students to learn, consolidate knowledge, at the same time to increase the PK module to strengthen students' learning enthusiasm. :sparkles:This is a WeChat small program that provides students with online learning courses, question bank exercises, exam questions, do questions PK, class check-in, data search, score analysis and other functions:pig:
@@ -27,6 +27,7 @@ The Admin：React + TypeScript
 Other：Qiniu Cloud
 
 ## Function
+### mini program
 1. Online learning course
 2. Special question bank exercises
 3. Answer questions on the course exam
@@ -36,6 +37,10 @@ Other：Qiniu Cloud
 7. Student performance analysis
 8. Schedule of activities
 9. Learning sharing forum
+
+### admin
+1. Login and Register
+2. The question bank management
 
 ## Screenshot
 
@@ -77,6 +82,12 @@ Other：Qiniu Cloud
 
 ### 1. Login Page
 ![](http://cdn.algbb.cn/screenshots/school-partners/管理端登录.png)
+
+### 2. Question Bank Management
+![](http://cdn.algbb.cn/screenshots/school-partners/题库管理.png)
+
+### 3. Question Bank Modify
+![](http://cdn.algbb.cn/screenshots/school-partners/修改题库.png)
 
 ## Installation operation
 
