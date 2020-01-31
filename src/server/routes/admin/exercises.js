@@ -4,37 +4,49 @@ const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE } = require('../../utils/sql');
 const parse = require('../../utils/parse')
 
 router.get('/exercises', async (ctx) => {
-  const response = []
-  const res = await query(QUERY_TABLE('exercise_list'));
-  res.map((item, index) => {
-    const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type } = item
-    response[index] = {
-      exerciseId: id,
-      exerciseName: exercise_name,
-      exerciseContent: exercise_content,
-      isHot: is_hot,
-      exerciseDifficulty: exercise_difficulty,
-      exerciseType: exercise_type
-    }
-  })
-  ctx.response.body = {
-    code: 200,
-    data: {
-      exerciseList: parse(response),
-      total: response.length
-    }
-  };
-})
-
-router.get('/exercises/:id', async (ctx) => {
-  const { id: exerciseId } = ctx.params
-  const res = await query(`SELECT * FROM exercise_list WHERE id = ${exerciseId}`)
-  const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type, topic_list } = parse(res)[0]
+  const responseData = []
   const responseBody = {
     code: 0,
     data: {}
   }
   try {
+    const res = await query(QUERY_TABLE('exercise_list'));
+    res.map((item, index) => {
+      const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type } = item
+      responseData[index] = {
+        exerciseId: id,
+        exerciseName: exercise_name,
+        exerciseContent: exercise_content,
+        isHot: is_hot,
+        exerciseDifficulty: exercise_difficulty,
+        exerciseType: exercise_type
+      }
+    })
+    responseBody.code = 200
+    responseBody.data = {
+      exerciseList: parse(responseData),
+      total: responseData.length
+    }
+  } catch (e) {
+    responseBody.code = 404
+    responseBody.data = {
+      msg: '无课程信息'
+    }
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
+
+router.get('/exercises/:id', async (ctx) => {
+  const { id: exerciseId } = ctx.params
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    const res = await query(`SELECT * FROM exercise_list WHERE id = ${exerciseId}`)
+    const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type, topic_list } = parse(res)[0]
     responseBody.data = {
       id,
       exerciseName: exercise_name,
@@ -46,8 +58,8 @@ router.get('/exercises/:id', async (ctx) => {
     }
     responseBody.code = 200
   } catch (e) {
-    responseBody.data.msg = '异常错误'
-    responseBody.code = 500
+    responseBody.data.msg = '无此题库'
+    responseBody.code = 404
   } finally {
     ctx.response.status = responseBody.code
     ctx.response.body = responseBody
