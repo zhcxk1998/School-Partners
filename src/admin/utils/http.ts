@@ -51,7 +51,7 @@ const get = (url: string, options?: object): Promise<any> => {
     }).catch(({ response }) => {
       const { data: { data } } = response
       message.error(data.msg)
-      return reject()
+      return reject(response)
     })
   })
 }
@@ -63,7 +63,7 @@ const post = (url: string, params: object, options?: object): Promise<any> => {
     }).catch(({ response }) => {
       const { data: { data } } = response
       message.error(data.msg)
-      return reject()
+      return reject(response)
     })
   })
 }
@@ -75,7 +75,7 @@ const put = (url: string, params: object, options?: object): Promise<any> => {
     }).catch(({ response }) => {
       const { data: { data } } = response
       message.error(data.msg)
-      return reject()
+      return reject(response)
     })
   })
 }
