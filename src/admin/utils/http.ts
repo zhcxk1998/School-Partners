@@ -68,9 +68,22 @@ const post = (url: string, params: object, options?: object): Promise<any> => {
   })
 }
 
+const put = (url: string, params: object, options?: object): Promise<any> => {
+  return new Promise(async (resolve, reject) => {
+    instance.put(url, params, options).then(data => {
+      resolve(data)
+    }).catch(({ response }) => {
+      const { data: { data } } = response
+      message.error(data.msg)
+      return reject()
+    })
+  })
+}
+
 export default {
   get,
   post,
+  put,
   delete: (url: string, options?: object): Promise<any> => {
     return new Promise(async (resolve, reject) => {
       instance.delete(url, options).then((data) => {
