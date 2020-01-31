@@ -10,7 +10,9 @@ Language: [简体中文](README-CH.md) | [English](README.md)
 当代大学生上课缺少积极性，学习缺乏效率。同为大学生的我深有体会。所以特别开发出这样一款学习类的微信小程序帮助学生进行学习、巩固知识，同时增加对战PK模块来加强学生们的学习积极性。:sparkles:这是一个为学生提供在线学习课程、题库练习、考试答题、做题PK、上课签到、资料查阅、成绩分析等功能的微信小程序:pig:
 
 具体使用请参考本人博客,将持续更新分析项目技术
-> https://juejin.im/post/5dd161675188254efb3bceea
+> 管理端: https://juejin.im/post/5e3389f06fb9a02fbd3791cf  
+> 小程序端: https://juejin.im/post/5dd161675188254efb3bceea  
+
 
 ## 视频演示
 http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
