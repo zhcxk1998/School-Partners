@@ -30,7 +30,7 @@ router.get('/exercises', async (ctx) => {
   } catch (e) {
     responseBody.code = 404
     responseBody.data = {
-      msg: '无课程信息'
+      msg: '无题库信息'
     }
   } finally {
     ctx.response.status = responseBody.code
@@ -77,7 +77,7 @@ router.delete('/exercises/:id', async (ctx) => {
     responseBody.data.msg = '删除成功'
     responseBody.code = 200
   } catch (e) {
-    responseBody.data.msg = '无此课程'
+    responseBody.data.msg = '无此题库'
     responseBody.code = 404
   } finally {
     ctx.response.status = responseBody.code
@@ -98,7 +98,7 @@ router.delete('/exercises', async (ctx) => {
     responseBody.data.msg = '删除成功'
     responseBody.code = 200
   } catch (e) {
-    responseBody.data.msg = '无此课程'
+    responseBody.data.msg = '无此题库'
     responseBody.code = 404
   } finally {
     ctx.response.status = responseBody.code
