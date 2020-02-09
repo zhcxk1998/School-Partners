@@ -6,6 +6,7 @@ const Index = LoadableComponent(() => import('./Index/index'))
 const ExerciseList = LoadableComponent(() => import('./ExerciseList'))
 const ExercisePublish = LoadableComponent(() => import('./ExercisePublish'))
 const ExerciseModify = LoadableComponent(() => import('./ExerciseModify'))
+const CourseList = LoadableComponent(() => import('./CourseList'))
 
 export {
   Login,
@@ -13,5 +14,6 @@ export {
   Index,
   ExerciseList,
   ExercisePublish,
-  ExerciseModify
+  ExerciseModify,
+  CourseList
 }

@@ -1,0 +1,28 @@
+.course-list {
+  &__container {
+    height: calc(100vh - 130px);
+    padding: 20px;
+    background: #fff;
+
+    /deep/ .ant-table {
+      height: calc(100vh - 250px);
+    }
+
+    /deep/ .ant-table-placeholder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: calc(100vh - 300px);
+    }
+  }
+
+  &__header {
+    display: flex;
+
+    .search__container {
+      width: 300px;
+      margin-left: auto;
+
+    }
+  }
+}
