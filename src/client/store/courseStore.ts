@@ -15,16 +15,16 @@ class courseStore {
   }
 
   @action.bound
-  getCourseDetail(cid: string, title: string): any {
+  getCourseDetail(id: number, title: string): any {
     return new Promise(async (resolve) => {
       Taro.showLoading({
         title: '加载中...'
       })
       const { data } = await Taro.request({
-        url: `http://localhost:3000/courses/${cid}`,
+        url: `http://localhost:3000/courses/${id}`,
         method: 'GET',
       })
-      this.courseDetail = data[0]
+      this.courseDetail = data
       await Taro.navigateTo({
         url: `/pages/courseDetail/index`
       })

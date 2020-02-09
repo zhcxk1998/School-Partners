@@ -38,7 +38,7 @@ class CourseDetail extends Component<IProps, IState> {
 
   render() {
     const { courseStore: { courseDetail } } = this.props
-    const { courseAuthor, publishDate, courseViews, courseDescription, stepName, stepDetail, courseRate } = courseDetail
+    const { courseAuthor, publishDate, courseViews, courseDescription, courseSteps, courseRate } = courseDetail
     return (
       <View className='course'>
         <View className='course-background' />
@@ -70,12 +70,12 @@ class CourseDetail extends Component<IProps, IState> {
               课程步骤
             </View>
             <View className='path__container'>
-              {stepName.map((name, index) => (
+              {courseSteps.map((item: any, index: number) => (
                 <View className='path__wrap' key={index}>
                   <Image src='http://cdn.algbb.cn/course/read.png' className='path__icon' />
                   <View className='path__info'>
-                    <View className='path__name'>{name}</View>
-                    <View className='path__description'>{stepDetail[index]}</View>
+                    <View className='path__name'>{item.title}</View>
+                    <View className='path__description'>{item.content}</View>
                   </View>
                   <View className='path__decoration'>{(index + 1).toString().padStart(2, '0')}</View>
                 </View>
