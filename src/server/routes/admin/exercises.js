@@ -14,7 +14,7 @@ router.get('/exercises', async (ctx) => {
     res.map((item, index) => {
       const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type } = item
       responseData[index] = {
-        exerciseId: id,
+        id,
         exerciseName: exercise_name,
         exerciseContent: exercise_content,
         isHot: is_hot,

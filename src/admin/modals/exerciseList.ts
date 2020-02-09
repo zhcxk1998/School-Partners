@@ -1,5 +1,5 @@
 interface ExerciseListProps {
-  exerciseId: number,
+  id: number,
   exerciseName: string,
   exerciseContent: string,
   exerciseType: number,

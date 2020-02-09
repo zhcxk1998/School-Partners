@@ -33,7 +33,6 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   }, [fetchFlag])
 
   const handleSelectedChange = (selectedRowKeys: number[]) => {
-    console.log(selectedRowKeys)
     setSelectedRowKeys(selectedRowKeys)
   }
 
@@ -42,12 +41,12 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     setSearchValue(value)
   }
 
-  const handleEditClick = (exerciseId: number) => {
-    history.push(`/admin/content/exercise-modify/${exerciseId}`)
+  const handleEditClick = (id: number) => {
+    history.push(`/admin/content/exercise-modify/${id}`)
   }
 
-  const handleDeleteClick = async (exerciseId: number) => {
-    const { data: { msg } } = await http.delete(`/exercises/${exerciseId}`)
+  const handleDeleteClick = async (id: number) => {
+    const { data: { msg } } = await http.delete(`/exercises/${id}`)
     setFetchFlag(fetchFlag + 1)
     setSelectedRowKeys([])
     message.success(msg)
@@ -69,7 +68,7 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
 
   const columns: ColumnProps<ExerciseListProps>[] = [
     {
-      title: '题目名称',
+      title: '题库名称',
       dataIndex: 'exerciseName',
       key: 'exerciseName',
       width: 180,
@@ -78,12 +77,12 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
         row.exerciseName.toString().indexOf(searchValue) !== -1
       )
     }, {
-      title: '题目内容',
+      title: '题库内容',
       dataIndex: 'exerciseContent',
       key: 'exerciseContent',
       ellipsis: true,
     }, {
-      title: '题目类型',
+      title: '题库类型',
       dataIndex: 'exerciseType',
       key: 'exerciseType',
       width: 120,
@@ -126,10 +125,10 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
         <span>
           <Button
             type="primary"
-            onClick={() => handleEditClick(row.exerciseId)}>编辑</Button>
+            onClick={() => handleEditClick(row.id)}>编辑</Button>
           <Popconfirm
-            title="确定删除此课程吗?"
-            onConfirm={() => handleDeleteClick(row.exerciseId)}
+            title="确定删除此题库吗?"
+            onConfirm={() => handleDeleteClick(row.id)}
             okText="确定"
             cancelText="取消"
           >
@@ -150,7 +149,7 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Button type="primary" style={{ marginRight: 10 }} onClick={() => { history.push('/admin/content/exercise-publish') }}>新增题库</Button>
           <Popconfirm
             disabled={!hasSelected}
-            title="确定删除这些课程吗?"
+            title="确定删除这些题库吗?"
             onConfirm={handleBatchDelete}
             okText="确定"
             cancelText="取消"
@@ -161,7 +160,7 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Input.Search
             className="search__container"
             value={searchValue}
-            placeholder="请输入要查询的题目名称"
+            placeholder="请输入要查询的题库名称"
             onChange={handleSearchChange}
             enterButton />
         </div>
@@ -169,7 +168,7 @@ const ExerciseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           rowSelection={rowSelection}
           dataSource={exerciseList}
           columns={columns}
-          rowKey="exerciseId"
+          rowKey="id"
           scroll={{
             y: "calc(100vh - 300px)"
           }}
