@@ -1,5 +1,5 @@
 export interface CourseInfo {
-  courseCid: number,
+  id: number,
   courseName: string,
   isRecommend: boolean
 }

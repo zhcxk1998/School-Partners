@@ -3,7 +3,6 @@ export interface CourseInfo {
   publishDate: string,
   courseViews: number,
   courseDescription: string,
-  stepName: Array<string>,
-  stepDetail: Array<string>,
+  courseSteps: Array<object>,
   courseRate: number
 }
