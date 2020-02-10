@@ -72,4 +72,23 @@ router.post('/courses', async (ctx) => {
   }
 })
 
+router.delete('/courses/:id', async (ctx) => {
+  const id = ctx.params.id
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    await query(`DELETE FROM course_list WHERE id = ${id}`)
+    responseBody.data.msg = '删除成功'
+    responseBody.code = 200
+  } catch (e) {
+    responseBody.data.msg = '无此课程'
+    responseBody.code = 404
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
+
 module.exports = router
