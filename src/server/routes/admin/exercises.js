@@ -46,7 +46,7 @@ router.get('/exercises/:id', async (ctx) => {
   }
   try {
     const res = await query(`SELECT * FROM exercise_list WHERE id = ${exerciseId}`)
-    const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type, topic_list } = parse(res)[0]
+    const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type, topic_list, publish_date } = parse(res)[0]
     responseBody.data = {
       id,
       exerciseName: exercise_name,
@@ -54,7 +54,8 @@ router.get('/exercises/:id', async (ctx) => {
       exerciseDifficulty: exercise_difficulty,
       exerciseType: exercise_type,
       isHot: !!is_hot,
-      topicList: topic_list
+      topicList: topic_list,
+      publishDate: publish_date
     }
     responseBody.code = 200
   } catch (e) {
@@ -126,7 +127,8 @@ router.post('/exercises', async (ctx) => {
       exercise_type: exerciseType,
       exercise_difficulty: exerciseDifficulty,
       is_hot: isHot,
-      topic_list: JSON.stringify(topicList)
+      topic_list: JSON.stringify(topicList),
+      publish_date: new Date().getTime()
     })
     responseBody.data.msg = '新增成功'
     responseBody.code = 200
