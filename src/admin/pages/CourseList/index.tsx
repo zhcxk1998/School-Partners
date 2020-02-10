@@ -130,7 +130,7 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
       <CustomBreadcrumb list={['内容管理', '课程管理']} />
       <div className="course-list__container">
         <div className="course-list__header">
-          <Button type="primary" style={{ marginRight: 10 }} onClick={() => { history.push('/admin/content/exercise-publish') }}>新增课程</Button>
+          <Button type="primary" style={{ marginRight: 10 }} onClick={() => { history.push('/admin/content/course-publish') }}>新增课程</Button>
           <Popconfirm
             disabled={!hasSelected}
             title="确定删除这些课程吗?"
@@ -144,7 +144,7 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Input.Search
             className="search__container"
             value={searchValue}
-            placeholder="请输入要查询的题目名称"
+            placeholder="请输入要查询的课程名称"
             onChange={handleSearchChange}
             enterButton />
         </div>

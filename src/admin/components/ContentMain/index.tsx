@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import { withRouter, Switch, Redirect, RouteComponentProps, Route } from 'react-router-dom'
-import { Index, ExerciseList, ExercisePublish, ExerciseModify, CourseList } from '@/admin/pages'
+import { Index, ExerciseList, ExercisePublish, ExerciseModify, CourseList, CoursePublish } from '@/admin/pages'
 import './index.scss'
 
 const ContentMain: FC<RouteComponentProps> = () => {
@@ -12,6 +12,7 @@ const ContentMain: FC<RouteComponentProps> = () => {
         <Route exact path="/admin/content/exercise-publish" component={ExercisePublish} />
         <Route exact path="/admin/content/exercise-modify/:id" component={ExerciseModify} />
         <Route exact path="/admin/content/course-list/" component={CourseList} />
+        <Route exact path="/admin/content/course-publish/" component={CoursePublish} />
 
         <Redirect exact from="/" to="/admin" />
       </Switch>
