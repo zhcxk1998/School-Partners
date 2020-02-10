@@ -40,12 +40,12 @@ const CourseList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     setSearchValue(value)
   }
 
-  const handleEditClick = (exerciseId: number) => {
-    history.push(`/admin/content/course-modify/${exerciseId}`)
+  const handleEditClick = (courseId: number) => {
+    history.push(`/admin/content/course-modify/${courseId}`)
   }
 
-  const handleDeleteClick = async (exerciseId: number) => {
-    const { data: { msg } } = await http.delete(`/courses/${exerciseId}`)
+  const handleDeleteClick = async (courseId: number) => {
+    const { data: { msg } } = await http.delete(`/courses/${courseId}`)
     setFetchFlag(fetchFlag + 1)
     setSelectedRowKeys([])
     message.success(msg)
