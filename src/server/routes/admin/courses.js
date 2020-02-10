@@ -91,4 +91,25 @@ router.delete('/courses/:id', async (ctx) => {
   }
 })
 
+router.delete('/courses', async (ctx) => {
+  const deleteIdList = ctx.request.body
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    await Promise.all(deleteIdList.map(async (deleteId) => {
+      await query(`DELETE FROM course_list WHERE id = ${deleteId}`)
+    }))
+    responseBody.data.msg = '删除成功'
+    responseBody.code = 200
+  } catch (e) {
+    responseBody.data.msg = '无此课程'
+    responseBody.code = 404
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
+
 module.exports = router
