@@ -16,7 +16,8 @@ import {
   Icon,
   Checkbox,
   Tooltip,
-  message
+  message,
+  Spin
 } from 'antd';
 import {
   ExerciseNameRules,
@@ -57,6 +58,7 @@ interface ExerciseInfo {
 }
 
 const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [topicList, setTopicList] = useState<TopicList[]>([{
     topicType: 1,
     topicAnswer: [],
@@ -110,6 +112,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
         exerciseType,
         isHot,
       })
+      setIsLoading(false)
     } catch (e) {
       /* 当通过url直接访问页面时候，若题库不存在则跳转回列表页面 */
       history.push('/admin/content/exercise-list')
@@ -199,146 +202,152 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
     <div>
       <CustomBreadcrumb list={['内容管理', '修改题库', modifyExerciseName]} />
       <div className="exercise-modify__container">
-        <div className="form__title">题库信息</div>
-        <Form layout="horizontal" {...formLayout} hideRequiredMark>
-          <Form.Item label="题库名称">
-            {getFieldDecorator('exerciseName', {
-              rules: ExerciseNameRules,
-              initialValue: exerciseInfo.exerciseName
-            })(<Input />)}
-          </Form.Item>
-          <Form.Item label="题库简介">
-            {getFieldDecorator('exerciseContent', {
-              rules: ExerciseContentRules,
-              initialValue: exerciseInfo.exerciseContent
-            })(<Input />)}
-          </Form.Item>
-          <Row>
-            <Col span={12}>
-              <Form.Item label="题库难度" labelCol={{
-                span: 8
-              }} wrapperCol={{
-                span: 10,
-                offset: 2
-              }}>
-                {getFieldDecorator('exerciseDifficulty', {
-                  rules: ExerciseDifficultyRules,
-                  initialValue: exerciseInfo.exerciseDifficulty
-                })(<Select>
-                  <Option value={1}>简单</Option>
-                  <Option value={2}>中等</Option>
-                  <Option value={3}>困难</Option>
-                </Select>)}
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item label="题库类型" labelCol={{
-                span: 4
-              }} wrapperCol={{
-                span: 10,
-                offset: 2
-              }}>
-                {getFieldDecorator('exerciseType', {
-                  rules: ExerciseTypeRules,
-                  initialValue: exerciseInfo.exerciseType
-                })(<Select>
-                  <Option value={1}>免费</Option>
-                  <Option value={2}>会员</Option>
-                </Select>)}
-              </Form.Item>
-            </Col>
-          </Row>
-          <Form.Item label="题库热门">
-            {getFieldDecorator('isHot', {
-              initialValue: exerciseInfo.isHot,
-              valuePropName: 'checked'
-            })(
-              <Switch />
-            )}
-          </Form.Item>
-          <Divider></Divider>
-          <Form.Item label="新增题目">
-            {topicList && topicList.map((_: any, index: number) => {
-              return (
-                <Fragment key={index}>
-                  <div className="form__subtitle">
-                    第{index + 1}题
+        <Spin
+          spinning={isLoading}
+          size="large"
+          tip="加载中..."
+          indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />}>
+          <div className="form__title">题库信息</div>
+          <Form layout="horizontal" {...formLayout} hideRequiredMark>
+            <Form.Item label="题库名称">
+              {getFieldDecorator('exerciseName', {
+                rules: ExerciseNameRules,
+                initialValue: exerciseInfo.exerciseName
+              })(<Input />)}
+            </Form.Item>
+            <Form.Item label="题库简介">
+              {getFieldDecorator('exerciseContent', {
+                rules: ExerciseContentRules,
+                initialValue: exerciseInfo.exerciseContent
+              })(<Input />)}
+            </Form.Item>
+            <Row>
+              <Col span={12}>
+                <Form.Item label="题库难度" labelCol={{
+                  span: 8
+                }} wrapperCol={{
+                  span: 10,
+                  offset: 2
+                }}>
+                  {getFieldDecorator('exerciseDifficulty', {
+                    rules: ExerciseDifficultyRules,
+                    initialValue: exerciseInfo.exerciseDifficulty
+                  })(<Select>
+                    <Option value={1}>简单</Option>
+                    <Option value={2}>中等</Option>
+                    <Option value={3}>困难</Option>
+                  </Select>)}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="题库类型" labelCol={{
+                  span: 4
+                }} wrapperCol={{
+                  span: 10,
+                  offset: 2
+                }}>
+                  {getFieldDecorator('exerciseType', {
+                    rules: ExerciseTypeRules,
+                    initialValue: exerciseInfo.exerciseType
+                  })(<Select>
+                    <Option value={1}>免费</Option>
+                    <Option value={2}>会员</Option>
+                  </Select>)}
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item label="题库热门">
+              {getFieldDecorator('isHot', {
+                initialValue: exerciseInfo.isHot,
+                valuePropName: 'checked'
+              })(
+                <Switch />
+              )}
+            </Form.Item>
+            <Divider></Divider>
+            <Form.Item label="新增题目">
+              {topicList && topicList.map((_: any, index: number) => {
+                return (
+                  <Fragment key={index}>
+                    <div className="form__subtitle">
+                      第{index + 1}题
                     <Tooltip title="删除该题目">
-                      <Icon
-                        type="delete"
-                        theme="twoTone"
-                        twoToneColor="#fa4b2a"
-                        style={{ marginLeft: 16, display: topicList.length > 1 ? 'inline' : 'none' }}
-                        onClick={() => handleTopicDeleteClick(index)} />
-                    </Tooltip>
-                  </div>
-                  <Form.Item label="题目内容" >
-                    {getFieldDecorator(`topicList[${index}].topicContent`, {
-                      rules: TopicContentRules,
-                      initialValue: topicList[index].topicContent
-                    })(<Input.TextArea />)}
-                  </Form.Item>
-                  <Row gutter={32}>
-                    <Col span={12}>
-                      <Form.Item label={
-                        <span>
-                          题目类型&nbsp;
+                        <Icon
+                          type="delete"
+                          theme="twoTone"
+                          twoToneColor="#fa4b2a"
+                          style={{ marginLeft: 16, display: topicList.length > 1 ? 'inline' : 'none' }}
+                          onClick={() => handleTopicDeleteClick(index)} />
+                      </Tooltip>
+                    </div>
+                    <Form.Item label="题目内容" >
+                      {getFieldDecorator(`topicList[${index}].topicContent`, {
+                        rules: TopicContentRules,
+                        initialValue: topicList[index].topicContent
+                      })(<Input.TextArea />)}
+                    </Form.Item>
+                    <Row gutter={32}>
+                      <Col span={12}>
+                        <Form.Item label={
+                          <span>
+                            题目类型&nbsp;
                           <Tooltip title="目前仅支持单选及多选">
-                            <Icon type="info-circle" />
-                          </Tooltip>
-                        </span>
-                      }>
-                        {getFieldDecorator(`topicList[${index}].topicType`, {
-                          rules: TopicTypeRules,
-                          initialValue: topicList[index].topicType
-                        })(<Select onChange={(value) => handleTopicTypeChange(value, index)}>
-                          <Option value={1}>单选</Option>
-                          <Option value={2}>多选</Option>
-                        </Select>)}
-                      </Form.Item>
-                    </Col>
-                    <Col span={12}>
-                      <Form.Item label="正确答案">
-                        {getFieldDecorator(`topicList[${index}].topicAnswer`, {
-                          rules: TopicAnswerRules,
-                          initialValue: topicList[index].topicAnswer
-                        })(<Checkbox.Group
-                          style={{ width: '100%' }}
-                          onChange={(values) => handleTopicAnswerChange(values, index)}>
-                          <Row>
-                            {['A', 'B', 'C', 'D'].map((option, idx) => (
-                              <Col span={6} key={idx}>
-                                <Checkbox value={idx + 1}>选项{option}</Checkbox>
-                              </Col>
-                            ))}
-                          </Row>
-                        </Checkbox.Group>)}
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                  <Row gutter={32}>
-                    {['A', 'B', 'C', 'D'].map((option, idx) => (
-                      <Col span={12} key={idx}>
-                        <Form.Item label={`选项${option}`}>
-                          {getFieldDecorator(`topicList[${index}].topicOptions[${idx}]`, {
-                            rules: TopicOptionRules,
-                            initialValue: topicList[index].topicOptions[idx]
-                          })(<Input />)}
+                              <Icon type="info-circle" />
+                            </Tooltip>
+                          </span>
+                        }>
+                          {getFieldDecorator(`topicList[${index}].topicType`, {
+                            rules: TopicTypeRules,
+                            initialValue: topicList[index].topicType
+                          })(<Select onChange={(value) => handleTopicTypeChange(value, index)}>
+                            <Option value={1}>单选</Option>
+                            <Option value={2}>多选</Option>
+                          </Select>)}
                         </Form.Item>
                       </Col>
-                    ))}
-                  </Row>
-                </Fragment>
-              )
-            })}
-            <Form.Item>
-              <Button onClick={handleTopicAddClick}>新增题目</Button>
+                      <Col span={12}>
+                        <Form.Item label="正确答案">
+                          {getFieldDecorator(`topicList[${index}].topicAnswer`, {
+                            rules: TopicAnswerRules,
+                            initialValue: topicList[index].topicAnswer
+                          })(<Checkbox.Group
+                            style={{ width: '100%' }}
+                            onChange={(values) => handleTopicAnswerChange(values, index)}>
+                            <Row>
+                              {['A', 'B', 'C', 'D'].map((option, idx) => (
+                                <Col span={6} key={idx}>
+                                  <Checkbox value={idx + 1}>选项{option}</Checkbox>
+                                </Col>
+                              ))}
+                            </Row>
+                          </Checkbox.Group>)}
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                    <Row gutter={32}>
+                      {['A', 'B', 'C', 'D'].map((option, idx) => (
+                        <Col span={12} key={idx}>
+                          <Form.Item label={`选项${option}`}>
+                            {getFieldDecorator(`topicList[${index}].topicOptions[${idx}]`, {
+                              rules: TopicOptionRules,
+                              initialValue: topicList[index].topicOptions[idx]
+                            })(<Input />)}
+                          </Form.Item>
+                        </Col>
+                      ))}
+                    </Row>
+                  </Fragment>
+                )
+              })}
+              <Form.Item>
+                <Button onClick={handleTopicAddClick}>新增题目</Button>
+              </Form.Item>
             </Form.Item>
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 5 }}>
-            <Button type="primary" size="large" onClick={handleFormSubmit}>立即提交</Button>
-          </Form.Item>
-        </Form>
+            <Form.Item wrapperCol={{ offset: 5 }}>
+              <Button type="primary" size="large" onClick={handleFormSubmit}>立即提交</Button>
+            </Form.Item>
+          </Form>
+        </Spin>
       </div>
     </div >
   )
