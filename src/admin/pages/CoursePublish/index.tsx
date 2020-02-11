@@ -36,14 +36,14 @@ interface FormLayout {
 }
 
 interface StepList {
-  stepTitle: string,
-  stepContent: string,
+  title: string,
+  content: string,
 }
 
 const CoursePublish: FC<PublishProps> = (props: PublishProps) => {
   const [stepList, setStepList] = useState<StepList[]>([{
-    stepTitle: '',
-    stepContent: ''
+    title: '',
+    content: ''
   }])
   const { history, form } = props
   const { getFieldDecorator, getFieldsValue, setFieldsValue } = form
@@ -87,8 +87,8 @@ const CoursePublish: FC<PublishProps> = (props: PublishProps) => {
 
   const handleTopicAddClick = () => {
     setStepList([...stepList, {
-      stepTitle: '',
-      stepContent: ''
+      title: '',
+      content: ''
     }])
   }
 
@@ -166,12 +166,12 @@ const CoursePublish: FC<PublishProps> = (props: PublishProps) => {
                     </Tooltip>
                   </div>
                   <Form.Item label="标题" >
-                    {getFieldDecorator(`stepList[${index}].stepTitle`, {
+                    {getFieldDecorator(`stepList[${index}].title`, {
                       rules: StepTitleRules
                     })(<Input />)}
                   </Form.Item>
                   <Form.Item label="内容" >
-                    {getFieldDecorator(`stepList[${index}].stepContent`, {
+                    {getFieldDecorator(`stepList[${index}].content`, {
                       rules: StepContentRules
                     })(<Input.TextArea />)}
                   </Form.Item>
