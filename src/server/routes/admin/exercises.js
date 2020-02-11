@@ -128,7 +128,8 @@ router.post('/exercises', async (ctx) => {
       exercise_difficulty: exerciseDifficulty,
       is_hot: isHot,
       topic_list: JSON.stringify(topicList),
-      publish_date: new Date().getTime()
+      publish_date: new Date().getTime(),
+      total_count: topicList.length
     })
     responseBody.data.msg = '新增成功'
     responseBody.code = 200
@@ -156,6 +157,8 @@ router.put('/exercises/:id', async (ctx) => {
     data: {}
   }
   try {
+    const res = await query(`SELECT finish_count, publish_date FROM exercise_list WHERE id = ${exerciseId}`);
+    const { finish_count, publish_date } = res[0]
     await query(REPLACE_TABLE('exercise_list'), {
       id: exerciseId,
       exercise_name: exerciseName,
@@ -163,11 +166,15 @@ router.put('/exercises/:id', async (ctx) => {
       exercise_type: exerciseType,
       exercise_difficulty: exerciseDifficulty,
       is_hot: isHot,
-      topic_list: JSON.stringify(topicList)
+      topic_list: JSON.stringify(topicList),
+      publish_date,
+      finish_count,
+      total_count: topicList.length
     })
     responseBody.data.msg = '修改成功'
     responseBody.code = 200
   } catch (e) {
+    console.length(e)
     responseBody.data.msg = '异常错误'
     responseBody.code = 500
   } finally {
