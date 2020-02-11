@@ -6,3 +6,11 @@ export interface CourseList {
   courseDescription: string,
   isRecommend: boolean
 }
+
+export interface CourseDetails {
+  courseName: string,
+  courseAuthor: string,
+  courseDescription: string,
+  isRecommend: boolean,
+  courseRate: number,
+}
