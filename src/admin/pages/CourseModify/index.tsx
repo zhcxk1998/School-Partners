@@ -145,7 +145,7 @@ const CourseModify: FC<ModifyProps> = (props: ModifyProps) => {
 
   return (
     <div>
-      <CustomBreadcrumb list={['内容管理', '新增课程', courseName]} />
+      <CustomBreadcrumb list={['内容管理', '课程管理', courseName]} />
       <div className="course-modify__container">
         <Spin
           spinning={isLoading}
