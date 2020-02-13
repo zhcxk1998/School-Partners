@@ -2,13 +2,15 @@ import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtSearchBar } from 'taro-ui'
+import { inject, observer } from '@tarojs/mobx'
 
 import { CourseInfo } from '../../modals/courseList'
+import courseStore from '../../../store/courseStore'
 
 import './index.scss'
 
 interface IProps {
-
+  courseStore: courseStore
 }
 
 interface IState {
@@ -16,6 +18,8 @@ interface IState {
   searchValue: string
 }
 
+@inject('courseStore')
+@observer
 class CourseList extends Component<IProps, IState>{
   constructor(props: IProps) {
     super(props)
@@ -42,6 +46,7 @@ class CourseList extends Component<IProps, IState>{
   }
 
   render() {
+    const { courseStore: { getCourseDetail } } = this.props;
     const { courseList, searchValue } = this.state
     return (
       <View className="course-list">
@@ -51,9 +56,9 @@ class CourseList extends Component<IProps, IState>{
         />
         <View className="course-list__container">
           {courseList.map(course => {
-            const { courseCid, courseName } = course
+            const { id, courseName } = course
             return (
-              <View className="course-list__wrap" key={courseCid}>
+              <View className="course-list__wrap" key={id}  onClick={() => { getCourseDetail(id, courseName) }}>
                 <View className="cover"></View>
                 <View className="name">{courseName}</View>
               </View>
@@ -61,7 +66,6 @@ class CourseList extends Component<IProps, IState>{
           })}
         </View>
       </View>
-
     )
   }
 }
