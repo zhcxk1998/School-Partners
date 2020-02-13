@@ -1,5 +1,5 @@
 export interface ExerciseInfo {
-  exerciseId: number,
+  id: number,
   exerciseName: string,
   exerciseContent: string,
   isHot: boolean

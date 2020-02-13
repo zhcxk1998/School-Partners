@@ -2,13 +2,15 @@ import React, { ComponentType } from 'react'
 import Taro, { Component } from '@tarojs/taro'
 import { View } from '@tarojs/components'
 import { AtSearchBar, AtIcon } from 'taro-ui'
+import { observer, inject } from '@tarojs/mobx'
 
 import { ExerciseInfo } from '../../modals/exerciseDetail'
+import exerciseStore from '../../store/exerciseStore'
 
 import './index.scss'
 
 interface IProps {
-
+  exerciseStore: exerciseStore
 }
 
 interface IState {
@@ -16,6 +18,8 @@ interface IState {
   searchValue: string
 }
 
+@inject('exerciseStore')
+@observer
 class CourseList extends Component<IProps, IState>{
   constructor(props: IProps) {
     super(props)
@@ -60,6 +64,7 @@ class CourseList extends Component<IProps, IState>{
   }
 
   render() {
+    const { exerciseStore: { getExerciseDetail } } = this.props
     const { exerciseList, searchValue } = this.state
     return (
       <View className="exercise-list">
@@ -69,9 +74,9 @@ class CourseList extends Component<IProps, IState>{
         />
         <View className="exercise-list__container">
           {exerciseList.map(exercise => {
-            const { exerciseCid, exerciseName, finsihCount, totalCount, exerciseDifficulty, exerciseType } = exercise
+            const { id, exerciseName, finsihCount, totalCount, exerciseDifficulty, exerciseType } = exercise
             return (
-              <View className="exercise-list__wrap" key={exerciseCid}>
+              <View className="exercise-list__wrap" key={id} onClick={() => { getExerciseDetail(id) }}>
                 <View className="name">{exerciseName}</View>
                 <View className="status-bar">
                   {finsihCount}人完成&emsp;共{totalCount}题&emsp;-{this.generateDifficulty(exerciseDifficulty)}-&emsp;

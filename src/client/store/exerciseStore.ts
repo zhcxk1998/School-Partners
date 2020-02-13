@@ -51,7 +51,7 @@ class exerciseStore {
   }
 
   @action.bound
-  getExerciseDetail(cid: string): any {
+  getExerciseDetail(cid: number): any {
     return new Promise(async (resolve) => {
       await Taro.navigateTo({
         url: '/pages/exerciseDetail/index'

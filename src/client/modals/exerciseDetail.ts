@@ -1,5 +1,5 @@
 export interface ExerciseInfo {
-  exerciseCid: number,
+  id: number,
   exerciseName: string,
   finsihCount: number,
   totalCount: number,
