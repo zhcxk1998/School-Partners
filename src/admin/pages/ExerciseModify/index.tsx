@@ -200,7 +200,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
 
   return (
     <div>
-      <CustomBreadcrumb list={['内容管理', '修改题库', modifyExerciseName]} />
+      <CustomBreadcrumb list={['内容管理', '题库管理', modifyExerciseName]} />
       <div className="exercise-modify__container">
         <Spin
           spinning={isLoading}
