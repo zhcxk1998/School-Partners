@@ -9,8 +9,7 @@ class courseStore {
     publishDate: '',
     courseViews: 0,
     courseDescription: '',
-    stepName: [],
-    stepDetail: [],
+    courseSteps: [],
     courseRate: 0
   }
 
