@@ -52,6 +52,13 @@ const Login: FC<LoginProps> = (props: LoginProps) => {
     })
   }
 
+  const handleEnterPress = (e: any) => {
+    e.preventDefault()
+    if (e.keyCode === 13) {
+      handleFormSubmit(e)
+    }
+  }
+
   return (
     <div className="login__container">
       <div className="login__mask" hidden={!isModalOpened} onClick={handleMaskClick} >
@@ -85,7 +92,7 @@ const Login: FC<LoginProps> = (props: LoginProps) => {
                 })(
                   <div className="form__wrap">
                     <i className="form__icon iconfont icon-mima" />
-                    <input className="form__input" type="password" placeholder="密码" />
+                    <input className="form__input" type="password" placeholder="密码" onKeyUp={handleEnterPress} />
                   </div>
                 )}
               </Form.Item>
