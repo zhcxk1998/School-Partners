@@ -9,7 +9,7 @@ router.get('/exercises', async (ctx) => {
   res.map((item, index) => {
     const { id, exercise_name, exercise_content, is_hot, finish_count, total_count, exercise_difficulty, exercise_type } = item
     response[index] = {
-      exerciseId: id,
+      id,
       exerciseName: exercise_name,
       exerciseContent: exercise_content,
       isHot: is_hot,
