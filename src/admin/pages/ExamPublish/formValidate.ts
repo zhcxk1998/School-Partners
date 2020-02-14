@@ -1,5 +1,3 @@
-const { validateNumber } = require('@/admin/utils/formValidate')
-
 export const ExamNameRules = [
   { required: true, message: '请输入考试名称' }
 ]
