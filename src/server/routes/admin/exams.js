@@ -1,7 +1,48 @@
 const router = require('koa-router')()
 const { query } = require('../../utils/query')
-const { INSERT_TABLE } = require('../../utils/sql');
+const { QUERY_TABLE, INSERT_TABLE } = require('../../utils/sql');
 const { generateRandomCode } = require('../../utils/generateRandomCode')
+
+router.get('/exams', async (ctx) => {
+  const responseData = []
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    const res = await query(QUERY_TABLE('exam_list'));
+    res.map((item, index) => {
+      const { id, exam_name, exam_content, exam_type, exam_difficulty, exam_code, is_open, timing_mode, start_time, end_time, count_down, publish_date } = item
+      responseData[index] = {
+        id,
+        examName: exam_name,
+        examContent: exam_content,
+        examType: exam_type,
+        examDifficulty: exam_difficulty,
+        examTimingMode: timing_mode,
+        isOpen: !!is_open,
+        startTime: parseInt(start_time),
+        endTime: parseInt(end_time),
+        countDown: count_down,
+        examCode: exam_code,
+        publishDate: parseInt(publish_date)
+      }
+    })
+    responseBody.code = 200
+    responseBody.data = {
+      examList: responseData,
+      total: responseData.length
+    }
+  } catch (e) {
+    responseBody.code = 404
+    responseBody.data = {
+      msg: '无考试信息'
+    }
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
 
 router.post('/exams', async (ctx) => {
   const {
