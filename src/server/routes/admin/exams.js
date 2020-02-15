@@ -13,6 +13,13 @@ router.get('/exams', async (ctx) => {
     const res = await query(QUERY_TABLE('exam_list'));
     res.map((item, index) => {
       const { id, exam_name, exam_content, exam_type, exam_difficulty, exam_code, is_open, timing_mode, start_time, end_time, count_down, publish_date } = item
+      const generateExamTime = (time) => {
+        const examTime = new Date(time).toLocaleString()
+        return examTime.substr(0, examTime.length - 3)
+      }
+      const examTime = timing_mode === 1
+        ? '倒计时 ' + count_down.replace(/s/g, '秒').replace(/m/g, '分钟').replace(/h/g, '小时').replace(/d/g, '天')
+        : generateExamTime(+start_time) + '<br/>至<br/>' + generateExamTime(+end_time)
       responseData[index] = {
         id,
         examName: exam_name,
@@ -21,9 +28,7 @@ router.get('/exams', async (ctx) => {
         examDifficulty: exam_difficulty,
         examTimingMode: timing_mode,
         isOpen: !!is_open,
-        startTime: parseInt(start_time),
-        endTime: parseInt(end_time),
-        countDown: count_down,
+        examTime,
         examCode: exam_code,
         publishDate: parseInt(publish_date)
       }
