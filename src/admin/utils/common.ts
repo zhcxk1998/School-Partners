@@ -1,4 +1,4 @@
-const generateDifficulty = (difficultyDegree: number): { color: string, difficulty: string } => {
+export const generateDifficulty = (difficultyDegree: number): { color: string, difficulty: string } => {
   const difficultyList = {
     1: '简单',
     2: '中等',
@@ -15,7 +15,7 @@ const generateDifficulty = (difficultyDegree: number): { color: string, difficul
   }
 }
 
-const generateExerciseType = (exerciseType: number): { color: string, type: string } => {
+export const generateExerciseType = (exerciseType: number): { color: string, type: string } => {
   const typeList = {
     1: '免费',
     2: '会员'
@@ -30,7 +30,6 @@ const generateExerciseType = (exerciseType: number): { color: string, type: stri
   }
 }
 
-export {
-  generateDifficulty,
-  generateExerciseType
+export const generateExamType = (examType: number): string => {
+  return examType === 1 ? '课堂小测' : '单元测试'
 }

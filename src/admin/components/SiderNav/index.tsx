@@ -60,7 +60,9 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           <Menu.Item key="/admin/content/course-list">
             <Link to="/admin/content/course-list">课程管理</Link>
           </Menu.Item>
-          <Menu.Item key="3">option3</Menu.Item>
+          <Menu.Item key="/admin/content/exam-list">
+            <Link to="/admin/content/exam-list">考试管理</Link>
+          </Menu.Item>
           <Menu.Item key="4">option4</Menu.Item>
         </SubMenu>
         <SubMenu
