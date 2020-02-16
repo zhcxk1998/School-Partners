@@ -56,14 +56,14 @@ const ExamList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   }
 
   const handleDeleteClick = async (id: number) => {
-    const { data: { msg } } = await http.delete(`/exercises/${id}`)
+    const { data: { msg } } = await http.delete(`/exams/${id}`)
     setFetchFlag(fetchFlag + 1)
     setSelectedRowKeys([])
     message.success(msg)
   }
 
   const handleBatchDelete = async () => {
-    const { data: { msg } } = await http.delete(`/exercises`, {
+    const { data: { msg } } = await http.delete(`/exams`, {
       data: selectedRowKeys
     })
     setFetchFlag(fetchFlag + 1)
@@ -141,7 +141,7 @@ const ExamList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           type="primary"
           onClick={() => handleEditClick(row.id)}>编辑</Button>
         <Popconfirm
-          title="确定删除此题库吗?"
+          title="确定删除此考试吗?"
           onConfirm={() => handleDeleteClick(row.id)}
           okText="确定"
           cancelText="取消"
