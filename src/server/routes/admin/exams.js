@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const { query } = require('../../utils/query')
-const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE } = require('../../utils/sql');
+const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE, UPDATE_TABLE } = require('../../utils/sql');
 const { generateRandomCode } = require('../../utils/generateRandomCode')
 
 router.get('/exams', async (ctx) => {
@@ -199,6 +199,30 @@ router.put('/exams/:id', async (ctx) => {
       is_open: isOpen
     })
     responseBody.data.msg = '修改成功'
+    responseBody.code = 200
+  } catch (e) {
+    console.log(e)
+    responseBody.data.msg = '异常错误'
+    responseBody.code = 500
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
+
+router.put('/exams/status/:id', async (ctx) => {
+  const { id: examId } = ctx.params
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    const res = await query(`SELECT is_open from exam_list where id = ${examId}`)
+    const { is_open } = res[0]
+    const newStatus = is_open === 1 ? 0 : 1
+    await query(UPDATE_TABLE('exam_list', { primaryKey: 'id', primaryValue: examId }, { key: 'is_open', value: newStatus }))
+    responseBody.data.msg = '修改成功'
+    responseBody.data.status = !!!newStatus
     responseBody.code = 200
   } catch (e) {
     console.log(e)
