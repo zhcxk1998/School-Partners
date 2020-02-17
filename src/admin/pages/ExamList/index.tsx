@@ -52,7 +52,7 @@ const ExamList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
   }
 
   const handleEditClick = (id: number) => {
-    history.push(`/admin/content/exercise-modify/${id}`)
+    history.push(`/admin/content/exam-modify/${id}`)
   }
 
   const handleDeleteClick = async (id: number) => {
