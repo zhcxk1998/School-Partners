@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const { query } = require('../../utils/query')
-const { QUERY_TABLE, INSERT_TABLE } = require('../../utils/sql');
+const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE } = require('../../utils/sql');
 const { generateRandomCode } = require('../../utils/generateRandomCode')
 
 router.get('/exams', async (ctx) => {
@@ -157,6 +157,53 @@ router.delete('/exams', async (ctx) => {
   } catch (e) {
     responseBody.data.msg = '无此考试'
     responseBody.code = 404
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
+
+router.put('/exams/:id', async (ctx) => {
+  const { id: examId } = ctx.params
+  const {
+    examName,
+    examContent,
+    examType,
+    examDifficulty,
+    examTimingMode,
+    examTime,
+    topicList,
+    examCode,
+    isOpen
+  } = ctx.request.body
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    const res = await query(`SELECT publish_date FROM exam_list WHERE id = ${examId}`);
+    const { publish_date } = res[0]
+    await query(REPLACE_TABLE('exam_list'), {
+      id: examId,
+      exam_name: examName,
+      exam_content: examContent,
+      exam_type: examType,
+      exam_difficulty: examDifficulty,
+      timing_mode: examTimingMode,
+      start_time: examTimingMode === 1 ? 0 : examTime[0],
+      end_time: examTimingMode === 1 ? 0 : examTime[1],
+      count_down: examTimingMode === 1 ? examTime : 0,
+      publish_date,
+      topic_list: JSON.stringify(topicList),
+      exam_code: examCode,
+      is_open: isOpen
+    })
+    responseBody.data.msg = '修改成功'
+    responseBody.code = 200
+  } catch (e) {
+    console.log(e)
+    responseBody.data.msg = '异常错误'
+    responseBody.code = 500
   } finally {
     ctx.response.status = responseBody.code
     ctx.response.body = responseBody
