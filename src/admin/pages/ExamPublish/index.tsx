@@ -116,7 +116,7 @@ const ExamPublish: FC<PublishProps> = (props: PublishProps) => {
   const handleTopicAddClick = () => {
     setTopicList([...topicList, {
       topicType: 1,
-      topicAnswer: [],
+      topicAnswer: [1],
       topicContent: '',
       topicOptions: [],
     }])
