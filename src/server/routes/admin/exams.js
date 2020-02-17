@@ -49,6 +49,41 @@ router.get('/exams', async (ctx) => {
   }
 })
 
+router.get('/exams/:id', async (ctx) => {
+  const { id: examId } = ctx.params
+  const responseBody = {
+    code: 0,
+    data: {}
+  }
+  try {
+    const res = await query(`SELECT * FROM exam_list where id = ${examId}`);
+    const { id, exam_name, exam_content, exam_type, exam_difficulty, exam_code, is_open, timing_mode, start_time, end_time, count_down, topic_list } = res[0]
+    responseBody.data = {
+      id,
+      examName: exam_name,
+      examContent: exam_content,
+      examType: exam_type,
+      examDifficulty: exam_difficulty,
+      examTimingMode: timing_mode,
+      isOpen: !!is_open,
+      startTime: parseInt(start_time),
+      endTime: parseInt(end_time),
+      countDown: count_down,
+      examCode: exam_code,
+      topicList: JSON.parse(topic_list)
+    }
+    responseBody.code = 200
+  } catch (e) {
+    responseBody.code = 404
+    responseBody.data = {
+      msg: '无考试信息'
+    }
+  } finally {
+    ctx.response.status = responseBody.code
+    ctx.response.body = responseBody
+  }
+})
+
 router.post('/exams', async (ctx) => {
   const {
     examName,
