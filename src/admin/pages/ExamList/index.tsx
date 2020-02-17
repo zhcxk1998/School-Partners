@@ -19,6 +19,9 @@ import { FetchConfig } from '@/admin/modals/http'
 import { useService } from '@/admin/hooks'
 import http from '@/admin/utils/http'
 
+message.config({
+  maxCount: 1
+})
 import './index.scss'
 
 const ExamList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
@@ -69,6 +72,12 @@ const ExamList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     setFetchFlag(fetchFlag + 1)
     setSelectedRowKeys([])
     message.success(msg)
+  }
+
+  const handleOpenChange = async (examId: number) => {
+    const { data: { msg } } = await http.put(`/exams/status/${examId}`, {})
+    message.success(msg)
+    setFetchFlag(fetchFlag + 1)
   }
 
   const rowSelection = {
@@ -129,7 +138,7 @@ const ExamList: FC<RouteComponentProps> = (props: RouteComponentProps) => {
     dataIndex: 'isOpen',
     key: 'isOpen',
     width: 120,
-    render: isOpen => <Switch checked={isOpen} />,
+    render: (isOpen, row) => <Switch checked={isOpen} onChange={() => handleOpenChange(row.id)} />,
   }, {
     title: '操作',
     dataIndex: '',
