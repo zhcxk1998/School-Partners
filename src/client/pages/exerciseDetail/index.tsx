@@ -53,7 +53,7 @@ class Exam extends Component<IProps, {}> {
   }
 
   render() {
-    const { exerciseStore: { currentPage, topicList, theme } } = this.props;
+    const { exerciseStore: { currentPage, topicList, theme }, exerciseStore } = this.props;
     const tabList = this.generateTab();
     return (
       <View className={`exam-container ${theme}`}>
@@ -65,8 +65,8 @@ class Exam extends Component<IProps, {}> {
           {topicList.map((_, index) => {
             return (
               <AtTabsPane current={currentPage} index={index} key={index}>
-                <Topic number={index} exerciseStore={new exerciseStore()} />
-                <Options number={index} exerciseStore={new exerciseStore()} />
+                <Topic number={index} exerciseStore={exerciseStore} />
+                <Options number={index} exerciseStore={exerciseStore} />
               </AtTabsPane>
             )
           })}
