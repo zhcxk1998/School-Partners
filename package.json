@@ -61,6 +61,7 @@
     "react-dom": "^16.12.0",
     "react-loadable": "^5.5.0",
     "react-router-dom": "^5.1.2",
+    "@types/react-router-dom": "^5.1.3",
     "regenerator-runtime": "^0.11.1",
     "taro": "^0.0.7",
     "taro-ui": "^2.2.1",
