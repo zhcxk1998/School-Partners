@@ -16,7 +16,8 @@ import {
   CourseModify,
   ExamList,
   ExamPublish,
-  ExamModify
+  ExamModify,
+  MarkPaper
 } from '@/admin/pages'
 import './index.scss'
 
@@ -34,6 +35,7 @@ const ContentMain: FC<RouteComponentProps> = () => {
         <Route exact path="/admin/content/exam-list/" component={ExamList} />
         <Route exact path="/admin/content/exam-publish/" component={ExamPublish} />
         <Route exact path="/admin/content/exam-modify/:id" component={ExamModify} />
+        <Route exact path="/admin/content/mark-paper/" component={MarkPaper} />
 
         <Redirect exact from="/" to="/admin" />
       </Switch>

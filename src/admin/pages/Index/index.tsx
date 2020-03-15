@@ -1,21 +1,12 @@
-import React, { ComponentType, useState, useEffect } from 'react'
-
-import http from '@/admin/utils/http'
-
+import React, { ComponentType } from 'react'
 import './index.scss'
 
 const Index = () => {
-  const [content, setContent] = useState('index')
-
-  useEffect(() => {
-    (async () => {
-      const res = await http.get('/info')
-      console.log(res)
-    })()
-  })
-
   return (
-    <div>{content}</div>
+    <div>
+      我是首页
+
+    </div>
   )
 }
 
