@@ -14,6 +14,7 @@
     width: 70%;
     height: 100%;
     border: #666 1px solid;
+    border-radius: 8px;
     background: #333;
   }
 
@@ -35,8 +36,10 @@
     width: 25%;
     height: 100%;
     padding: 20px;
-    border: #1890ff 1px solid;
+    border: #66a6ff 1px solid;
+    border-radius: 8px;
     background: #fff;
+    transition: all .25s ease;
   }
 
   &__action {
