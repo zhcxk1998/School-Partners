@@ -3,7 +3,7 @@ import { CustomBreadcrumb } from '@/admin/components'
 import { RouteComponentProps } from 'react-router-dom';
 import { FormComponentProps } from 'antd/lib/form';
 import {
-  Slider, Radio, Button, Tooltip, Icon, Select, Spin
+  Slider, Radio, Button, Tooltip, Icon, Select, Spin, message, Popconfirm
 } from 'antd';
 
 import './index.scss'
@@ -17,6 +17,7 @@ type MarkPaperProps = RouteComponentProps & FormComponentProps
 const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
   const MOVE_MODE: number = 0
   const LINE_MODE: number = 1
+  const ERASER_MODE: number = 2
   const canvasRef: RefObject<HTMLCanvasElement> = useRef(null)
   const containerRef: RefObject<HTMLDivElement> = useRef(null)
   const wrapRef: RefObject<HTMLDivElement> = useRef(null)
@@ -24,12 +25,14 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
   const translatePointYRef: MutableRefObject<number> = useRef(0)
   const fillStartPointXRef: MutableRefObject<number> = useRef(0)
   const fillStartPointYRef: MutableRefObject<number> = useRef(0)
+  const canvasHistroyListRef: MutableRefObject<ImageData[]> = useRef([])
+  const [lineColor, setLineColor] = useState<string>('#fa4b2a')
+  const [fillImageSrc, setFillImageSrc] = useState<string>('')
   const [mouseMode, setmouseMode] = useState<number>(MOVE_MODE)
   const [lineWidth, setLineWidth] = useState<number>(5)
-  const [lineColor, setLineColor] = useState<string>('#fa4b2a')
   const [canvasScale, setCanvasScale] = useState<number>(1)
-  const [fillImageSrc, setFillImageSrc] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [canvasCurrentHistory, setCanvasCurrentHistory] = useState<number>(0)
 
   useEffect(() => {
     setFillImageSrc('http://cdn.algbb.cn/test/canvasTest.jpg')
@@ -49,7 +52,7 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
   // 画布参数变动时，重新监听canvas
   useEffect(() => {
     handleCanvas()
-  }, [mouseMode, canvasScale])
+  }, [mouseMode, canvasScale, canvasCurrentHistory])
 
   // 监听画笔颜色变化
   useEffect(() => {
@@ -71,6 +74,15 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     canvas && (canvas.style.transform = `scale(${canvasScale},${canvasScale}) translate(${translatePointX}px,${translatePointY}px)`)
   }, [canvasScale])
 
+  useEffect(() => {
+    const { current: canvas } = canvasRef
+    const { current: canvasHistroyList } = canvasHistroyListRef
+    const context: CanvasRenderingContext2D | undefined | null = canvas?.getContext('2d')
+    if (!canvas || !context || canvasCurrentHistory === 0) return
+    console.log('current index: ', canvasCurrentHistory)
+    context?.putImageData(canvasHistroyList[canvasCurrentHistory - 1], 0, 0)
+  }, [canvasCurrentHistory])
+
   const fillImage = async () => {
     const { current: canvas } = canvasRef
     const { current: wrap } = wrapRef
@@ -86,7 +98,9 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
       // const centerY: number = canvas && canvas.height / 2 - img.height / 2 || 0
       canvas.width = img.width
       canvas.height = img.height
-      // context.clearRect(0, 0, canvas.width, canvas.height)
+
+      // 背景设置为图片，橡皮擦的效果才能出来
+      canvas.style.background = `url(${img.src})`
       context.drawImage(img, 0, 0)
       context.strokeStyle = lineColor
       context.lineWidth = lineWidth
@@ -97,6 +111,11 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
       canvas.style.transformOrigin = `${wrap?.offsetWidth / 2}px ${wrap?.offsetHeight / 2}px`
       // 清除上一次变化的效果
       canvas.style.transform = ''
+      const imageData: ImageData = context.getImageData(0, 0, canvas.width, canvas.height)
+      canvasHistroyListRef.current = []
+      canvasHistroyListRef.current.push(imageData)
+      // canvasCurrentHistoryRef.current = 1
+      setCanvasCurrentHistory(1)
       setTimeout(() => { setIsLoading(false) }, 500)
     }
   }
@@ -122,32 +141,37 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     const { current: canvas } = canvasRef
     const { current: wrap } = wrapRef
     const context: CanvasRenderingContext2D | undefined | null = canvas?.getContext('2d')
-    if (!canvas || !wrap) return
+    if (!canvas || !wrap || !context) return
 
     const offsetLeft: number = canvas.offsetLeft
     const offsetTop: number = canvas.offsetTop
-    // 减去画布便宜的距离（以画布为基准进行计算坐标）
-    console.log(canvasRef)
+    // 减去画布偏移的距离（以画布为基准进行计算坐标）
     downX = downX - offsetLeft
     downY = downY - offsetTop
 
     const { pointX, pointY } = generateLinePoint(downX, downY)
-
-    console.log(downX, offsetLeft, pointX, translatePointXRef.current)
-
-    context?.beginPath()
-    context?.moveTo(pointX, pointY)
+    context.globalCompositeOperation = "source-over"
+    context.beginPath()
+    context.moveTo(pointX, pointY)
 
     canvas.onmousemove = null
     canvas.onmousemove = (event: MouseEvent) => {
       const moveX: number = event.pageX - offsetLeft
       const moveY: number = event.pageY - offsetTop
       const { pointX, pointY } = generateLinePoint(moveX, moveY)
-      context?.lineTo(pointX, pointY)
-      context?.stroke()
+      context.lineTo(pointX, pointY)
+      context.stroke()
     }
     canvas.onmouseup = () => {
-      context?.closePath()
+      const imageData: ImageData = context.getImageData(0, 0, canvas.width, canvas.height)
+
+      // 如果此时处于撤销状态，此时再使用画笔，则将之后的状态清空，以刚画的作为最新的画布状态
+      if (canvasCurrentHistory < canvasHistroyListRef.current.length) {
+        canvasHistroyListRef.current = canvasHistroyListRef.current.slice(0, canvasCurrentHistory)
+      }
+      canvasHistroyListRef.current.push(imageData)
+      setCanvasCurrentHistory(canvasCurrentHistory + 1)
+      context.closePath()
       canvas.onmousemove = null
       canvas.onmouseup = null
     }
@@ -183,6 +207,46 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     }
   }
 
+  // 目前橡皮擦还有点问题，前端显示正常，保存图片下来，擦除的痕迹会变成白色
+  const handleEraserMode = (downX: number, downY: number) => {
+    const { current: canvas } = canvasRef
+    const { current: wrap } = wrapRef
+    const context: CanvasRenderingContext2D | undefined | null = canvas?.getContext('2d')
+    if (!canvas || !wrap || !context) return
+
+    const offsetLeft: number = canvas.offsetLeft
+    const offsetTop: number = canvas.offsetTop
+    downX = downX - offsetLeft
+    downY = downY - offsetTop
+
+    const { pointX, pointY } = generateLinePoint(downX, downY)
+
+    context.beginPath()
+    context.moveTo(pointX, pointY)
+
+    canvas.onmousemove = null
+    canvas.onmousemove = (event: MouseEvent) => {
+      const moveX: number = event.pageX - offsetLeft
+      const moveY: number = event.pageY - offsetTop
+      const { pointX, pointY } = generateLinePoint(moveX, moveY)
+      context.globalCompositeOperation = "destination-out"
+      context.lineWidth = lineWidth
+      context.lineTo(pointX, pointY)
+      context.stroke()
+    }
+    canvas.onmouseup = () => {
+      const imageData: ImageData = context.getImageData(0, 0, canvas.width, canvas.height)
+      if (canvasCurrentHistory < canvasHistroyListRef.current.length) {
+        canvasHistroyListRef.current = canvasHistroyListRef.current.slice(0, canvasCurrentHistory)
+      }
+      canvasHistroyListRef.current.push(imageData)
+      setCanvasCurrentHistory(canvasCurrentHistory + 1)
+      context.closePath()
+      canvas.onmousemove = null
+      canvas.onmouseup = null
+    }
+  }
+
   const handleCanvas = () => {
     const { current: canvas } = canvasRef
     const { current: wrap } = wrapRef
@@ -201,6 +265,9 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
           break
         case LINE_MODE:
           handleLineMode(downX, downY)
+          break
+        case ERASER_MODE:
+          handleEraserMode(downX, downY)
           break
         default:
           break
@@ -247,6 +314,11 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
         canvas.style.cursor = `url('http://cdn.algbb.cn/pointer.ico') 6 26, pointer`
         wrap.style.cursor = 'default'
         break
+      case ERASER_MODE:
+        message.warning('橡皮擦功能尚未完善，保存图片会出现错误')
+        canvas.style.cursor = `url('http://cdn.algbb.cn/eraser.ico') 6 26, pointer`
+        wrap.style.cursor = 'default'
+        break
       default:
         canvas.style.cursor = 'default'
         wrap.style.cursor = 'default'
@@ -267,6 +339,33 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
       'xueshengyi': 'http://cdn.algbb.cn/emoji/30.png',
     }
     setFillImageSrc(fillImageList[value])
+  }
+
+  const handleRollBack = () => {
+    const isFirstHistory: boolean = canvasCurrentHistory === 1
+    console.log(canvasCurrentHistory)
+    if (isFirstHistory) return
+    setCanvasCurrentHistory(canvasCurrentHistory - 1)
+  }
+
+  const handleRollForward = () => {
+    const { current: canvasHistroyList } = canvasHistroyListRef
+    const isLastHistory: boolean = canvasCurrentHistory === canvasHistroyList.length
+    console.log(canvasCurrentHistory)
+    if (isLastHistory) return
+    setCanvasCurrentHistory(canvasCurrentHistory + 1)
+  }
+
+  const handleClearCanvasClick = () => {
+    const { current: canvas } = canvasRef
+    const context: CanvasRenderingContext2D | undefined | null = canvas?.getContext('2d')
+    if (!canvas || !context || canvasCurrentHistory === 0) return
+
+    // 清空画布历史
+    canvasHistroyListRef.current = [canvasHistroyListRef.current[0]]
+    setCanvasCurrentHistory(1)
+
+    message.success('画布清除成功！')
   }
 
   return (
@@ -309,6 +408,31 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
             </Select>
           </div>
           <div>
+            画布操作：<br />
+            <div className="mark-paper__action">
+              <Tooltip title="撤销">
+                <i
+                  className={`icon iconfont icon-chexiao ${canvasCurrentHistory <= 1 && 'disable'}`}
+                  onClick={handleRollBack} />
+              </Tooltip>
+              <Tooltip title="恢复">
+                <i
+                  className={`icon iconfont icon-fanhui ${canvasCurrentHistory >= canvasHistroyListRef.current.length && 'disable'}`}
+                  onClick={handleRollForward} />
+              </Tooltip>
+              <Popconfirm
+                title="确定清空画布吗？"
+                onConfirm={handleClearCanvasClick}
+                okText="确定"
+                cancelText="取消"
+              >
+                <Tooltip title="清空">
+                  <i className="icon iconfont icon-qingchu" />
+                </Tooltip>
+              </Popconfirm>
+            </div>
+          </div>
+          <div>
             画布缩放：
             <Tooltip placement="top" title='可用鼠标滚轮进行缩放'>
               <Icon type="question-circle" />
@@ -338,6 +462,7 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
               value={mouseMode}>
               <Radio value={0}>移动</Radio>
               <Radio value={1}>画笔</Radio>
+              <Radio value={2}>橡皮擦</Radio>
             </Radio.Group>
           </div>
           <div>
