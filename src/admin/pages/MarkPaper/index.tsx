@@ -79,7 +79,6 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     const { current: canvasHistroyList } = canvasHistroyListRef
     const context: CanvasRenderingContext2D | undefined | null = canvas?.getContext('2d')
     if (!canvas || !context || canvasCurrentHistory === 0) return
-    console.log('current index: ', canvasCurrentHistory)
     context?.putImageData(canvasHistroyList[canvasCurrentHistory - 1], 0, 0)
   }, [canvasCurrentHistory])
 
@@ -311,7 +310,7 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
         wrap.style.cursor = 'move'
         break
       case LINE_MODE:
-        canvas.style.cursor = `url('http://cdn.algbb.cn/pointer.ico') 6 26, pointer`
+        canvas.style.cursor = `url('http://cdn.algbb.cn/pencil.ico') 6 26, pointer`
         wrap.style.cursor = 'default'
         break
       case ERASER_MODE:
@@ -334,16 +333,15 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
 
   const handlePaperChange = (value: string) => {
     const fillImageList = {
-      'chenzikang': 'http://cdn.algbb.cn/test/canvasTest.jpg',
-      'xueshengjia': 'http://cdn.algbb.cn/test/canvasTest2.png',
-      'xueshengyi': 'http://cdn.algbb.cn/emoji/30.png',
+      'xueshengjia': 'http://cdn.algbb.cn/test/canvasTest.jpg',
+      'xueshengyi': 'http://cdn.algbb.cn/test/canvasTest2.png',
+      'xueshengbing': 'http://cdn.algbb.cn/emoji/30.png',
     }
     setFillImageSrc(fillImageList[value])
   }
 
   const handleRollBack = () => {
     const isFirstHistory: boolean = canvasCurrentHistory === 1
-    console.log(canvasCurrentHistory)
     if (isFirstHistory) return
     setCanvasCurrentHistory(canvasCurrentHistory - 1)
   }
@@ -351,7 +349,6 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
   const handleRollForward = () => {
     const { current: canvasHistroyList } = canvasHistroyListRef
     const isLastHistory: boolean = canvasCurrentHistory === canvasHistroyList.length
-    console.log(canvasCurrentHistory)
     if (isLastHistory) return
     setCanvasCurrentHistory(canvasCurrentHistory + 1)
   }
@@ -393,17 +390,17 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
           <div>
             选择作业：
             <Select
-              defaultValue="chenzikang"
+              defaultValue="xueshengjia"
               style={{
                 width: '100%', margin: '10px 0 20px 0'
               }}
               onChange={handlePaperChange} >
               <OptGroup label="17软件一班">
-                <Option value="chenzikang">陈子康</Option>
                 <Option value="xueshengjia">学生甲</Option>
+                <Option value="xueshengyi">学生乙</Option>
               </OptGroup>
               <OptGroup label="17软件二班">
-                <Option value="xueshengyi">学生乙</Option>
+                <Option value="xueshengbing">学生丙</Option>
               </OptGroup>
             </Select>
           </div>
