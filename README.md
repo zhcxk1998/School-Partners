@@ -42,6 +42,7 @@ Other：Qiniu Cloud
 ### admin
 1. Login and Register
 2. The question bank management
+3. Mark the Exam Paper
 
 ## Screenshot
 
@@ -89,6 +90,9 @@ Other：Qiniu Cloud
 
 ### 3. Question Bank Modify
 ![](http://cdn.algbb.cn/screenshots/school-partners/修改题库.png)
+
+### 4. Mark Paper
+![](http://cdn.algbb.cn/screenshots/mark-paper.png)
 
 ## Installation operation
 

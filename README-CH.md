@@ -39,9 +39,11 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 8. 活动日程安排
 9. 学习分享论坛
 
+
 ### 管理端
 1. 登录注册
 2. 题库管理
+3. 试卷批改
 
 ## 运行截图
 
@@ -89,6 +91,9 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
 ### 3. 修改题库
 ![](http://cdn.algbb.cn/screenshots/school-partners/修改题库.png)
+
+### 4. 试卷批改
+![](http://cdn.algbb.cn/screenshots/mark-paper.png)
 
 ## 安装运行
 
