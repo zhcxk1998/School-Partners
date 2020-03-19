@@ -13,6 +13,7 @@ Contemporary college students lack enthusiasm in class and efficiency in learnin
 For specific use, please refer to my blog, will continue to update the analysis of project technology
 > Admin: https://juejin.im/post/5e3389f06fb9a02fbd3791cf  
 > Client: https://juejin.im/post/5dd161675188254efb3bceea
+> Using Canvas to realize image marking and transformation: https://juejin.im/post/5e717376e51d4526dd1ec2e6#comment
 
 ## Video Demo
 http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
