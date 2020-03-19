@@ -11,7 +11,7 @@ Language: [简体中文](README-CH.md) | [English](README.md)
 
 具体使用请参考本人博客,将持续更新分析项目技术
 > 管理端: https://juejin.im/post/5e3389f06fb9a02fbd3791cf  
-> 小程序端: https://juejin.im/post/5dd161675188254efb3bceea  
+> 小程序端: https://juejin.im/post/5dd161675188254efb3bceea    
 > canvas实现图片标记与画布的各种变换效果：https://juejin.im/post/5e717376e51d4526dd1ec2e6
 
 
