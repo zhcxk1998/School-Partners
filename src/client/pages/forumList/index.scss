@@ -91,9 +91,10 @@
 
       .content {
         display: -webkit-box;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
+        /*! autoprefixer: ignore next */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
         color: #666;
         font-size: 1.2em;
       }
