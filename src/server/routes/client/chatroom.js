@@ -38,17 +38,4 @@ router.get('/chatlog/:to', async (ctx) => {
   ctx.response.body = parse(response)
 })
 
-router.put('/chatlog', async (ctx) => {
-  const { to, userName, userAvatar, currentTime, message } = ctx.request.body
-  const data = {
-    room_name: to,
-    user_name: userName,
-    user_avatar: userAvatar,
-    current_time: currentTime,
-    message
-  }
-  await query(INSERT_TABLE('chatlog'), data);
-  ctx.status = 200
-})
-
 module.exports = router

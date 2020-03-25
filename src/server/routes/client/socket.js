@@ -1,4 +1,6 @@
 const generateTime = require('../../utils/generateTime')
+const { query } = require('../../utils/query')
+const { INSERT_TABLE } = require('../../utils/sql');
 
 let onlineUserSocket = {}
 let onlineUserInfo = {}
@@ -35,10 +37,18 @@ const handleLogout = (socketId) => {
 }
 
 /* 要处理离线用户消息发送的问题（找不到此用户的id，导致报错）需要从数据库开一个数组存取用户离线时收到的消息 */
-const handleTextMessage = (ws, socketMessage) => {
+const handleTextMessage = async (ws, socketMessage) => {
   const { to, message, from } = socketMessage
+  const { userName, userAvatar } = onlineUserInfo[ws.socketId]
   const currentTime = generateTime()
   const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
+  await query(INSERT_TABLE('chatlog'), {
+    room_name: to,
+    user_name: userName,
+    user_avatar: userAvatar,
+    current_time: currentTime,
+    message
+  });
   broadcast({
     ...onlineUserInfo[ws.socketId],
     currentTime,
