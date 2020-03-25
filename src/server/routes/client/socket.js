@@ -95,6 +95,10 @@ const handleTextMessage = async (ws, socketMessage) => {
   } */
 }
 
+const handleHeartCheck = (ws, socketMessage) => {
+  ws.send(JSON.stringify({ data: 'pong' }))
+}
+
 const websocket = (ctx) => {
   const ws = ctx.websocket;
   ws.on('message', (socketMessage) => {
@@ -115,6 +119,9 @@ const websocket = (ctx) => {
         break;
       case 'image':
 
+        break;
+      case 'check':
+        handleHeartCheck(ws, socketMessage)
         break;
       default:
         break;

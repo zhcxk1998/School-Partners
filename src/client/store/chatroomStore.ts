@@ -7,7 +7,11 @@ import { SendMessageInfo, ReceiveMessageInfo, LoginInfo, MessageList, ContactsIn
 
 class chatroomStore {
   /* socket部分 */
-  timer: any = null
+  reConnectTimer: any = null
+  heartCheckTimer: any = null
+  timeoutTimer: any = null
+  reConnectCount: number = 3
+
   @observable socketTask: any = null
   @observable socketId: string = ''
   @observable userName: string = ''
@@ -35,6 +39,8 @@ class chatroomStore {
     }
     socketTask.onOpen(() => {
       socketTask.send({ data: JSON.stringify(loginInfo) })
+      this.handleStartHeartCheck()
+
       /* 在成功登陆之后，重置重连标识 */
       this.isReconnected = false
     })
@@ -43,8 +49,15 @@ class chatroomStore {
   handleSocketMessage(): void {
     const { socketTask } = this
     socketTask.onMessage(async ({ data }: { data: any }) => {
+      // 判断是否为心跳检测的返回信息
+      if (JSON.parse(data).data === 'pong') {
+        this.handleStartHeartCheck()
+        console.log('心跳检测...')
+        return
+      }
+
       const messageInfo: ReceiveMessageInfo = JSON.parse(data)
-      const { to, messageId, isMyself, userName, userAvatar, currentTime, message } = messageInfo
+      const { to, messageId, isMyself, userName, currentTime, message } = messageInfo
       const time: string = formatTime(currentTime)
 
       this.messageList[to].push({
@@ -56,6 +69,8 @@ class chatroomStore {
         userName, message, currentTime: time
       }
       this.scrollViewId = isMyself ? messageId : ''
+
+      this.handleStartHeartCheck()
     })
   }
 
@@ -75,6 +90,23 @@ class chatroomStore {
       this.socketReconnect()
       console.log('Error!')
     })
+  }
+
+  handleStartHeartCheck(): void {
+    const { socketTask } = this
+    this.timeoutTimer && clearTimeout(this.timeoutTimer)
+    this.heartCheckTimer && clearTimeout(this.heartCheckTimer)
+    this.heartCheckTimer = setTimeout(() => {
+      const checkInfo = {
+        type: 'check',
+        data: 'ping'
+      }
+      socketTask.send({ data: JSON.stringify(checkInfo) })
+      this.timeoutTimer = setTimeout(() => {
+        console.log('心跳检测超时了，断开连接')
+        socketTask.close()
+      }, 3000)
+    }, 5000)
   }
 
   async setMessageList(contacts: ContactsInfo[]): Promise<any> {
@@ -126,10 +158,10 @@ class chatroomStore {
 
   socketReconnect(): void {
     this.isReconnected = true
-    clearTimeout(this.timer)
+    this.reConnectTimer && clearTimeout(this.reConnectTimer)
 
     /* 3s延迟重连，减轻压力 */
-    this.timer = setTimeout(() => {
+    this.reConnectTimer = setTimeout(() => {
       this.socketConnect()
     }, 3000)
   }
