@@ -56,17 +56,6 @@ class chatroomStore {
         userName, message, currentTime: time
       }
       this.scrollViewId = isMyself ? messageId : ''
-      await Taro.request({
-        url: 'http://localhost:3000/chatlog',
-        method: 'PUT',
-        data: {
-          to,
-          userName,
-          userAvatar,
-          currentTime,
-          message,
-        }
-      })
     })
   }
 
