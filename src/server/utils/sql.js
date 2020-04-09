@@ -8,10 +8,19 @@ const UPDATE_TABLE = (tableName, { primaryKey, primaryValue }, { key, value }) =
 
 const DELETE_TABLE = (tableName, { primaryKey, primaryValue }) => `DELETE FROM ${tableName} WHERE(${primaryKey}=${primaryValue});`
 
+const UPDATE_TABLE_MULTI = (tableName, { primaryKey, primaryValue }, params) => {
+  const sqlList = []
+  for (const [key, value] of Object.entries(params)) {
+    sqlList.push(`${key}='${value}'`)
+  }
+  return `UPDATE ${tableName} SET ${sqlList.join(',')} WHERE ${primaryKey}=${primaryValue}`
+}
+
 module.exports = {
   QUERY_TABLE,
   INSERT_TABLE,
   UPDATE_TABLE,
   DELETE_TABLE,
-  REPLACE_TABLE
+  REPLACE_TABLE,
+  UPDATE_TABLE_MULTI
 }
