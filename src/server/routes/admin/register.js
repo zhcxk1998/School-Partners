@@ -12,7 +12,8 @@ router.post('/register', async (ctx) => {
   }
 
   try {
-    const { insertId: user_id } = await query(INSERT_TABLE('user_info'), { username, phone, email });
+    const { insertId: class_id } = await query(INSERT_TABLE('class_list'), { class_tag: 1 })
+    const { insertId: user_id } = await query(INSERT_TABLE('user_info'), { username, phone, email, class_id });
     const salt = getRandomSalt()
     const encryptPassword = getEncrypt(password + salt)
     await query(INSERT_TABLE('user_password'), {
@@ -21,7 +22,7 @@ router.post('/register', async (ctx) => {
       salt
     })
     responseBody.data.msg = '注册成功'
-    responseBody.data.token = generateToken({ username })
+    responseBody.data.token = generateToken({ username, userId: user_id })
     responseBody.code = 200
   } catch (e) {
     responseBody.data.msg = '用户名已存在'

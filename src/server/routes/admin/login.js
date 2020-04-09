@@ -18,7 +18,7 @@ router.post('/login', async (ctx) => {
     const sign = getEncrypt(password + salt)
     if (sign === verifySign) {
       responseBody.data.msg = '登陆成功'
-      responseBody.data.token = generateToken({ username })
+      responseBody.data.token = generateToken({ username, userId })
       responseBody.code = 200
     } else {
       responseBody.data.msg = '用户名或密码错误'
