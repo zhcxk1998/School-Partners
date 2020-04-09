@@ -1,7 +1,5 @@
-import Test from './test'
+import UserInfoStore from './UserInfoStore'
 
-const store = {
-  Test: new Test(),
+export {
+  UserInfoStore
 }
-
-export default store
