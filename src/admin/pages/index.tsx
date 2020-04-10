@@ -13,6 +13,7 @@ const ExamList = LoadableComponent(() => import('./ExamList'))
 const ExamPublish = LoadableComponent(() => import('./ExamPublish'))
 const ExamModify = LoadableComponent(() => import('./ExamModify'))
 const MarkPaper = LoadableComponent(() => import('./MarkPaper'))
+const ClassDashboard = LoadableComponent(() => import('./ClassDashboard'))
 
 export {
   Login,
@@ -27,5 +28,6 @@ export {
   ExamList,
   ExamPublish,
   ExamModify,
-  MarkPaper
+  MarkPaper,
+  ClassDashboard
 }
