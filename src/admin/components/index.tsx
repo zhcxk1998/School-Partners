@@ -7,6 +7,7 @@ import LoadableComponent from './LoadableComponent'
 import Main from './Main'
 import PrivateRoute from './PrivateRoute'
 import SiderNav from './SiderNav'
+import RestrictRoute from './RestrictRoute'
 
 export {
   ContentMain,
@@ -17,5 +18,6 @@ export {
   LoadableComponent,
   Main,
   PrivateRoute,
-  SiderNav
+  SiderNav,
+  RestrictRoute
 }
