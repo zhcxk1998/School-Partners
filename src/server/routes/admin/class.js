@@ -44,9 +44,7 @@ router.put('/classes', async (ctx) => {
   try {
     const { header: { authorization }, request: { body } } = ctx
     const { className, classTeacher, classTag, classCode, classAvatar, isChecked } = body
-    const { userId } = getJWTPayload(authorization)
-    const userInfo = (await query(`SELECT class_id FROM user_info WHERE id = ${userId}`))[0];
-    const { class_id: classId } = userInfo
+    const { userId, classId } = getJWTPayload(authorization)
     await query(UPDATE_TABLE_MULTI('class_list', { primaryKey: 'id', primaryValue: classId }, {
       id: classId,
       class_name: className,

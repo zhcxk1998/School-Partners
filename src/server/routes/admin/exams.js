@@ -2,6 +2,7 @@ const router = require('koa-router')()
 const { query } = require('../../utils/query')
 const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE, UPDATE_TABLE } = require('../../utils/sql');
 const { generateRandomCode } = require('../../utils/generateRandomCode')
+const { getJWTPayload } = require('../../utils/token')
 
 router.get('/exams', async (ctx) => {
   const responseData = []
@@ -10,7 +11,9 @@ router.get('/exams', async (ctx) => {
     data: {}
   }
   try {
-    const res = await query(QUERY_TABLE('exam_list'));
+    const { authorization } = ctx.header
+    const { classId } = getJWTPayload(authorization)
+    const res = await query(QUERY_TABLE('exam_list', ['class_id', classId]));
     res.map((item, index) => {
       const { id, exam_name, exam_content, exam_type, exam_difficulty, exam_code, is_open, timing_mode, start_time, end_time, count_down, publish_date } = item
       const generateExamTime = (time) => {

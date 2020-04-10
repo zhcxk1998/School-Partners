@@ -1,6 +1,7 @@
 const router = require('koa-router')()
 const { query } = require('../../utils/query')
 const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE } = require('../../utils/sql');
+const { getJWTPayload } = require('../../utils/token')
 const parse = require('../../utils/parse')
 
 router.get('/exercises', async (ctx) => {
@@ -10,7 +11,9 @@ router.get('/exercises', async (ctx) => {
     data: {}
   }
   try {
-    const res = await query(QUERY_TABLE('exercise_list'));
+    const { authorization } = ctx.header
+    const { classId } = getJWTPayload(authorization)
+    const res = await query(QUERY_TABLE('exercise_list', ['class_id', classId]));
     res.map((item, index) => {
       const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type } = item
       responseData[index] = {
