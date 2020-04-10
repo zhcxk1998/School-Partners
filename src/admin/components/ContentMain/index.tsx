@@ -17,8 +17,13 @@ import {
   ExamList,
   ExamPublish,
   ExamModify,
-  MarkPaper
+  MarkPaper,
+  ClassDashboard
 } from '@/admin/pages'
+import {
+  RestrictRoute
+} from '@/admin/components'
+
 import './index.scss'
 
 const ContentMain: FC<RouteComponentProps> = () => {
@@ -26,16 +31,18 @@ const ContentMain: FC<RouteComponentProps> = () => {
     <div className="main__container">
       <Switch>
         <Route exact path="/admin" component={Index} />
-        <Route exact path="/admin/content/exercise-list" component={ExerciseList} />
-        <Route exact path="/admin/content/exercise-publish" component={ExercisePublish} />
-        <Route exact path="/admin/content/exercise-modify/:id" component={ExerciseModify} />
-        <Route exact path="/admin/content/course-list/" component={CourseList} />
-        <Route exact path="/admin/content/course-publish/" component={CoursePublish} />
-        <Route exact path="/admin/content/course-modify/:id/" component={CourseModify} />
-        <Route exact path="/admin/content/exam-list/" component={ExamList} />
-        <Route exact path="/admin/content/exam-publish/" component={ExamPublish} />
-        <Route exact path="/admin/content/exam-modify/:id" component={ExamModify} />
-        <Route exact path="/admin/content/mark-paper/" component={MarkPaper} />
+        <RestrictRoute exact path="/admin/content/exercise-list" component={ExerciseList} />
+        <RestrictRoute exact path="/admin/content/exercise-publish" component={ExercisePublish} />
+        <RestrictRoute exact path="/admin/content/exercise-modify/:id" component={ExerciseModify} />
+        <RestrictRoute exact path="/admin/content/course-list/" component={CourseList} />
+        <RestrictRoute exact path="/admin/content/course-publish/" component={CoursePublish} />
+        <RestrictRoute exact path="/admin/content/course-modify/:id/" component={CourseModify} />
+        <RestrictRoute exact path="/admin/content/exam-list/" component={ExamList} />
+        <RestrictRoute exact path="/admin/content/exam-publish/" component={ExamPublish} />
+        <RestrictRoute exact path="/admin/content/exam-modify/:id" component={ExamModify} />
+        <RestrictRoute exact path="/admin/content/mark-paper/" component={MarkPaper} />
+
+        <Route exact path="/admin/class/class-dashboard" component={ClassDashboard} />
 
         <Redirect exact from="/" to="/admin" />
       </Switch>
