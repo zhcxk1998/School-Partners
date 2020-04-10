@@ -1,4 +1,8 @@
-const QUERY_TABLE = (tableName) => `SELECT * FROM ${tableName};`;
+const QUERY_TABLE = (tableName, limit, query) => {
+  const limitSql = limit ? `WHERE ${limit[0]} = '${limit[1]}'` : ''
+  const querySql = query ? query.join(',') : '*'
+  return `SELECT ${querySql} FROM ${tableName} ${limitSql}`
+}
 
 const INSERT_TABLE = (tableName) => `INSERT INTO ${tableName} SET ?`;
 
