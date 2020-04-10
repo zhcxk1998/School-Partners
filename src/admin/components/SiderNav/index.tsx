@@ -68,18 +68,26 @@ const SiderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
           </Menu.Item>
         </SubMenu>
         <SubMenu
-          key="sub2"
+          key="/admin/class"
           title={
             <span>
-              <Icon type="laptop" />
-              subnav 2
+              <Icon type="user" />
+              班级建设
             </span>
           }
         >
-          <Menu.Item key="5">option5</Menu.Item>
-          <Menu.Item key="6">option6</Menu.Item>
-          <Menu.Item key="7">option7</Menu.Item>
-          <Menu.Item key="8">option8</Menu.Item>
+          <Menu.Item key="/admin/class/class-dashboard">
+            <Link to="/admin/class/class-dashboard">班级管理</Link>
+          </Menu.Item>
+          <Menu.Item key="1">
+            <Link to="/#">1</Link>
+          </Menu.Item>
+          <Menu.Item key="2">
+            <Link to="/#">2</Link>
+          </Menu.Item>
+          <Menu.Item key="3">
+            <Link to="/#">3</Link>
+          </Menu.Item>
         </SubMenu>
         <SubMenu
           key="sub3"

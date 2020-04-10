@@ -1,21 +1,15 @@
 import React, { FC, useEffect, useState } from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Menu, Dropdown, Icon, message } from 'antd'
-import http from '@/admin/utils/http'
+import { observer } from 'mobx-react'
+
+import { useStore } from '@/admin/hooks/useStore'
 
 import './index.scss'
 
 const HeaderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
-  const [username, setUsername] = useState<string>('')
-
-  useEffect(() => {
-    getUserInfo()
-  }, [])
-
-  const getUserInfo = async () => {
-    const { data: { username } } = await http.get('/info')
-    setUsername(username)
-  }
+  const { userInfoStore } = useStore()
+  const { username } = userInfoStore
 
   const handleLogout = () => {
     const { history } = props
@@ -60,4 +54,4 @@ const HeaderNav: FC<RouteComponentProps> = (props: RouteComponentProps) => {
 }
 
 
-export default withRouter(HeaderNav)
+export default withRouter(observer(HeaderNav))

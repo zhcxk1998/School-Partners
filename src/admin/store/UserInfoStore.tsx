@@ -15,6 +15,11 @@ class UserInfoStore {
       this.isActived = isActived
     })
   }
+
+  @action.bound
+  setIsActived(isActived: boolean) {
+    this.isActived = isActived
+  }
 }
 
 export default UserInfoStore;
