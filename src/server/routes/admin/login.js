@@ -12,13 +12,13 @@ router.post('/login', async (ctx) => {
   }
 
   try {
-    const { id: userId } = parse(await query(`select id from user_info where username = '${username}'`))[0]
+    const { id: userId, class_id: classId } = parse(await query(`select id, class_id from user_info where username = '${username}'`))[0]
     const { password: verifySign, salt } = parse(await query(`select password, salt from user_password where user_id = '${userId}'`))[0]
 
     const sign = getEncrypt(password + salt)
     if (sign === verifySign) {
       responseBody.data.msg = '登陆成功'
-      responseBody.data.token = generateToken({ username, userId })
+      responseBody.data.token = generateToken({ username, userId, classId })
       responseBody.code = 200
     } else {
       responseBody.data.msg = '用户名或密码错误'

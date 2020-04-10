@@ -22,7 +22,7 @@ router.post('/register', async (ctx) => {
       salt
     })
     responseBody.data.msg = '注册成功'
-    responseBody.data.token = generateToken({ username, userId: user_id })
+    responseBody.data.token = generateToken({ username, userId: user_id, classId: class_id })
     responseBody.code = 200
   } catch (e) {
     responseBody.data.msg = '用户名已存在'
