@@ -69,6 +69,7 @@ const CoursePublish: FC<PublishProps> = (props: PublishProps) => {
           courseAuthor,
           courseRate,
           isRecommend,
+          isPublic,
           stepList
         } = values
         const { data: { msg } } = await http.post('/courses', {
@@ -77,6 +78,7 @@ const CoursePublish: FC<PublishProps> = (props: PublishProps) => {
           courseAuthor,
           courseRate,
           isRecommend,
+          isPublic,
           stepList
         })
         message.success(msg)
@@ -141,14 +143,39 @@ const CoursePublish: FC<PublishProps> = (props: PublishProps) => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item label="是否推荐">
-            {getFieldDecorator('isRecommend', {
-              initialValue: false,
-              valuePropName: 'checked'
-            })(
-              <Switch />
-            )}
-          </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item label="是否推荐" labelCol={{
+                span: 8
+              }} wrapperCol={{
+                span: 10,
+                offset: 2
+              }}>
+                {getFieldDecorator('isRecommend', {
+                  initialValue: false,
+                  valuePropName: 'checked'
+                })(
+                  <Switch />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="是否公开" labelCol={{
+                span: 4
+              }} wrapperCol={{
+                span: 10,
+                offset: 2
+              }}>
+                {getFieldDecorator('isPublic', {
+                  initialValue: false,
+                  valuePropName: 'checked'
+                })(
+                  <Switch />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Divider></Divider>
           <Form.Item label="课程步骤">
             {stepList && stepList.map((_: any, index: number) => {

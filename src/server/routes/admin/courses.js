@@ -1,6 +1,6 @@
 const router = require('koa-router')()
 const { query } = require('../../utils/query')
-const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE } = require('../../utils/sql');
+const { QUERY_TABLE, INSERT_TABLE, UPDATE_TABLE_MULTI } = require('../../utils/sql');
 const { getJWTPayload } = require('../../utils/token')
 const parse = require('../../utils/parse')
 
@@ -49,11 +49,12 @@ router.get('/courses/:id', async (ctx) => {
   }
   try {
     const res = await query(`SELECT * FROM course_list WHERE id = ${courseId}`);
-    const { id, course_name, is_recommend, course_author, publish_date, course_description, course_rate, course_steps } = res[0]
+    const { id, course_name, is_recommend, is_public, course_author, publish_date, course_description, course_rate, course_steps } = res[0]
     responseBody.data = {
       id,
       courseName: course_name,
       isRecommend: !!is_recommend,
+      isPublic: !!is_public,
       publishDate: parseInt(publish_date) || 0,
       courseAuthor: course_author,
       courseDescription: course_description,
@@ -73,31 +74,37 @@ router.get('/courses/:id', async (ctx) => {
 })
 
 router.post('/courses', async (ctx) => {
-  const {
-    courseName,
-    courseDescription,
-    courseAuthor,
-    courseRate,
-    isRecommend,
-    stepList
-  } = ctx.request.body
   const responseBody = {
     code: 0,
     data: {}
   }
   try {
+    const { header: { authorization } } = ctx
+    const {
+      courseName,
+      courseDescription,
+      courseAuthor,
+      courseRate,
+      isRecommend,
+      isPublic,
+      stepList
+    } = ctx.request.body
+    const { classId } = getJWTPayload(authorization)
     await query(INSERT_TABLE('course_list'), {
       course_name: courseName,
       course_description: courseDescription,
       course_author: courseAuthor,
       course_rate: courseRate,
-      is_recommend: isRecommend,
+      is_recommend: isRecommend ? 1 : 0,
+      is_public: isPublic ? 1 : 0,
       course_steps: JSON.stringify(stepList),
-      publish_date: new Date().getTime()
+      publish_date: new Date().getTime(),
+      class_id: classId
     })
     responseBody.data.msg = '新增成功'
     responseBody.code = 200
   } catch (e) {
+    console.log(e)
     responseBody.data.msg = '异常错误'
     responseBody.code = 500
   } finally {
@@ -154,6 +161,7 @@ router.put('/courses/:id', async (ctx) => {
     courseAuthor,
     courseRate,
     isRecommend,
+    isPublic,
     stepList
   } = ctx.request.body
   const responseBody = {
@@ -161,19 +169,15 @@ router.put('/courses/:id', async (ctx) => {
     data: {}
   }
   try {
-    const res = await query(`SELECT * FROM course_list WHERE id = ${courseId}`);
-    const { publish_date, course_views } = res[0]
-    await query(REPLACE_TABLE('course_list'), {
-      id: courseId,
+    await query(UPDATE_TABLE_MULTI('course_list', { primaryKey: 'id', primaryValue: courseId }, {
       course_name: courseName,
       course_description: courseDescription,
       course_author: courseAuthor,
       course_rate: courseRate,
-      is_recommend: isRecommend,
-      course_steps: JSON.stringify(stepList),
-      publish_date,
-      course_views
-    })
+      is_recommend: isRecommend ? 1 : 0,
+      is_public: isPublic ? 1 : 0,
+      course_steps: JSON.stringify(stepList)
+    }))
     responseBody.data.msg = '修改成功'
     responseBody.code = 200
   } catch (e) {

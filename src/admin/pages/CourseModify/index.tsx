@@ -54,7 +54,8 @@ const CourseModify: FC<ModifyProps> = (props: ModifyProps) => {
     courseName: '',
     courseDescription: '',
     courseAuthor: '',
-    isRecommend: false
+    isRecommend: false,
+    isPublic: false
   })
 
   const { history, form, match } = props
@@ -83,6 +84,7 @@ const CourseModify: FC<ModifyProps> = (props: ModifyProps) => {
         courseAuthor,
         courseRate,
         isRecommend,
+        isPublic,
         courseSteps } = data
       setCourseName(courseName)
       setStepList([...courseSteps])
@@ -92,6 +94,7 @@ const CourseModify: FC<ModifyProps> = (props: ModifyProps) => {
         courseAuthor,
         courseRate,
         isRecommend,
+        isPublic
       })
       setIsLoading(false)
     } catch (e) {
@@ -112,6 +115,7 @@ const CourseModify: FC<ModifyProps> = (props: ModifyProps) => {
           courseAuthor,
           courseRate,
           isRecommend,
+          isPublic,
           stepList
         } = values
         const { params: { id } } = match as any
@@ -121,6 +125,7 @@ const CourseModify: FC<ModifyProps> = (props: ModifyProps) => {
           courseAuthor,
           courseRate,
           isRecommend,
+          isPublic,
           stepList
         })
         message.success(msg)
@@ -194,14 +199,39 @@ const CourseModify: FC<ModifyProps> = (props: ModifyProps) => {
                 </Form.Item>
               </Col>
             </Row>
-            <Form.Item label="是否推荐">
-              {getFieldDecorator('isRecommend', {
-                initialValue: courseDetails.isRecommend,
-                valuePropName: 'checked'
-              })(
-                <Switch />
-              )}
-            </Form.Item>
+            <Row>
+              <Col span={12}>
+                <Form.Item label="是否推荐" labelCol={{
+                  span: 8
+                }} wrapperCol={{
+                  span: 10,
+                  offset: 2
+                }}>
+                  {getFieldDecorator('isRecommend', {
+                    initialValue: courseDetails.isRecommend,
+                    valuePropName: 'checked'
+                  })(
+                    <Switch />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="是否公开" labelCol={{
+                  span: 4
+                }} wrapperCol={{
+                  span: 10,
+                  offset: 2
+                }}>
+                  {getFieldDecorator('isPublic', {
+                    initialValue: courseDetails.isPublic,
+                    valuePropName: 'checked'
+                  })(
+                    <Switch />
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+
             <Divider></Divider>
             <Form.Item label="课程步骤">
               {stepList && stepList.map((_: any, index: number) => {

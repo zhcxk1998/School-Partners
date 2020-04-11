@@ -12,5 +12,6 @@ export interface CourseDetails {
   courseAuthor: string,
   courseDescription: string,
   isRecommend: boolean,
+  isPublic: boolean,
   courseRate: number,
 }
