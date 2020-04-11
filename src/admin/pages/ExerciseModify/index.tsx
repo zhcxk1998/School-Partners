@@ -54,7 +54,8 @@ interface ExerciseInfo {
   exerciseContent: string,
   exerciseDifficulty: number,
   exerciseType: number,
-  isHot: boolean
+  isHot: boolean,
+  isPublic: boolean
 }
 
 const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
@@ -70,7 +71,8 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
     exerciseContent: '',
     exerciseDifficulty: 1,
     exerciseType: 1,
-    isHot: false
+    isHot: false,
+    isPublic: false
   })
   const [modifyExerciseName, setModifyExerciseName] = useState<string>('')
   const { history, form, match } = props
@@ -99,6 +101,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
         exerciseDifficulty,
         exerciseType,
         isHot,
+        isPublic,
         topicList } = data
       topicList.forEach((_: any, index: number) => {
         topicList[index].topicOptions = topicList[index].topicOptions.map((item: any) => item.option)
@@ -111,6 +114,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
         exerciseDifficulty,
         exerciseType,
         isHot,
+        isPublic
       })
       setIsLoading(false)
     } catch (e) {
@@ -131,6 +135,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
           exerciseType,
           exerciseDifficulty,
           isHot,
+          isPublic,
           topicList
         } = values
         topicList.forEach((topic: TopicList) => {
@@ -147,6 +152,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
           exerciseType,
           exerciseDifficulty,
           isHot,
+          isPublic,
           topicList
         })
         message.success(msg)
@@ -256,14 +262,39 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
                 </Form.Item>
               </Col>
             </Row>
-            <Form.Item label="题库热门">
-              {getFieldDecorator('isHot', {
-                initialValue: exerciseInfo.isHot,
-                valuePropName: 'checked'
-              })(
-                <Switch />
-              )}
-            </Form.Item>
+            <Row>
+              <Col span={12}>
+                <Form.Item label="题库热门" labelCol={{
+                  span: 8
+                }} wrapperCol={{
+                  span: 10,
+                  offset: 2
+                }}>
+                  {getFieldDecorator('isHot', {
+                    initialValue: exerciseInfo.isHot,
+                    valuePropName: 'checked'
+                  })(
+                    <Switch />
+                  )}
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="是否公开" labelCol={{
+                  span: 4
+                }} wrapperCol={{
+                  span: 10,
+                  offset: 2
+                }}>
+                  {getFieldDecorator('isPublic', {
+                    initialValue: exerciseInfo.isPublic,
+                    valuePropName: 'checked'
+                  })(
+                    <Switch />
+                  )}
+                </Form.Item>
+              </Col>
+            </Row>
+
             <Divider></Divider>
             <Form.Item label="新增题目">
               {topicList && topicList.map((_: any, index: number) => {

@@ -79,6 +79,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
           exerciseType,
           exerciseDifficulty,
           isHot,
+          isPublic,
           topicList
         } = values
         topicList.forEach((topic: TopicList) => {
@@ -94,6 +95,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
           exerciseType,
           exerciseDifficulty,
           isHot,
+          isPublic,
           topicList
         })
         message.success(msg)
@@ -196,14 +198,39 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item label="题库热门">
-            {getFieldDecorator('isHot', {
-              initialValue: false,
-              valuePropName: 'checked'
-            })(
-              <Switch />
-            )}
-          </Form.Item>
+          <Row>
+            <Col span={12}>
+              <Form.Item label="题库热门" labelCol={{
+                span: 8
+              }} wrapperCol={{
+                span: 10,
+                offset: 2
+              }}>
+                {getFieldDecorator('isHot', {
+                  initialValue: false,
+                  valuePropName: 'checked'
+                })(
+                  <Switch />
+                )}
+              </Form.Item>
+            </Col>
+            <Col span={12}>
+              <Form.Item label="是否公开" labelCol={{
+                span: 4
+              }} wrapperCol={{
+                span: 10,
+                offset: 2
+              }}>
+                {getFieldDecorator('isPublic', {
+                  initialValue: false,
+                  valuePropName: 'checked'
+                })(
+                  <Switch />
+                )}
+              </Form.Item>
+            </Col>
+          </Row>
+
           <Divider></Divider>
           <Form.Item label="新增题目">
             {topicList && topicList.map((topic, index) => {
