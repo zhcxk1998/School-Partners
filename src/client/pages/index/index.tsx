@@ -24,7 +24,7 @@ interface IProps {
 
 interface IState {
   count: number,
-  current: number,
+  current: number
 }
 
 @inject('studyStore', 'chatroomStore', 'infoStore')
@@ -47,14 +47,14 @@ class Index extends Component<IProps, IState> {
     super(props);
     this.state = {
       count: 1,
-      current: 0,
+      current: 0
     }
   }
 
   async componentDidMount() {
     const { chatroomStore: { socketConnect, setUserInfo, setContactsList }, infoStore: { getUserInfo, handleUserLogin } } = this.props
     await handleUserLogin()
-    await getUserInfo()
+    // await getUserInfo()
     await setUserInfo()
     await setContactsList()
     await socketConnect()
@@ -78,7 +78,7 @@ class Index extends Component<IProps, IState> {
 
   switchTab(index: number): void {
     const navigationTitle: Array<string> = [
-      '首页', '聊天室', '论坛', '个人中心'
+      '首页', '聊天室', '考试', '论坛', '个人中心'
     ]
     this.setState({ current: index })
     Taro.setNavigationBarTitle({ title: navigationTitle[index] })
@@ -90,8 +90,8 @@ class Index extends Component<IProps, IState> {
       <View className='index-container'>
         {current === 0 ? <Study />
           : current === 1 ? <Contacts />
-            : current === 2 ? <ForumList />
-              : current === 3 ? <DashBoard />
+            : current === 3 ? <ForumList />
+              : current === 4 ? <DashBoard />
                 : null}
         <Tabbar onSwitchTab={this.switchTab.bind(this)} current={current} />
       </View>
