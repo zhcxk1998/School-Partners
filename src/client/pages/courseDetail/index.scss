@@ -5,10 +5,10 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 35vh;
     background: url(http://cdn.algbb.cn/course/background.jpg) no-repeat;
-    background-size: contain;
+    background-size: cover;
     z-index: -1;
   }
 
