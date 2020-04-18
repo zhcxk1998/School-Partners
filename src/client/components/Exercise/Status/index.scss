@@ -92,13 +92,13 @@
 
     .theme-setting {
       @extend .flex;
-      justify-content: space-evenly;
+      justify-content: space-around;
 
 
       .theme-wrap {
         @extend .flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: space-around;
         opacity: .8;
 
         .theme-icon {
