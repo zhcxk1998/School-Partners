@@ -125,7 +125,9 @@ class ChatRoom extends Component<IProps, IState> {
           </View>
           <ScrollView scrollY className='emoji-container'>
             {Array.from({ length: 33 }).map((_, index) => {
-              const imgSrc = `http://cdn.algbb.cn/emoji/${(index + 1).toString().padStart(2, '0')}.png`
+              let id = index + 1 + ''
+              if (id.length === 1) id = '0' + id
+              const imgSrc = `http://cdn.algbb.cn/emoji/${id}.png`
               return (
                 <Image className='emoji' key={index} src={imgSrc} />
               )

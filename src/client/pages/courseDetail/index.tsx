@@ -70,16 +70,20 @@ class CourseDetail extends Component<IProps, IState> {
               课程步骤
             </View>
             <View className='path__container'>
-              {courseSteps.map((item: any, index: number) => (
-                <View className='path__wrap' key={index}>
-                  <Image src='http://cdn.algbb.cn/course/read.png' className='path__icon' />
-                  <View className='path__info'>
-                    <View className='path__name'>{item.title}</View>
-                    <View className='path__description'>{item.content}</View>
+              {courseSteps.map((item: any, index: number) => {
+                let step = index + 1 + ''
+                if (step.length === 1) step = '0' + step
+                return (
+                  <View className='path__wrap' key={index}>
+                    <Image src='http://cdn.algbb.cn/course/read.png' className='path__icon' />
+                    <View className='path__info'>
+                      <View className='path__name'>{item.title}</View>
+                      <View className='path__description'>{item.content}</View>
+                    </View>
+                    <View className='path__decoration'>{step}</View>
                   </View>
-                  <View className='path__decoration'>{(index + 1).toString().padStart(2, '0')}</View>
-                </View>
-              ))}
+                )
+              })}
             </View>
           </View>
           <View className="course-container__video" onClick={this.handleVideoClick}>播放课程视频</View>
