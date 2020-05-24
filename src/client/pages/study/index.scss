@@ -2,11 +2,10 @@
 
   .study-banner {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
-    width: 100vw;
     height: 400px;
-    padding-bottom: 100px;
+    padding: 0 1em 100px 1em;
     background-image: linear-gradient(60deg, rgb(142, 177, 253) 0%, rgb(222, 255, 254) 80%);
     
 
@@ -18,9 +17,9 @@
     .slogan {
       display: flex;
       flex-direction: column;
-      justify-content: space-evenly;
+      justify-content: space-around;
       width: 300px;
-      height: 300px;
+      height: 260px;
       color: #666;
       font-size: 1em;
 
