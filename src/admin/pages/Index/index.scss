@@ -132,6 +132,7 @@
           color: #666;
           display: -webkit-box;
           -webkit-line-clamp: 3;
+          /*! autoprefixer: ignore next */
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
