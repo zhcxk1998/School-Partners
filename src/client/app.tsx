@@ -41,7 +41,9 @@ class App extends Component {
       'pages/forumPublish/index',
       'pages/forumModify/index',
       'pages/mySchedule/index',
-      'pages/courseVideo/index'
+      'pages/courseVideo/index',
+      'pages/myClass/index',
+      'pages/login/index'
     ],
     window: {
       backgroundTextStyle: 'dark',
