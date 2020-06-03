@@ -102,10 +102,12 @@ Other：Qiniu Cloud
 * #### second
     * `cnpm i` Install dependencies
 * #### third
+    * Start the server `npm run server`
     * Build run services `npm run dev:weapp`
     * Build run admin `npm run dev`
 * #### fourth
     * Preview in the WeChat applet development tool
+    * Preview admin in the Chrome 
 
 ## The directory structure
 

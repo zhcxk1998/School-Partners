@@ -103,10 +103,12 @@ http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 * #### 第二步
     * `cnpm i`安装依赖
 * #### 第三步
-    * 构建小程序运行服务`npm run dev:weapp`
+    * 启动后台服务 `npm run server`
+    * 构建小程序运行服务 `npm run dev:weapp`
     * 构建管理端 `npm run dev`
 * #### 第四部
     * 在微信小程序开发工具中预览
+    * 在PC端预览管理端
 
 ## 目录结构
 
