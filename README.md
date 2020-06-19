@@ -18,6 +18,10 @@ For specific use, please refer to my blog, will continue to update the analysis 
 ## Video Demo
 http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
+## Sql File
+**Please import the sql file into mysql, otherwise the project will run fail**
+https://github.com/zhcxk1998/School-Partners/blob/master/school-partners.sql
+
 ## Technology Selection
 
 The Client：Taro + WeChat Applet + Echarts
