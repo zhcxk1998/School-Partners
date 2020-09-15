@@ -43,29 +43,41 @@ class DashBoard extends Component<IProps, IState> {
 
   async componentWillMount() {
     const { infoStore: { handleUserLogin, getUserInfo, userInfo } } = this.props
-    if (userInfo.avatarUrl !== '') {
-      this.setState({ isLoading: false })
-    }
-    else {
+    // if (userInfo.avatarUrl !== '') {
+    //   this.setState({ isLoading: false })
+    // }
+    // else {
+    try {
       Taro.showLoading({
         title: '加载中...'
       })
       await handleUserLogin()
-      await getUserInfo()
+      // await getUserInfo()
       this.setState({ isLoading: false })
       Taro.hideLoading()
+    } catch (e) {
+
     }
+
+    // }
   }
 
   render() {
     const { isLoading } = this.state
-    return !isLoading ? (
+    return (
       <View className='dashboard-container'>
         <PersonalInfo />
         <Recoomend />
         <FeatureList />
       </View>
-    ) : <Button openType='getUserInfo' >点击登录</Button>
+    )
+    // return !isLoading ? (
+    //   <View className='dashboard-container'>
+    //     <PersonalInfo />
+    //     <Recoomend />
+    //     <FeatureList />
+    //   </View>
+    // ) : <Button openType='getUserInfo' >点击登录</Button>
   }
 }
 

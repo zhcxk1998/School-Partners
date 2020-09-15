@@ -23,27 +23,36 @@ class studyStore {
 
   @action.bound
   getCourseList(): any {
-    return new Promise(async (resolve) => {
-      const { data } = await Taro.request({
-        url: 'http://localhost:3000/courses',
-        method: 'GET',
-      })
-      this.courseList = data;
-      this.recommendCourseList = data.filter(this.isRecommend)
-      resolve()
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await Taro.request({
+          url: 'http://localhost:3000/courses',
+          method: 'GET',
+        })
+        this.courseList = data;
+        this.recommendCourseList = data.filter(this.isRecommend)
+        resolve()
+      } catch (e) {
+        reject(e)
+      }
     })
   }
 
   @action.bound
   getExerciseList(): any {
-    return new Promise(async (resolve) => {
-      const { data } = await Taro.request({
-        url: 'http://localhost:3000/exercises',
-        method: 'GET',
-      })
-      this.exerciseList = data;
-      this.hotExerciseList = data.filter(this.isHot)
-      resolve()
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await Taro.request({
+          url: 'http://localhost:3000/exercises',
+          method: 'GET',
+        })
+        this.exerciseList = data;
+        this.hotExerciseList = data.filter(this.isHot)
+        resolve()
+      } catch (e) {
+        reject(e)
+      }
+
     })
   }
 }

@@ -39,10 +39,25 @@ class Study extends Component<IProps, IState> {
     Taro.showLoading({
       title: '加载中...'
     })
-    const { studyStore: { getCourseList, getExerciseList } } = this.props;
-    await getCourseList()
-    await getExerciseList()
-    Taro.hideLoading()
+    this.getCourseInfo()
+
+  }
+
+  async getCourseInfo() {
+    try {
+      const { studyStore: { getCourseList, getExerciseList } } = this.props;
+      await getCourseList()
+      await getExerciseList()
+      Taro.hideLoading()
+    } catch (e) {
+      Taro.showToast({
+        title: '资源加载失败，请重试...',
+        icon: 'none'
+      })
+      setTimeout(() => {
+        this.getCourseInfo()
+      }, 1000)
+    }
   }
 
   render() {
