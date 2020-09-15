@@ -14,13 +14,15 @@ const {
   contact,
   chatroom,
   forum,
-  websocket
+  websocket,
+  login,
+  classes
 } = require('../routes/client')
 
 client.use(cors())
 client.use(bodyParser())
 /* 小程序端 */
-client.use(routes(router, { course, exercise, contact, chatroom, forum }))
+client.use(routes(router, { course, exercise, contact, chatroom, forum, login, classes }))
 client.ws.use(websocket());
 
 module.exports = client

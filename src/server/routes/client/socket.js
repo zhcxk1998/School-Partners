@@ -1,25 +1,43 @@
 const generateTime = require('../../utils/generateTime')
-const { query } = require('../../utils/query')
-const { INSERT_TABLE } = require('../../utils/sql');
+const {
+  query
+} = require('../../utils/query')
+const {
+  INSERT_TABLE
+} = require('../../utils/sql');
 
 let onlineUserSocket = {}
 let onlineUserInfo = {}
 
 // 广播消息
 const broadcast = (message) => {
-  const { from, userName } = message
+  const {
+    from,
+    userName,
+    openid
+  } = message
   Object.values(onlineUserSocket).forEach((socket) => {
     socket.send(JSON.stringify({
-      ...message,
-      isMyself: userName === onlineUserInfo[socket.socketId].userName
+      ...message, 
+      // isMyself: userName === onlineUserInfo[socket.socketId].userName
+      isMyself:openid === onlineUserInfo[socket.socketId].openid
     }))
   })
 }
 
 const handleLogin = (ws, socketMessage) => {
-  const { socketId, userName, userAvatar } = socketMessage
+  const {
+    socketId,
+    userName,
+    userAvatar,
+    openid
+  } = socketMessage
   onlineUserSocket[socketId] = ws
-  onlineUserInfo[socketId] = { userName, userAvatar }
+  onlineUserInfo[socketId] = {
+    userName,
+    userAvatar,
+    openid
+  }
   ws.socketId = socketId
   console.log('|---------------------------------------------------\n')
   console.log(Object.keys(onlineUserSocket).length + '人在线')
@@ -38,16 +56,33 @@ const handleLogout = (socketId) => {
 
 /* 要处理离线用户消息发送的问题（找不到此用户的id，导致报错）需要从数据库开一个数组存取用户离线时收到的消息 */
 const handleTextMessage = async (ws, socketMessage) => {
-  const { to, message, from } = socketMessage
-  const { userName, userAvatar } = onlineUserInfo[ws.socketId]
+  const {
+    to,
+    message,
+    from
+  } = socketMessage
+  const {
+    userName,
+    userAvatar,
+    openid
+  } = onlineUserInfo[ws.socketId]
   const currentTime = generateTime()
   const messageId = `msg${new Date().getTime()}${Math.ceil(Math.random() * 100)}`
+  console.log({
+    room_name: to,
+    user_name: userName,
+    user_avatar: userAvatar,
+    current_time: currentTime,
+    message,
+    openid
+  })
   await query(INSERT_TABLE('chatlog'), {
     room_name: to,
     user_name: userName,
     user_avatar: userAvatar,
     current_time: currentTime,
-    message
+    message,
+    openid
   });
   broadcast({
     ...onlineUserInfo[ws.socketId],
@@ -56,6 +91,7 @@ const handleTextMessage = async (ws, socketMessage) => {
     messageId,
     from,
     to,
+    openid
   })
 
   /*
@@ -96,14 +132,18 @@ const handleTextMessage = async (ws, socketMessage) => {
 }
 
 const handleHeartCheck = (ws, socketMessage) => {
-  ws.send(JSON.stringify({ data: 'pong' }))
+  ws.send(JSON.stringify({
+    data: 'pong'
+  }))
 }
 
 const websocket = (ctx) => {
   const ws = ctx.websocket;
   ws.on('message', (socketMessage) => {
     socketMessage = JSON.parse(socketMessage)
-    const { type } = socketMessage
+    const {
+      type
+    } = socketMessage
     switch (type) {
       case 'login':
         handleLogin(ws, socketMessage)

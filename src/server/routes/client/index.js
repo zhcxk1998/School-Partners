@@ -4,6 +4,8 @@ const contact = require('./contact')
 const chatroom = require('./chatroom')
 const forum = require('./forum')
 const websocket = require('./socket')
+const login = require('./login')
+const classes = require('./class')
 
 module.exports = {
   course,
@@ -11,5 +13,7 @@ module.exports = {
   contact,
   chatroom,
   forum,
-  websocket
+  websocket,
+  login,
+  classes
 }

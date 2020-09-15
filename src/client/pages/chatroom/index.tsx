@@ -36,7 +36,8 @@ class ChatRoom extends Component<IProps, IState> {
 
   componentWillMount() {
     const { title, to } = this.$router.params
-    const { chatroomStore: { setLatestScrollViewId } } = this.props
+    const { chatroomStore: { setLatestScrollViewId, messageList } } = this.props
+    console.log(messageList[to])
     /* 加载记录无需动画，直接跳转到最新消息 */
     setLatestScrollViewId(to)
     Taro.setNavigationBarTitle({
@@ -81,9 +82,10 @@ class ChatRoom extends Component<IProps, IState> {
   }
 
   render() {
-    const { chatroomStore: { messageList, scrollViewId, userName, isReconnected } } = this.props
+    const { chatroomStore: { messageList, scrollViewId, userName, isReconnected, openid } } = this.props
     const { value, scrollAnimation, emojiOpened } = this.state
     const { to } = this.$router.params
+
     return (
       <View className='chat'>
         <View hidden={!isReconnected}>
@@ -98,7 +100,7 @@ class ChatRoom extends Component<IProps, IState> {
           {messageList[to] && messageList[to].map(messageInfo => {
             const { message, messageId, currentTime, userAvatar, isMyself } = messageInfo
             return (
-              <View className={`message-wrap ${isMyself || messageInfo.userName === userName ? 'myself' : ''}`} id={messageId} key={messageId}>
+              <View className={`message-wrap ${isMyself || messageInfo.openid === openid ? 'myself' : ''}`} id={messageId} key={messageId}>
                 <Image className='avatar' src={userAvatar} />
                 <View className='info'>
                   <View className='header'>

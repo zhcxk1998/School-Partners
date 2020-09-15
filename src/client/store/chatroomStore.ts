@@ -1,6 +1,5 @@
 import { observable, action } from 'mobx'
 import Taro from '@tarojs/taro'
-
 import formatTime from '../utils/formatTime'
 
 import { SendMessageInfo, ReceiveMessageInfo, LoginInfo, MessageList, ContactsInfo } from '../modals/chatroom'
@@ -12,6 +11,7 @@ class chatroomStore {
   timeoutTimer: any = null
   reConnectCount: number = 3
 
+  @observable openid: string = ''
   @observable socketTask: any = null
   @observable socketId: string = ''
   @observable userName: string = ''
@@ -36,6 +36,7 @@ class chatroomStore {
       socketId: this.socketId,
       userName: this.userName,
       userAvatar: this.userAvatar,
+      openid: this.openid
     }
     socketTask.onOpen(() => {
       socketTask.send({ data: JSON.stringify(loginInfo) })
@@ -60,10 +61,25 @@ class chatroomStore {
       const { to, messageId, isMyself, userName, currentTime, message } = messageInfo
       const time: string = formatTime(currentTime)
 
-      this.messageList[to].push({
+      const messageList = this.messageList[to]
+
+      messageList.push({
         ...messageInfo,
         currentTime: time
       })
+
+      this.messageList = {
+        ...this.messageList,
+        [to]: messageList
+      }
+
+      // this.messageList[to].push({
+      //   ...messageInfo,
+      //   currentTime: time
+      // })
+
+
+
       /* 设置群组最新消息 */
       this.contactsList.filter(contacts => contacts.contactsId === to)[0].latestMessage = {
         userName, message, currentTime: time
@@ -122,14 +138,18 @@ class chatroomStore {
 
   @action.bound
   async setContactsList() {
-    return new Promise(async (resolve) => {
-      const { data } = await Taro.request({
-        url: 'http://localhost:3000/contacts',
-        method: 'GET'
-      })
-      this.contactsList = data
-      this.setMessageList(data)
-      resolve()
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await Taro.request({
+          url: 'http://localhost:3000/contacts',
+          method: 'GET'
+        })
+        this.contactsList = data
+        this.setMessageList(data)
+        resolve()
+      } catch (e) {
+        reject(e)
+      }
     })
   }
 
@@ -162,13 +182,18 @@ class chatroomStore {
 
     /* 3s延迟重连，减轻压力 */
     this.reConnectTimer = setTimeout(() => {
-      this.socketConnect()
+      this.socketConnect(this.openid)
     }, 3000)
   }
 
   @action.bound
-  async socketConnect() {
+  async socketConnect(openid: string) {
+    console.log('emmm')
+    console.log(openid)
+
+    this.openid = openid
     this.generateSocketId()
+
 
     /* 使用then的方法才能正确触发onOpen的方法，暂时不知道原因 */
     Taro.connectSocket({

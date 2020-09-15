@@ -4,6 +4,7 @@ export interface LoginInfo {
   socketId: string,
   userName: string,
   userAvatar: string,
+  openid?: string
 }
 
 export interface SendMessageInfo {
@@ -22,6 +23,7 @@ export interface ReceiveMessageInfo {
   userName: string
   userAvatar: string,
   isMyself: boolean,
+  openid?:string
 }
 
 export interface MessageList {

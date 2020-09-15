@@ -52,12 +52,23 @@ class Index extends Component<IProps, IState> {
   }
 
   async componentDidMount() {
-    const { chatroomStore: { socketConnect, setUserInfo, setContactsList }, infoStore: { getUserInfo, handleUserLogin } } = this.props
-    await handleUserLogin()
-    // await getUserInfo()
-    await setUserInfo()
-    await setContactsList()
-    await socketConnect()
+    this.getChatRoomInfo()
+  }
+
+  async getChatRoomInfo() {
+    try {
+      const { chatroomStore: { socketConnect, setUserInfo, setContactsList }, infoStore: { handleUserLogin, openid } } = this.props
+      await handleUserLogin()
+
+      // await getUserInfo()
+      await setUserInfo()
+      await setContactsList()
+      await socketConnect(this.props.infoStore.openid)
+    } catch (e) {
+      setTimeout(() => {
+        this.getChatRoomInfo()
+      }, 1000)
+    }
   }
 
   onReachBottom() {
