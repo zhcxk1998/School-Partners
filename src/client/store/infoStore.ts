@@ -44,6 +44,7 @@ class infoStore {
         })
         const { openid = '' } = data
         console.log('login suc')
+        Taro.setStorageSync('openid', openid)
         this.openid = openid
         this.userInfo = userInfo
         resolve()
@@ -51,7 +52,7 @@ class infoStore {
         console.log(e)
         if (e.errMsg === 'getUserInfo:fail scope unauthorized') {
           Taro.redirectTo({
-            url:'/pages/login/index'
+            url: '/pages/login/index'
           })
           resolve()
           return

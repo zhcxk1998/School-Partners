@@ -1,13 +1,26 @@
 const router = require('koa-router')()
-const { query } = require('../../utils/query')
-const { QUERY_TABLE } = require('../../utils/sql');
+const {
+  query
+} = require('../../utils/query')
+const {
+  QUERY_TABLE
+} = require('../../utils/sql');
 const parse = require('../../utils/parse')
 
 router.get('/exercises', async (ctx) => {
   const response = []
   const res = await query(QUERY_TABLE('exercise_list'));
   res.map((item, index) => {
-    const { id, exercise_name, exercise_content, is_hot, finish_count, total_count, exercise_difficulty, exercise_type } = item
+    const {
+      id,
+      exercise_name,
+      exercise_content,
+      is_hot,
+      finish_count,
+      total_count,
+      exercise_difficulty,
+      exercise_type
+    } = item
     response[index] = {
       id,
       exerciseName: exercise_name,
@@ -25,7 +38,10 @@ router.get('/exercises', async (ctx) => {
 router.get('/exercises/:id', async (ctx) => {
   const id = ctx.params.id
   const res = await query(`SELECT exercise_name, topic_list FROM exercise_list WHERE id = ${id}`)
-  const { exercise_name, topic_list } = res[0]
+  const {
+    exercise_name,
+    topic_list
+  } = res[0]
   const responseBody = {
     code: 0,
     data: {}
@@ -42,6 +58,48 @@ router.get('/exercises/:id', async (ctx) => {
   } finally {
     ctx.response.status = responseBody.code
     ctx.response.body = responseBody
+  }
+})
+
+router.put('/exercises/score', async (ctx) => {
+  const body = ctx.request.body
+  const {
+    openid,
+    score,
+    exerciseId
+  } = body
+
+  try {
+    const studentInfo = await query(`SELECT id, student_name, nick_name FROM student_list WHERE open_id = '${openid}'`)
+    const {
+      id = 0
+    } = studentInfo[0] || []
+
+    const record = await query(`SELECT id FROM exercise_score WHERE exercise_id = ${exerciseId} AND student_id = ${id}`)
+    const isRecordExist = record.length !== 0
+
+    if (isRecordExist) {
+      await query(`UPDATE exercise_score SET student_score = ${score} WHERE exercise_id = ${exerciseId} AND student_id = ${id}`)
+    } else {
+      await query(`INSERT INTO exercise_score(exercise_id, student_id, student_score) VALUE(${exerciseId},${id},${score})`)
+    }
+
+    ctx.response.body = {
+      code: 200,
+      status: true,
+      data: {
+
+      }
+    }
+    ctx.response.status = 200
+  } catch (e) {
+    ctx.response.body = {
+      code: 500,
+      data: {
+        msg: '异常错误'
+      }
+    }
+    ctx.response.status = 500
   }
 })
 

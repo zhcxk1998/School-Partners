@@ -36,6 +36,9 @@ class exerciseStore {
   @observable exerciseAnswers: Array<Array<number>> = [];
   // 用户选择的答案
   @observable optionStatus: Array<Array<number>> = []
+  // 用户做对的题数
+  @observable correctCount: number = 0
+  @observable exerciseId: number = 0
 
   @action.bound
   resetExerciseDetail(): void {
@@ -52,6 +55,8 @@ class exerciseStore {
 
   @action.bound
   getExerciseDetail(cid: number): any {
+    this.exerciseId = cid
+
     return new Promise(async (resolve) => {
       await Taro.navigateTo({
         url: '/pages/exerciseDetail/index'
@@ -106,6 +111,7 @@ class exerciseStore {
     this.optionStatus[number][index] = this.optionStatus[number][index] === 1 ? 0 : 1
     this.emptyPage = this.optionStatus.findIndex((answer) => answer.every(option => option === 0));
     this.isFinished = this.emptyPage === -1
+
   }
 
   @action.bound
@@ -117,9 +123,14 @@ class exerciseStore {
     else {
       /* 处理答案 */
       this.isSubmitted = true
+
       this.optionStatus.forEach((eachTopic, topicIndex) => {
+        const { topicAnswer = [], topicOptions } = this.topicList[topicIndex]
+
+        /* 记录做对题目id */
+        const correctAnswer: number[] = topicAnswer.slice()
+
         eachTopic.forEach((option, optionIndex) => {
-          const { topicAnswer = [], topicOptions } = this.topicList[topicIndex]
           const { id: currentId = 0 } = topicOptions[optionIndex]
 
           if (option === 1 && !topicAnswer.includes(currentId)) {
@@ -134,14 +145,38 @@ class exerciseStore {
           } else if (option === 1 && topicAnswer.includes(currentId)) {
             /* 选了，选对了 */
             this.optionStatus[topicIndex][optionIndex] = 2
+
+            correctAnswer.splice(correctAnswer.indexOf(currentId), 1)
           }
         })
+
+        /* 所有选项都选中了，不多不少，则判断作对一题 */
+        if (correctAnswer.length === 0) {
+          this.correctCount += 1
+        }
       })
-      this.currentPage = 0
+
+      const openid = Taro.getStorageSync('openid')
+      const score: number = parseFloat((this.correctCount / this.totalPage).toFixed(4)) * 100
+
+      Taro.request({
+        url: 'http://localhost:3000/exercises/score',
+        method: 'PUT',
+        data: {
+          exerciseId: this.exerciseId,
+          openid,
+          score
+        }
+      })
+
       Taro.showToast({
-        title: 'ok',
+        title: `最终得分: ${score}`,
         icon: 'none'
       })
+
+      // 清空做题状态
+      this.currentPage = 0
+      this.correctCount = 0
     }
   }
 }
