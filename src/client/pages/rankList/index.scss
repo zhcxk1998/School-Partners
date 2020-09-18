@@ -21,6 +21,10 @@
     padding: 2vw 5vw;
     border-bottom: #d7d7d7 1px solid;
 
+    &--header {
+      height: 80px;
+    }
+
     .number {
       color: #999;
       font-size: 1.2em;
@@ -39,6 +43,12 @@
       color: #333;
       font-size: 1.2em;
       font-weight: bold;
+    }
+
+    .realname {
+      color: #666;
+      font-size: 0.8em;
+      font-weight: normal;
     }
 
     .score {
@@ -78,8 +88,17 @@
         font-weight: bold;
       }
 
-      .score {
-        color: #444;
+      .realname {
+        display: flex;
+        justify-content: space-between;
+        color: #666;
+        font-size: 0.9em;
+        font-weight: normal;
+
+        .score {
+          color: #444;
+          font-weight: bold;
+        }
       }
     }
   }

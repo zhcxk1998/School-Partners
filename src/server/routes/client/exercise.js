@@ -103,4 +103,29 @@ router.put('/exercises/score', async (ctx) => {
   }
 })
 
+router.get('/exercises-rank', async (ctx) => {
+  const res = await query(`SELECT count(exercise_id) as count, sum(student_score) as total, student_id, student_name, nick_name, student_avatar FROM exercise_score left join student_list on exercise_score.student_id = student_list.id GROUP BY student_id ORDER BY count DESC`)
+  ctx.response.body = {
+    rankList: res.map(item => {
+      const {
+        count,
+        total,
+        student_id,
+        student_name,
+        nick_name,
+        student_avatar
+      } = item
+      return {
+        count,
+        total,
+        studentId: student_id,
+        studentName: student_name,
+        studentAvatar: student_avatar,
+        nickName: nick_name,
+        correctRate: parseFloat((total / (count * 100)).toFixed(4)) * 100 + '%'
+      }
+    })
+  };
+})
+
 module.exports = router
