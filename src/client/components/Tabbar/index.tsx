@@ -22,7 +22,7 @@ class Tabbar extends Component<IProps, {}> {
             { title: '首页', iconType: 'bullet-list' },
             { title: '聊天', iconType: 'message' },
             { title: '考试', iconType: 'edit' },
-            { title: '论坛', iconType: 'edit' },
+            { title: '论坛', iconType: 'bookmark' },
             { title: '个人', iconType: 'user' }
           ]}
           onClick={onSwitchTab}
