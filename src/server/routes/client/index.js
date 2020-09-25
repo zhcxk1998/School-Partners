@@ -6,6 +6,7 @@ const forum = require('./forum')
 const websocket = require('./socket')
 const login = require('./login')
 const classes = require('./class')
+const upload = require('./upload')
 
 module.exports = {
   course,
@@ -15,5 +16,6 @@ module.exports = {
   forum,
   websocket,
   login,
-  classes
+  classes,
+  upload
 }

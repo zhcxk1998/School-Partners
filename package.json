@@ -47,6 +47,7 @@
     "jsonwebtoken": "^8.5.1",
     "koa": "latest",
     "koa-bodyparser": "latest",
+    "koa-body": "^4.2.0",
     "koa-jwt": "^3.6.0",
     "koa-router": "latest",
     "koa-websocket": "latest",
@@ -68,7 +69,8 @@
     "taro-ui": "^2.2.1",
     "ts-import-plugin": "^1.6.1",
     "ts-lint": "^4.5.1",
-    "ts-loader": "^6.0.4"
+    "ts-loader": "^6.0.4",
+    "qiniu": "^7.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.0",
