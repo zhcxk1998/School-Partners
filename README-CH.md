@@ -18,6 +18,9 @@ Language: [简体中文](README-CH.md) | [English](README.md)
 ## 视频演示
 http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
+## 参数配置
+**运行项目前，需要对`src/server/config`目录下的配置文件进行配置**
+
 ## 数据库文件
 **运行项目前，请务必将根目录下的sql文件导入进mysql数据库，否则无法运行**
 https://github.com/zhcxk1998/School-Partners/blob/master/school-partners.sql
