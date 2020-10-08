@@ -45,7 +45,8 @@ interface TopicList {
   topicType: number,
   topicAnswer: number[],
   topicContent: string,
-  topicOptions: any[]
+  topicOptions: any[],
+  isUpload: boolean
 }
 
 const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
@@ -53,7 +54,8 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
     topicType: 1,
     topicAnswer: [],
     topicContent: '',
-    topicOptions: []
+    topicOptions: [],
+    isUpload: false
   }])
   const { history, form } = props
   const { getFieldDecorator, getFieldsValue, setFieldsValue } = form
@@ -110,6 +112,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
       topicAnswer: [],
       topicContent: '',
       topicOptions: [],
+      isUpload: false
     }])
   }
 
@@ -132,12 +135,16 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
   }
 
   const handleTopicTypeChange = (value: SelectValue, index: number) => {
+    const isUploadType: boolean = value === 3
     const { topicList: currentTopicList } = getFieldsValue(['topicList'])
     const { topicAnswer } = currentTopicList[index]
     const len = topicAnswer.length
     if (value === 1 && len > 1) {
       currentTopicList[index].topicAnswer.splice(0, len - 1)
     }
+
+    currentTopicList[index].isUpload = isUploadType
+
     setTopicList([...currentTopicList])
     setFieldsValue({ topicList: currentTopicList })
   }
@@ -254,10 +261,19 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                   </Form.Item>
                   <Row gutter={32}>
                     <Col span={12}>
+                      <Form.Item style={{ display: 'none' }}>
+                        {getFieldDecorator(`topicList[${index}].isUpload`, {
+
+                        })(
+                          <span>
+
+                          </span>
+                        )}
+                      </Form.Item>
                       <Form.Item label={
                         <span>
                           题目类型&nbsp;
-                          <Tooltip title="目前仅支持单选及多选">
+                          <Tooltip title="目前支持单选、多选及文件上传题">
                             <Icon type="info-circle" />
                           </Tooltip>
                         </span>
@@ -268,10 +284,11 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                         })(<Select onChange={(value) => handleTopicTypeChange(value, index)}>
                           <Option value={1}>单选</Option>
                           <Option value={2}>多选</Option>
+                          <Option value={3}>文件上传题</Option>
                         </Select>)}
                       </Form.Item>
                     </Col>
-                    <Col span={12}>
+                    <Col span={12} hidden={topicList[index].isUpload}>
                       {/* <Form.Item label="正确答案">
                         {getFieldDecorator(`topicList[${index}].topicAnswer`, {
                           rules: TopicAnswerRules,
@@ -285,7 +302,7 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                       </Form.Item> */}
                       <Form.Item label="正确答案">
                         {getFieldDecorator(`topicList[${index}].topicAnswer`, {
-                          rules: TopicAnswerRules,
+                          rules: topicList[index].isUpload ? [{ required: false }] : TopicAnswerRules,
                           initialValue: [1]
                         })(<Checkbox.Group
                           style={{ width: '100%' }}
@@ -301,12 +318,12 @@ const ExercisePublish: FC<PublishProps> = (props: PublishProps) => {
                       </Form.Item>
                     </Col>
                   </Row>
-                  <Row gutter={32}>
+                  <Row gutter={32} hidden={topicList[index].isUpload}>
                     {['A', 'B', 'C', 'D'].map((option, idx) => (
                       <Col span={12} key={idx}>
                         <Form.Item label={`选项${option}`}>
                           {getFieldDecorator(`topicList[${index}].topicOptions[${idx}]`, {
-                            rules: TopicOptionRules
+                            rules: topicList[index].isUpload ? [{ required: false }] : TopicOptionRules
                             // 改用数组形式存储选项，大于两个选项时候则允许提交
                           })(<Input />)}
                         </Form.Item>

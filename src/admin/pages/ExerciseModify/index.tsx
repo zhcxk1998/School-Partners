@@ -46,7 +46,8 @@ interface TopicList {
   topicType: number,
   topicAnswer: number[],
   topicContent: string,
-  topicOptions: any[]
+  topicOptions: any[],
+  isUpload: boolean
 }
 
 interface ExerciseInfo {
@@ -64,7 +65,8 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
     topicType: 1,
     topicAnswer: [],
     topicContent: '',
-    topicOptions: []
+    topicOptions: [],
+    isUpload: false
   }])
   const [exerciseInfo, setExerciseInfo] = useState<ExerciseInfo>({
     exerciseName: '',
@@ -106,6 +108,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
       topicList.forEach((_: any, index: number) => {
         topicList[index].topicOptions = topicList[index].topicOptions.map((item: any) => item.option)
       })
+
       setModifyExerciseName(exerciseName)
       setTopicList([...topicList])
       setExerciseInfo({
@@ -167,6 +170,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
       topicAnswer: [1],
       topicContent: '',
       topicOptions: [],
+      isUpload: false
     }])
   }
 
@@ -184,17 +188,23 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
       checkedValues.splice(0, len - 1)
     }
     currentTopicList[index].topicAnswer = [...checkedValues]
+
     setTopicList([...currentTopicList])
     setFieldsValue({ topicList: currentTopicList })
   }
 
   const handleTopicTypeChange = (value: SelectValue, index: number) => {
+    const isUploadType: boolean = value === 3
     const { topicList: currentTopicList } = getFieldsValue(['topicList'])
+
     const { topicAnswer } = currentTopicList[index]
     const len = topicAnswer.length
     if (value === 1 && len > 1) {
       currentTopicList[index].topicAnswer.splice(0, len - 1)
     }
+
+    currentTopicList[index].isUpload = isUploadType
+
     setTopicList([...currentTopicList])
     setFieldsValue({ topicList: currentTopicList })
   }
@@ -294,7 +304,6 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
                 </Form.Item>
               </Col>
             </Row>
-
             <Divider></Divider>
             <Form.Item label="新增题目">
               {topicList && topicList.map((_: any, index: number) => {
@@ -319,10 +328,19 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
                     </Form.Item>
                     <Row gutter={32}>
                       <Col span={12}>
+                        <Form.Item style={{ display: 'none' }}>
+                          {getFieldDecorator(`topicList[${index}].isUpload`, {
+
+                          })(
+                            <span>
+
+                            </span>
+                          )}
+                        </Form.Item>
                         <Form.Item label={
                           <span>
                             题目类型&nbsp;
-                          <Tooltip title="目前仅支持单选及多选">
+                          <Tooltip title="目前支持单选、多选及文件上传题">
                               <Icon type="info-circle" />
                             </Tooltip>
                           </span>
@@ -333,13 +351,14 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
                           })(<Select onChange={(value) => handleTopicTypeChange(value, index)}>
                             <Option value={1}>单选</Option>
                             <Option value={2}>多选</Option>
+                            <Option value={3}>文件上传题</Option>
                           </Select>)}
                         </Form.Item>
                       </Col>
-                      <Col span={12}>
+                      <Col span={12} hidden={topicList[index].isUpload}>
                         <Form.Item label="正确答案">
                           {getFieldDecorator(`topicList[${index}].topicAnswer`, {
-                            rules: TopicAnswerRules,
+                            rules: topicList[index].isUpload ? [{ required: false }] : TopicAnswerRules,
                             initialValue: topicList[index].topicAnswer
                           })(<Checkbox.Group
                             style={{ width: '100%' }}
@@ -355,12 +374,12 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
                         </Form.Item>
                       </Col>
                     </Row>
-                    <Row gutter={32}>
+                    <Row gutter={32} hidden={topicList[index].isUpload}>
                       {['A', 'B', 'C', 'D'].map((option, idx) => (
                         <Col span={12} key={idx}>
                           <Form.Item label={`选项${option}`}>
                             {getFieldDecorator(`topicList[${index}].topicOptions[${idx}]`, {
-                              rules: TopicOptionRules,
+                              rules: topicList[index].isUpload ? [{ required: false }] : TopicOptionRules,
                               initialValue: topicList[index].topicOptions[idx]
                             })(<Input />)}
                           </Form.Item>

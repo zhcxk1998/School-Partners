@@ -1,7 +1,16 @@
 const router = require('koa-router')()
-const { query } = require('../../utils/query')
-const { QUERY_TABLE, INSERT_TABLE, REPLACE_TABLE, UPDATE_TABLE_MULTI } = require('../../utils/sql');
-const { getJWTPayload } = require('../../utils/token')
+const {
+  query
+} = require('../../utils/query')
+const {
+  QUERY_TABLE,
+  INSERT_TABLE,
+  REPLACE_TABLE,
+  UPDATE_TABLE_MULTI
+} = require('../../utils/sql');
+const {
+  getJWTPayload
+} = require('../../utils/token')
 const parse = require('../../utils/parse')
 
 router.get('/exercises', async (ctx) => {
@@ -11,11 +20,22 @@ router.get('/exercises', async (ctx) => {
     data: {}
   }
   try {
-    const { authorization } = ctx.header
-    const { classId } = getJWTPayload(authorization)
+    const {
+      authorization
+    } = ctx.header
+    const {
+      classId
+    } = getJWTPayload(authorization)
     const res = await query(QUERY_TABLE('exercise_list', ['class_id', classId]));
     res.map((item, index) => {
-      const { id, exercise_name, exercise_content, is_hot, exercise_difficulty, exercise_type } = item
+      const {
+        id,
+        exercise_name,
+        exercise_content,
+        is_hot,
+        exercise_difficulty,
+        exercise_type
+      } = item
       responseData[index] = {
         id,
         exerciseName: exercise_name,
@@ -42,14 +62,26 @@ router.get('/exercises', async (ctx) => {
 })
 
 router.get('/exercises/:id', async (ctx) => {
-  const { id: exerciseId } = ctx.params
+  const {
+    id: exerciseId
+  } = ctx.params
   const responseBody = {
     code: 0,
     data: {}
   }
   try {
     const res = await query(`SELECT * FROM exercise_list WHERE id = ${exerciseId}`)
-    const { id, exercise_name, exercise_content, is_hot, is_public, exercise_difficulty, exercise_type, topic_list, publish_date } = parse(res)[0]
+    const {
+      id,
+      exercise_name,
+      exercise_content,
+      is_hot,
+      is_public,
+      exercise_difficulty,
+      exercise_type,
+      topic_list,
+      publish_date
+    } = parse(res)[0]
     responseBody.data = {
       id,
       exerciseName: exercise_name,
@@ -58,7 +90,10 @@ router.get('/exercises/:id', async (ctx) => {
       exerciseType: exercise_type,
       isHot: !!is_hot,
       isPublic: !!is_public,
-      topicList: topic_list,
+      topicList: topic_list.map(item => ({
+        ...item,
+        isUpload: item.topicType === 3
+      })),
       publishDate: publish_date
     }
     responseBody.code = 200
@@ -117,7 +152,11 @@ router.post('/exercises', async (ctx) => {
     data: {}
   }
   try {
-    const { header: { authorization } } = ctx
+    const {
+      header: {
+        authorization
+      }
+    } = ctx
     const {
       exerciseName,
       exerciseContent,
@@ -127,7 +166,9 @@ router.post('/exercises', async (ctx) => {
       isPublic,
       topicList
     } = ctx.request.body
-    const { classId } = getJWTPayload(authorization)
+    const {
+      classId
+    } = getJWTPayload(authorization)
     await query(INSERT_TABLE('exercise_list'), {
       exercise_name: exerciseName,
       exercise_content: exerciseContent,
@@ -152,7 +193,9 @@ router.post('/exercises', async (ctx) => {
 })
 
 router.put('/exercises/:id', async (ctx) => {
-  const { id: exerciseId } = ctx.params
+  const {
+    id: exerciseId
+  } = ctx.params
   const {
     exerciseName,
     exerciseContent,
@@ -168,8 +211,14 @@ router.put('/exercises/:id', async (ctx) => {
   }
   try {
     const res = await query(`SELECT finish_count, publish_date FROM exercise_list WHERE id = ${exerciseId}`);
-    const { finish_count, publish_date } = res[0]
-    await query(UPDATE_TABLE_MULTI('exercise_list', { primaryKey: 'id', primaryValue: exerciseId }, {
+    const {
+      finish_count,
+      publish_date
+    } = res[0]
+    await query(UPDATE_TABLE_MULTI('exercise_list', {
+      primaryKey: 'id',
+      primaryValue: exerciseId
+    }, {
       exercise_name: exerciseName,
       exercise_content: exerciseContent,
       exercise_type: exerciseType,
