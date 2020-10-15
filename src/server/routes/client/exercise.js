@@ -47,9 +47,14 @@ router.get('/exercises/:id', async (ctx) => {
     data: {}
   }
   try {
+    const topicList = JSON.parse(topic_list)
+
     responseBody.data = {
       exerciseName: exercise_name,
-      topicList: JSON.parse(topic_list)
+      topicList: topicList.map(item => ({
+        ...item,
+        isUpload: item.topicType === 3
+      }))
     }
     responseBody.code = 200
   } catch (e) {

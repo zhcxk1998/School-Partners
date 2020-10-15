@@ -14,5 +14,6 @@ export interface TopicList {
   topicOptions: {
     id: number,
     option: string
-  }[]
+  }[],
+  isUpload?: boolean
 }
