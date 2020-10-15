@@ -111,6 +111,9 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
 
       setModifyExerciseName(exerciseName)
       setTopicList([...topicList])
+
+      setFieldsValue({ topicList: [...topicList] })
+
       setExerciseInfo({
         exerciseName,
         exerciseContent,
@@ -165,13 +168,15 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
   }
 
   const handleTopicAddClick = () => {
-    setTopicList([...topicList, {
+    const currentTopicList = [...topicList, {
       topicType: 1,
       topicAnswer: [1],
       topicContent: '',
       topicOptions: [],
       isUpload: false
-    }])
+    }]
+    setTopicList([...currentTopicList])
+    // setFieldsValue({ topicList: currentTopicList })
   }
 
   const handleTopicDeleteClick = (topicIndex: number) => {
@@ -195,6 +200,7 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
 
   const handleTopicTypeChange = (value: SelectValue, index: number) => {
     const isUploadType: boolean = value === 3
+    /* 采用getFieldsValue是因为需要保存如题目内容等信息不被清空 */
     const { topicList: currentTopicList } = getFieldsValue(['topicList'])
 
     const { topicAnswer } = currentTopicList[index]
@@ -203,10 +209,14 @@ const ExerciseModify: FC<ModifyProps> = (props: ModifyProps) => {
       currentTopicList[index].topicAnswer.splice(0, len - 1)
     }
 
+    topicList.forEach((item, index) => {
+      currentTopicList[index].isUpload = item.isUpload
+    })
+
     currentTopicList[index].isUpload = isUploadType
 
     setTopicList([...currentTopicList])
-    setFieldsValue({ topicList: currentTopicList })
+    // setFieldsValue({ topicList: currentTopicList })
   }
 
   const isMultiple = (index: number): boolean => {
