@@ -19,7 +19,14 @@ class Topic extends Component<IProps, {}> {
     const { number, exerciseStore: { topicList, fontSize } } = this.props;
     if (!topicList[number]) return;
     const { topicType, topicContent } = topicList[number];
-    const tag: string = topicType === 1 ? '单选' : '多选';
+
+    const tagList = {
+      1: '单选',
+      2: '多选',
+      3: '上传'
+    }
+
+    const tag: string = tagList[topicType]
     return (
       <View className={`exam-topic ${fontSize}`}>
         <View className='type'>{tag}</View>

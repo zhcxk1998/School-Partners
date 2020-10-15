@@ -104,3 +104,27 @@
     opacity: 0;
   }
 }
+
+.uploader {
+  &__container {
+    color: #666;
+
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto 120px auto;
+    width: 90vw;
+    height: 400px;
+    background: #f3f3f3;
+  }
+
+  &__icon {
+    color: rgb(184, 184, 184);
+    font-size: 4em;
+    font-weight: lighter;
+    // font-weight: bold;
+  }
+}

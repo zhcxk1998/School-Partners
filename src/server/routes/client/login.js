@@ -24,14 +24,18 @@ router.post('/login', async (ctx) => {
   } = await axios.get(
     `https://api.weixin.qq.com/sns/jscode2session?appid=${appId}&secret=${appSecret}&js_code=${code}&grant_type=authorization_code`
   )
-  const res = await query(`INSERT INTO student_list(student_name, nick_name, open_id, student_avatar) VALUE('${student_name}','${nickName}','${openid}','${avatarUrl}') ON DUPLICATE KEY UPDATE student_name='${student_name}', nick_name='${nickName}', open_id='${openid}', student_avatar='${avatarUrl}'`)
+  const {
+    insertId: studentId
+  } = await query(`INSERT INTO student_list(student_name, nick_name, open_id, student_avatar) VALUE('${student_name}','${nickName}','${openid}','${avatarUrl}') ON DUPLICATE KEY UPDATE student_name='${student_name}', nick_name='${nickName}', open_id='${openid}', student_avatar='${avatarUrl}'`)
 
-  console.log(openid)
-  console.log(res)
+  // const {
+  //   class_id: classId
+  // } = await query(`SELECT class_id FROM student_class WHERE student_id = '${studentId+1}'`)[0]
 
   // 生成token
   ctx.response.body = {
-    openid
+    openid,
+    // classId
   }
 })
 
