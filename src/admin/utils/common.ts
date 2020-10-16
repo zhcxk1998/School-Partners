@@ -33,3 +33,5 @@ export const generateExerciseType = (exerciseType: number): { color: string, typ
 export const generateExamType = (examType: number): string => {
   return examType === 1 ? '课堂小测' : '单元测试'
 }
+
+export const prefix = 'http://localhost:4000'
