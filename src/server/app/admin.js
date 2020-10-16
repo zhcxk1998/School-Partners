@@ -20,7 +20,8 @@ const {
   exams,
   classes,
   tags,
-  dashboard
+  dashboard,
+  mark
 } = require('../routes/admin')
 
 admin.use(cors())
@@ -38,7 +39,8 @@ admin.use(routes(router, {
   exams,
   classes,
   tags,
-  dashboard
+  dashboard,
+  mark
 }))
 
 module.exports = admin

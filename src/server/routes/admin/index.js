@@ -7,6 +7,7 @@ const exams = require('./exams')
 const classes = require('./class')
 const tags = require('./tag')
 const dashboard = require('./dashboard')
+const mark = require('./mark')
 
 module.exports = {
   login,
@@ -17,5 +18,6 @@ module.exports = {
   exams,
   classes,
   tags,
-  dashboard
+  dashboard,
+  mark
 }
