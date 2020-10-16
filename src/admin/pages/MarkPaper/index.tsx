@@ -3,18 +3,35 @@ import { CustomBreadcrumb } from '@/admin/components'
 import { RouteComponentProps } from 'react-router-dom';
 import { FormComponentProps } from 'antd/lib/form';
 import {
-  Slider, Radio, Button, Tooltip, Icon, Select, Spin, message, Popconfirm
+  Slider,
+  Radio,
+  Button,
+  Tooltip,
+  Icon,
+  Select,
+  Spin,
+  message,
+  Popconfirm,
+  Form
 } from 'antd';
 
 import './index.scss'
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { getURLBase64 } from '@/admin/utils/getURLBase64'
-
+import { ExerciseListProps, ExerciseIndexList, ExerciseStudentList } from '@/admin/modals/exerciseList'
+import { prefix } from '@/admin/utils/common'
+import { SelectValue } from 'antd/lib/select';
+import http from '@/admin/utils/http'
 const { Option, OptGroup } = Select;
 
 type MarkPaperProps = RouteComponentProps & FormComponentProps
 
 const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
+  const { form } = props
+  const { getFieldDecorator, getFieldsValue, setFieldsValue } = form
+
+
+  /* 画布字段 */
   const MOVE_MODE: number = 0
   const LINE_MODE: number = 1
   const ERASER_MODE: number = 2
@@ -34,13 +51,21 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const [canvasCurrentHistory, setCanvasCurrentHistory] = useState<number>(0)
 
+  /* 信息字段 */
+  const [exerciseList, setExerciseList] = useState<ExerciseListProps[]>([])
+  const [exerciseId, setExerciseId] = useState<number>(0)
+  const [exerciseIndex, setExerciseIndex] = useState<number>(0)
+  const [exerciseIndexList, setExerciseIndexList] = useState<ExerciseIndexList[]>([])
+  const [exerciseStudentList, setExerciseStudentList] = useState<ExerciseStudentList[]>([])
+  const [classId, setClassId] = useState<number>(0)
+
   useEffect(() => {
-    setFillImageSrc('http://cdn.algbb.cn/test/canvasTest.jpg')
+    // setFillImageSrc('http://cdn.algbb.cn/test/canvasTest.jpg')
   }, [])
 
   // 重置变换参数，重新绘制图片
   useEffect(() => {
-    setIsLoading(true)
+    fillImageSrc !== '' && setIsLoading(true)
     translatePointXRef.current = 0
     translatePointYRef.current = 0
     fillStartPointXRef.current = 0
@@ -365,11 +390,51 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     message.success('画布清除成功！')
   }
 
+  /* 获取题库 */
+  useEffect(() => {
+    getExerciseList()
+  }, [])
+
+  const getExerciseList = async () => {
+    const { data = {} } = await http.get(`${prefix}/exercises`)
+    const { exerciseList = [] } = data
+
+    setExerciseList([...exerciseList])
+  }
+
+  const handleExerciseIdChange = async (value: SelectValue) => {
+    const { uploadExerciseList } = await http.get(`${prefix}/mark/paper/getExercises?exerciseId=${value}`)
+    setExerciseId(+value)
+    setExerciseIndexList([...uploadExerciseList])
+
+    /* 切换时，清空先前选项 */
+    form.resetFields(['index', 'student'])
+  }
+
+  const handleExerciseIndexChange = async (value: SelectValue) => {
+    const { classId, studentList } = await http.get(`${prefix}/mark/paper?exerciseId=${exerciseId}&exerciseIndex=${value}`)
+    setClassId(classId)
+    setExerciseIndex(+value)
+    setExerciseStudentList([...studentList])
+
+    /* 切换时，清空先前选项 */
+    form.resetFields(['student'])
+  }
+
+  const handleExerciseStudentChange = async (value: SelectValue) => {
+    // const data = exerciseStudentList.filter(item => item.studentId === +value)
+    const imgPath = `http://cdn.algbb.cn/uploadImage/exercise/${classId}/${exerciseId}/${exerciseIndex}/${value}.png`
+    setFillImageSrc(imgPath)
+  }
+
   return (
     <div>
       <CustomBreadcrumb list={['内容管理', '批阅作业']} />
       <div className="mark-paper__container" ref={containerRef}>
         <div className="mark-paper__wrap" ref={wrapRef}>
+          <div className="mark-paper__tips" style={{ display: fillImageSrc === '' ? 'flex' : 'none' }}>
+            右侧完善基本信息<br />即可编辑图片
+          </div>
           <div
             className="mark-paper__mask"
             style={{ display: isLoading ? 'flex' : 'none' }}
@@ -387,103 +452,147 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
           </canvas>
         </div>
         <div className="mark-paper__sider">
-          <div>
-            选择作业：
-            <Select
-              defaultValue="xueshengjia"
-              style={{
-                width: '100%', margin: '10px 0 20px 0'
-              }}
-              onChange={handlePaperChange} >
-              <OptGroup label="17软件一班">
-                <Option value="xueshengjia">学生甲</Option>
-                <Option value="xueshengyi">学生乙</Option>
-              </OptGroup>
-              <OptGroup label="17软件二班">
-                <Option value="xueshengbing">学生丙</Option>
-              </OptGroup>
-            </Select>
-          </div>
-          <div>
-            画布操作：<br />
-            <div className="mark-paper__action">
-              <Tooltip title="撤销">
-                <i
-                  className={`icon iconfont icon-chexiao ${canvasCurrentHistory <= 1 && 'disable'}`}
-                  onClick={handleRollBack} />
-              </Tooltip>
-              <Tooltip title="恢复">
-                <i
-                  className={`icon iconfont icon-fanhui ${canvasCurrentHistory >= canvasHistroyListRef.current.length && 'disable'}`}
-                  onClick={handleRollForward} />
-              </Tooltip>
-              <Popconfirm
-                title="确定清空画布吗？"
-                onConfirm={handleClearCanvasClick}
-                okText="确定"
-                cancelText="取消"
-              >
-                <Tooltip title="清空">
-                  <i className="icon iconfont icon-qingchu" />
+          <Form>
+            <div>
+              选择题库：
+              <Form.Item style={{ marginBottom: 0 }}>
+                {getFieldDecorator('id', {
+                })(<Select
+                  style={{
+                    width: '100%', margin: '10px 0 20px 0'
+                  }}
+                  placeholder="请选择题库"
+                  onChange={handleExerciseIdChange} >
+                  {exerciseList.map((item) => {
+                    const { id, exerciseName } = item
+                    return (
+                      <Option value={id} key={id}>{exerciseName}</Option>
+                    )
+                  })}
+                </Select>)}
+              </Form.Item>
+            </div>
+            <div>
+              选择题目：
+              <Form.Item style={{ marginBottom: 0 }}>
+                {getFieldDecorator('index', {
+                })(<Select
+                  notFoundContent="暂无文件上传题"
+                  style={{
+                    width: '100%', margin: '10px 0 20px 0'
+                  }}
+                  placeholder="请选择题目"
+                  onChange={handleExerciseIndexChange} >
+                  {exerciseIndexList.map((item) => {
+                    const { index, topicContent } = item
+                    return (
+                      <Option value={index} key={index}>第{index + 1}题</Option>
+                    )
+                  })}
+                </Select>)}
+              </Form.Item>
+            </div>
+            <div>
+              选择学生：
+              <Form.Item style={{ marginBottom: 0 }}>
+                {getFieldDecorator('student', {
+                })(<Select
+                  notFoundContent="暂无已提交的学生"
+                  placeholder="请选择学生"
+                  style={{
+                    width: '100%', margin: '10px 0 20px 0'
+                  }}
+                  onChange={handleExerciseStudentChange} >
+                  {exerciseStudentList.map((item) => {
+                    const { studentId, studentName } = item
+                    return (
+                      <Option value={studentId} key={studentId}>{studentName}</Option>
+                    )
+                  })}
+                </Select>)}
+              </Form.Item>
+            </div>
+            <div>
+              画布操作：<br />
+              <div className="mark-paper__action">
+                <Tooltip title="撤销">
+                  <i
+                    className={`icon iconfont icon-chexiao ${canvasCurrentHistory <= 1 && 'disable'}`}
+                    onClick={handleRollBack} />
                 </Tooltip>
-              </Popconfirm>
-            </div>
-          </div>
-          <div>
-            画布缩放：
-            <Tooltip placement="top" title='可用鼠标滚轮进行缩放'>
-              <Icon type="question-circle" />
-            </Tooltip>
-            <Slider
-              min={0.1}
-              max={2.01}
-              step={0.1}
-              value={canvasScale}
-              tipFormatter={(value) => `${(value).toFixed(2)}x`}
-              onChange={handleScaleChange} />
-          </div>
-          <div>
-            画笔大小：
-            <Slider
-              min={1}
-              max={9}
-              value={lineWidth}
-              tipFormatter={(value) => `${value}px`}
-              onChange={handleLineWidthChange} />
-          </div>
-          <div>
-            模式选择：
-            <Radio.Group
-              className="radio-group"
-              onChange={handleMouseModeChange}
-              value={mouseMode}>
-              <Radio value={0}>移动</Radio>
-              <Radio value={1}>画笔</Radio>
-              <Radio value={2}>橡皮擦</Radio>
-            </Radio.Group>
-          </div>
-          <div>
-            颜色选择：
-            <div className="color-picker__container">
-              {['#fa4b2a', '#ffff00', '#ee00ee', '#1890ff', '#333333', '#ffffff'].map(color => {
-                return (
-                  <Tooltip placement="top" title={color} key={color}>
-                    <div
-                      role="button"
-                      className={`color-picker__wrap ${color === lineColor && 'color-picker__wrap--active'}`}
-                      style={{ background: color }}
-                      onClick={() => handleColorChange(color)}
-                    />
+                <Tooltip title="恢复">
+                  <i
+                    className={`icon iconfont icon-fanhui ${canvasCurrentHistory >= canvasHistroyListRef.current.length && 'disable'}`}
+                    onClick={handleRollForward} />
+                </Tooltip>
+                <Popconfirm
+                  title="确定清空画布吗？"
+                  onConfirm={handleClearCanvasClick}
+                  okText="确定"
+                  cancelText="取消"
+                >
+                  <Tooltip title="清空">
+                    <i className="icon iconfont icon-qingchu" />
                   </Tooltip>
-                )
-              })}
+                </Popconfirm>
+              </div>
             </div>
-          </div>
-          <Button onClick={handleSaveClick}>保存图片</Button>
+            <div>
+              画布缩放：
+            <Tooltip placement="top" title='可用鼠标滚轮进行缩放'>
+                <Icon type="question-circle" />
+              </Tooltip>
+              <Slider
+                min={0.1}
+                max={2.01}
+                step={0.1}
+                value={canvasScale}
+                tipFormatter={(value) => `${(value).toFixed(2)}x`}
+                onChange={handleScaleChange} />
+            </div>
+            <div>
+              画笔大小：
+            <Slider
+                min={1}
+                max={9}
+                value={lineWidth}
+                tipFormatter={(value) => `${value}px`}
+                onChange={handleLineWidthChange} />
+            </div>
+            <div>
+              模式选择：
+            <Radio.Group
+                className="radio-group"
+                onChange={handleMouseModeChange}
+                value={mouseMode}>
+                <Radio value={0}>移动</Radio>
+                <Radio value={1}>画笔</Radio>
+                <Radio value={2}>橡皮擦</Radio>
+              </Radio.Group>
+            </div>
+            <div>
+              颜色选择：
+            <div className="color-picker__container">
+                {['#fa4b2a', '#ffff00', '#ee00ee', '#1890ff', '#333333', '#ffffff'].map(color => {
+                  return (
+                    <Tooltip placement="top" title={color} key={color}>
+                      <div
+                        role="button"
+                        className={`color-picker__wrap ${color === lineColor && 'color-picker__wrap--active'}`}
+                        style={{ background: color }}
+                        onClick={() => handleColorChange(color)}
+                      />
+                    </Tooltip>
+                  )
+                })}
+              </div>
+            </div>
+            <Button onClick={handleSaveClick}>保存图片</Button>
+          </Form>
         </div>
       </div>
     </div >
   )
 }
 
-export default MarkPaper as ComponentType
+export default Form.create({ name: 'MarkPaper' })(MarkPaper) as ComponentType

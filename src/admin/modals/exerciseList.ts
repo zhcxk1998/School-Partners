@@ -1,4 +1,4 @@
-interface ExerciseListProps {
+export type ExerciseListProps = {
   id: number,
   exerciseName: string,
   exerciseContent: string,
@@ -8,6 +8,15 @@ interface ExerciseListProps {
   key: string
 }
 
-export {
-  ExerciseListProps
+export type ExerciseIndexList = {
+  index: number,
+  topicContent: string
+}
+
+export type ExerciseStudentList = {
+  studentId: number,
+  studentName: string,
+  nickName: string,
+  openid: string,
+  studentAvtar: string
 }

@@ -18,6 +18,18 @@
     background: #333;
   }
 
+  &__tips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    color: #d7d7d7;
+    font-size: 1.6em;
+    text-align: center;
+    letter-spacing: 2px;
+  }
+
   &__mask {
     display: none;
     justify-content: center;
@@ -40,6 +52,21 @@
     border-radius: 8px;
     background: #fff;
     transition: all .25s ease;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      display: none;
+      // width: 8px;
+      // border-radius: 20px;
+    }
+
+    // &::-webkit-scrollbar-track {
+    //   border-radius: 20px;
+    // }
+
+    // &::-webkit-scrollbar-thumb {
+    //   border-radius: 20px;
+    // }
   }
 
   &__action {
