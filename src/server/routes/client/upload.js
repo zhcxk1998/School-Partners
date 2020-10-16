@@ -18,9 +18,10 @@ router.post('/upload', async (ctx) => {
     exerciseIndex
   } = ctx.request.body
 
-  const classInfo = await query(`SELECT class_id FROM student_class WHERE student_id IN (SELECT student_id FROM student_list WHERE open_id = '${openid}')`)
+  const classInfo = await query(`SELECT class_id, student_id FROM student_class WHERE student_id IN (SELECT student_id FROM student_list WHERE open_id = '${openid}')`)
   const {
-    class_id: classId
+    class_id: classId,
+    student_id: studentId
   } = classInfo[0]
 
   const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
@@ -39,10 +40,10 @@ router.post('/upload', async (ctx) => {
   const formUploader = new qiniu.form_up.FormUploader(config)
   const putExtra = new qiniu.form_up.PutExtra()
 
-  /* 图片路径为 `uploadImage/exercise/班级id/题库id/题号index` */
-  const key = `uploadImage/exercise/${classId}/${exerciseId}/${exerciseIndex}.png`
+  /* 图片路径为 `uploadImage/exercise/班级id/题库id/题号index/学生id` */
+  const key = `uploadImage/exercise/${classId}/${exerciseId}/${exerciseIndex}/${studentId}.png`
   const file = ctx.request.files.files.path
-  const name = ctx.request.files.files.name
+  // const name = ctx.request.files.files.name
 
 
   // ctx.response.body = {}
@@ -54,10 +55,12 @@ router.post('/upload', async (ctx) => {
   // console.log(file)
 
 
-  formUploader.putFile(uploadToken, key, file, putExtra, (err, res, info) => {
+  formUploader.putFile(uploadToken, key, file, putExtra, async (err, res, info) => {
     console.log(err)
     console.log(res)
     console.log(info)
+
+    await query(`INSERT INTO upload_exercise(class_id, exercise_id, student_id, exercise_index) VALUE('${classId}','${exerciseId}','${studentId}','${exerciseIndex}') ON DUPLICATE KEY UPDATE class_id='${classId}', exercise_id='${exerciseId}', student_id='${studentId}', exercise_index='${exerciseIndex}'`)
 
     ctx.response.body = {
 
