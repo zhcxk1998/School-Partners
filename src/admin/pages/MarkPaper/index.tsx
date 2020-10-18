@@ -437,6 +437,9 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     setExerciseIndex(+value)
     setExerciseStudentList([...studentList])
 
+    /* 清空当前显示的图片 */
+    setFillImageSrc('')
+
     /* 切换时，清空先前选项 */
     form.resetFields(['student'])
   }
