@@ -17,10 +17,10 @@ import {
 import './index.scss'
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { getURLBase64 } from '@/admin/utils/getURLBase64'
-import { 
-  ExerciseListProps, 
-  ExerciseIndexList, 
-  ExerciseStudentList 
+import {
+  ExerciseListProps,
+  ExerciseIndexList,
+  ExerciseStudentList
 } from '@/admin/modals/exerciseList'
 import { prefix } from '@/admin/utils/common'
 import { SelectValue } from 'antd/lib/select';
@@ -117,6 +117,8 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
 
     if (!canvas || !wrap || !context) return
 
+    // canvas && (canvas.style.transform = 'translate(0px, 0px)')
+
     img.src = await getURLBase64(fillImageSrc)
     img.onload = () => {
       // 取中间渲染图片
@@ -136,7 +138,20 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
       // 设置变化基点，为画布容器中央
       canvas.style.transformOrigin = `${wrap?.offsetWidth / 2}px ${wrap?.offsetHeight / 2}px`
       // 清除上一次变化的效果
-      canvas.style.transform = ''
+      // canvas.style.transform = ''
+
+      /* 以中间点初始渲染图片 */
+      const startX: number = (wrap?.offsetWidth - img.width) / 2
+      const startY: number = (wrap?.offsetHeight - img.height) / 2
+
+      /* 设置初始属性 */
+      translatePointXRef.current = startX
+      translatePointYRef.current = startY
+      fillStartPointXRef.current = startX
+      fillStartPointYRef.current = startY
+
+      canvas.style.transform = `scale(${canvasScale},${canvasScale}) translate(${translatePointXRef.current}px,${translatePointYRef.current}px)`
+
       const imageData: ImageData = context.getImageData(0, 0, canvas.width, canvas.height)
       canvasHistroyListRef.current = []
       canvasHistroyListRef.current.push(imageData)
@@ -452,7 +467,9 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
           </div>
           <canvas
             ref={canvasRef}
-            className="mark-paper__canvas">
+            className="mark-paper__canvas"
+            style={{ display: isLoading ? 'none' : 'block' }}
+          >
             <p>很可惜，这个东东与您的电脑不搭！</p>
           </canvas>
         </div>
