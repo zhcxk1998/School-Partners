@@ -14,22 +14,24 @@ import {
   Popconfirm,
   Form
 } from 'antd';
-
 import './index.scss'
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { getURLBase64 } from '@/admin/utils/getURLBase64'
-import { ExerciseListProps, ExerciseIndexList, ExerciseStudentList } from '@/admin/modals/exerciseList'
+import { 
+  ExerciseListProps, 
+  ExerciseIndexList, 
+  ExerciseStudentList 
+} from '@/admin/modals/exerciseList'
 import { prefix } from '@/admin/utils/common'
 import { SelectValue } from 'antd/lib/select';
 import http from '@/admin/utils/http'
-const { Option, OptGroup } = Select;
+const { Option } = Select;
 
 type MarkPaperProps = RouteComponentProps & FormComponentProps
 
 const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
   const { form } = props
-  const { getFieldDecorator, getFieldsValue, setFieldsValue } = form
-
+  const { getFieldDecorator } = form
 
   /* 画布字段 */
   const MOVE_MODE: number = 0
@@ -356,14 +358,14 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     console.log(canvas?.toDataURL())
   }
 
-  const handlePaperChange = (value: string) => {
-    const fillImageList = {
-      'xueshengjia': 'http://cdn.algbb.cn/test/canvasTest.jpg',
-      'xueshengyi': 'http://cdn.algbb.cn/test/canvasTest2.png',
-      'xueshengbing': 'http://cdn.algbb.cn/emoji/30.png',
-    }
-    setFillImageSrc(fillImageList[value])
-  }
+  // const handlePaperChange = (value: string) => {
+  //   const fillImageList = {
+  //     'xueshengjia': 'http://cdn.algbb.cn/test/canvasTest.jpg',
+  //     'xueshengyi': 'http://cdn.algbb.cn/test/canvasTest2.png',
+  //     'xueshengbing': 'http://cdn.algbb.cn/emoji/30.png',
+  //   }
+  //   setFillImageSrc(fillImageList[value])
+  // }
 
   const handleRollBack = () => {
     const isFirstHistory: boolean = canvasCurrentHistory === 1
@@ -406,6 +408,9 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
     const { uploadExerciseList } = await http.get(`${prefix}/mark/paper/getExercises?exerciseId=${value}`)
     setExerciseId(+value)
     setExerciseIndexList([...uploadExerciseList])
+
+    /* 清空当前显示的图片 */
+    setFillImageSrc('')
 
     /* 切换时，清空先前选项 */
     form.resetFields(['index', 'student'])
