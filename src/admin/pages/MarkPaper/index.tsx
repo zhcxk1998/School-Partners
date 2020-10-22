@@ -471,7 +471,7 @@ const MarkPaper: FC<MarkPaperProps> = (props: MarkPaperProps) => {
           <canvas
             ref={canvasRef}
             className="mark-paper__canvas"
-            style={{ display: isLoading ? 'none' : 'block' }}
+            style={{ display: isLoading || fillImageSrc === '' ? 'none' : 'block' }}
           >
             <p>很可惜，这个东东与您的电脑不搭！</p>
           </canvas>
