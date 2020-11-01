@@ -7,6 +7,9 @@ const config = {
     750: 1,
     828: 1.81 / 2
   },
+  plugins: [
+    '@tarojs/plugin-sass',
+  ],
   sourceRoot: 'src/client',
   outputRoot: 'dist',
   // babel、csso、uglify 等配置从 plugins 配置中移出来
