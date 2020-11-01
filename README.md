@@ -18,6 +18,9 @@ For specific use, please refer to my blog, will continue to update the analysis 
 ## Video Demo
 http://cdn.algbb.cn/School-Partners%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4
 
+## Compilation failure / Project dependency installation failure
+
+**If you encounter compilation failure or project dependency installation failure, please try to pull the latest code and update the taro version to `2.2.15`. If you still have problems, please issue**
 
 ## Config
 **Before running the project, you need to configure the configuration file under the directory `src/server/config`**
