@@ -3,7 +3,7 @@
   // justify-content: space-between;
 }
 
-.wrap{
+.wrap {
   display: flex;
   align-items: center;
   margin: 20px 0;
@@ -19,4 +19,102 @@
   border-radius: 50%;
   background: #1890ff;
   color: #fff;
+}
+
+.match {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__slogan {
+    color: #666;
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 80px;
+    color: #333;
+
+    image {
+      width: 120px;
+      height: 120px;
+      margin-top: 20px;
+      border-radius: 50%;
+    }
+  }
+
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    color: #fff;
+  }
+}
+
+.footer {
+  &__container {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    height: 400px;
+  }
+}
+
+.ready {
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+    color: #fff;
+  }
+}
+
+.game {
+  &__container {
+    display: flex;
+  }
+
+  &__userinfo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 80px;
+    color: #333;
+
+    View {
+      order: 2;
+    }
+
+    Image {
+      width: 120px;
+      height: 120px;
+      margin-top: 20px;
+      border-radius: 50%;
+      order: 1;
+    }
+
+    &--other {
+      margin-left: auto;
+
+      Image {
+        order: 2;
+      }
+    }
+  }
 }

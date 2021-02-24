@@ -122,8 +122,6 @@ const handleLogin = (ws, socketMessage) => {
   broadcast({
     type: 'system',
     count: Object.keys(onlineUserSocket).length,
-    topicId,
-    topicList: topicList[topicId]
   })
 }
 
@@ -137,6 +135,7 @@ const handleLogout = (socketId) => {
     Object.keys(gameRoom[roomId]).forEach(id => {
       onlineUserSocket[id].send(JSON.stringify({
         status: false,
+        type: 'close',
         msg: '房间已关闭',
         socketId: id
       }))
@@ -166,11 +165,14 @@ const handleLogout = (socketId) => {
 const handleMatch = (ws, socketMessage) => {
   const {
     socketId,
+  } = socketMessage
+
+  const {
     userName,
     userAvatar,
     openid,
     score
-  } = socketMessage
+  } = onlineUserInfo[socketId]
 
   matchQueue.push({
     openid,
@@ -210,13 +212,19 @@ const handleMatch = (ws, socketMessage) => {
       roomId,
       socketId: socketId1,
       msg: '匹配成功',
-      type: 'match'
+      type: 'match',
+      otherUser: socketId2,
+      otherUserName: onlineUserInfo[socketId2].userName,
+      otherUserAvatar: onlineUserInfo[socketId2].userAvatar
     }))
     onlineUserSocket[socketId2].send(JSON.stringify({
       roomId,
       socketId: socketId2,
       msg: '匹配成功',
-      type: 'match'
+      type: 'match',
+      otherUser: socketId1,
+      otherUserName: onlineUserInfo[socketId1].userName,
+      otherUserAvatar: onlineUserInfo[socketId1].userAvatar
     }))
   }
 }
@@ -235,12 +243,15 @@ const handleGameReady = (ws, socketMessage) => {
   /* 全部准备好就开始 */
   if (Object.values(gameRoom[roomId]).every(item => item.status)) {
     console.log(roomId, gameRoom[roomId])
+    const topicId = Math.floor(Math.random() * Object.keys(topicList).length)
     Object.keys(gameRoom[roomId]).forEach(id => {
       onlineUserSocket[id].send(JSON.stringify({
         status: true,
         msg: '游戏开始',
         socketId: id,
-        type: 'ready'
+        type: 'ready',
+        topicId,
+        topicList: topicList[topicId]
       }))
     })
   }
@@ -280,6 +291,8 @@ const handleAnswer = (ws, socketMessage) => {
       roomId,
       socketId: id,
       answerUser,
+      userName: onlineUserInfo[answerUser].userName,
+      userAvatar: onlineUserInfo[answerUser].userAvatar,
       answerContent,
       currentTopicId,
       type: 'answer',
