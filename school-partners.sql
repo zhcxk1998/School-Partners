@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : chatroom
+Source Server         : root
 Source Server Version : 50721
 Source Host           : localhost:3306
 Source Database       : school-partners
@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50721
 File Encoding         : 65001
 
-Date: 2020-05-29 13:06:28
+Date: 2021-02-24 21:51:01
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `chatlog`
+-- Table structure for chatlog
 -- ----------------------------
 DROP TABLE IF EXISTS `chatlog`;
 CREATE TABLE `chatlog` (
@@ -26,96 +26,142 @@ CREATE TABLE `chatlog` (
   `current_time` varchar(14) NOT NULL DEFAULT '',
   `user_avatar` varchar(200) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `openid` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=156 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of chatlog
 -- ----------------------------
-INSERT INTO `chatlog` VALUES ('shujuku', '3123213', '我爱数据库 ', '1567179732771', 'http://cdn.algbb.cn/fat.jpg', '11');
-INSERT INTO `chatlog` VALUES ('shujuku', '3123213', '我爱数据库 ', '1567179974959', 'http://cdn.algbb.cn/fat.jpg', '15');
-INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', '3123213', '我爱数据库 ', '1567187242423', 'http://cdn.algbb.cn/fat.jpg', '25');
-INSERT INTO `chatlog` VALUES ('shujuku', '3123213', '我爱数据库 ', '1567189380455', 'http://cdn.algbb.cn/fat.jpg', '33');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '哈哈哈', '1571036583375', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8m8ndPKiap2vYuJCvnyY9ziaQ/132', '34');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '瓦达瓦大', '1571299186397', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '35');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', 'awdawdaw', '1571299572539', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '36');
-INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '哈哈哈哈', '1571299936255', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '37');
-INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '123123', '1571300338670', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '38');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213', '1571469869021', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '39');
-INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '哥哥哥', '1571476113188', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '40');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213', '1571479462873', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '41');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213213123', '1571479464557', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '42');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213', '1571479467657', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '43');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571480629259', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '44');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123123', '1571480630611', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '45');
-INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'emmmmmm', '1571494139781', 'http://cdn.algbb.cn/fat.jpg', '46');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571494246599', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '47');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571494247871', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '48');
-INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'emmmmmm', '1571494251003', 'http://cdn.algbb.cn/fat.jpg', '49');
-INSERT INTO `chatlog` VALUES ('shujuku', 'test', '瓦打我打我都爱我', '1571494565662', 'http://cdn.algbb.cn/fat.jpg', '50');
-INSERT INTO `chatlog` VALUES ('shujuku', 'test', '瓦打我打我都爱我', '1571495381320', 'http://cdn.algbb.cn/fat.jpg', '51');
-INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'aahehih13123', '1571495389695', 'http://cdn.algbb.cn/fat.jpg', '52');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571495395472', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '53');
-INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'aahehih13123', '1571495396913', 'http://cdn.algbb.cn/fat.jpg', '54');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571577498172', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '55');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '哈哈哈', '1571578024908', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '56');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571578128721', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '57');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '啊啊', '1571585595948', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '58');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571585605166', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '59');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123123213', '1571585703657', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '60');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571585715089', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '61');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '啊啊啊', '1571631897734', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '62');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571636480762', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '63');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿', '1571637335510', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '64');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '爱我打我打我', '1571637933043', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '65');
-INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'aahehih13123', '1571638335200', 'http://cdn.algbb.cn/fat.jpg', '66');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571641655110', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '67');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '测试测试！', '1572189828643', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '68');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '3', '1573631568378', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '69');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1573901850727', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '70');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '。。', '1575890533457', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '71');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', 'aa ', '1575961403193', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '72');
-INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', 'BB小天使?', '不把软件工程当人？', '1576569801219', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '73');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '测试测试', '1576655804357', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '74');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '色色', '1576656178890', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '75');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213123123', '1577629778798', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '76');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '你们好啊', '1577629784657', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '77');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿', '1578566979856', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '78');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '213', '1578748465948', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '79');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1111', '1578839928729', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '80');
-INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', 'BB小天使?', '？', '1578839935644', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '81');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1580046035540', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '82');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', 'hh ', '1583767693845', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '83');
-INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', 'BB小天使?', 'aaa', '1583767698068', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '84');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1585115595118', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '85');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '321', '1585115689061', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '86');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1585116278415', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '87');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1585116442213', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '88');
-INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '这是计网交流群', '1585116503558', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '89');
-INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '哈哈哈', '1585116507476', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '90');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1585120543573', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '91');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '3', '1585120552354', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '92');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '4', '1585120577687', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '93');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1585123782775', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '94');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '5', '1585123792640', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '95');
-INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '1', '1587034290763', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '96');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1587034308039', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '97');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1587178788146', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '98');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1587178795099', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '99');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '999', '1587178811052', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '100');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1587178824224', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '101');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿嘿嘿', '1589542270416', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '102');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '测试测试', '1589542275437', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '103');
-INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '。。。', '1589542335646', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '104');
-INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '嗷呜嗷呜', '1589542339468', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '105');
-INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', '1589542342493', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '106');
-INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '啦啦啦啦啦', '1589542345942', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '107');
-INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '13123213', '1589542349965', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '108');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿', '1589550924197', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '109');
-INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '12', '1589678788758', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '110');
+INSERT INTO `chatlog` VALUES ('shujuku', '3123213', '我爱数据库 ', '1567179732771', 'http://cdn.algbb.cn/fat.jpg', '11', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '3123213', '我爱数据库 ', '1567179974959', 'http://cdn.algbb.cn/fat.jpg', '15', null);
+INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', '3123213', '我爱数据库 ', '1567187242423', 'http://cdn.algbb.cn/fat.jpg', '25', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '3123213', '我爱数据库 ', '1567189380455', 'http://cdn.algbb.cn/fat.jpg', '33', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '哈哈哈', '1571036583375', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8m8ndPKiap2vYuJCvnyY9ziaQ/132', '34', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '瓦达瓦大', '1571299186397', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '35', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', 'awdawdaw', '1571299572539', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '36', null);
+INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '哈哈哈哈', '1571299936255', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '37', null);
+INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '123123', '1571300338670', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '38', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213', '1571469869021', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '39', null);
+INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '哥哥哥', '1571476113188', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '40', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213', '1571479462873', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '41', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213213123', '1571479464557', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '42', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213', '1571479467657', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '43', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571480629259', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '44', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123123', '1571480630611', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '45', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'emmmmmm', '1571494139781', 'http://cdn.algbb.cn/fat.jpg', '46', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571494246599', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '47', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571494247871', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '48', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'emmmmmm', '1571494251003', 'http://cdn.algbb.cn/fat.jpg', '49', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'test', '瓦打我打我都爱我', '1571494565662', 'http://cdn.algbb.cn/fat.jpg', '50', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'test', '瓦打我打我都爱我', '1571495381320', 'http://cdn.algbb.cn/fat.jpg', '51', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'aahehih13123', '1571495389695', 'http://cdn.algbb.cn/fat.jpg', '52', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571495395472', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '53', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'aahehih13123', '1571495396913', 'http://cdn.algbb.cn/fat.jpg', '54', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571577498172', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '55', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '哈哈哈', '1571578024908', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '56', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571578128721', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '57', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '啊啊', '1571585595948', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '58', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571585605166', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '59', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123123213', '1571585703657', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '60', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571585715089', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '61', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '啊啊啊', '1571631897734', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '62', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571636480762', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '63', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿', '1571637335510', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '64', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '爱我打我打我', '1571637933043', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '65', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'test', 'aahehih13123', '1571638335200', 'http://cdn.algbb.cn/fat.jpg', '66', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1571641655110', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '67', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '测试测试！', '1572189828643', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '68', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '3', '1573631568378', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '69', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1573901850727', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8J3P5Y9fkst16wK0I92uLibw/132', '70', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '。。', '1575890533457', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '71', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', 'aa ', '1575961403193', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '72', null);
+INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', 'BB小天使?', '不把软件工程当人？', '1576569801219', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '73', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '测试测试', '1576655804357', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '74', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '色色', '1576656178890', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '75', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123213123123', '1577629778798', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '76', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '你们好啊', '1577629784657', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '77', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿', '1578566979856', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '78', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '213', '1578748465948', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '79', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1111', '1578839928729', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '80', null);
+INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', 'BB小天使?', '？', '1578839935644', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8diaPnvZ2mbeM2iauiaictibQDMQ/132', '81', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1580046035540', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '82', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', 'hh ', '1583767693845', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '83', null);
+INSERT INTO `chatlog` VALUES ('ruanjiangongcheng', 'BB小天使?', 'aaa', '1583767698068', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '84', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1585115595118', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '85', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '321', '1585115689061', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '86', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '123', '1585116278415', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '87', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1585116442213', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '88', null);
+INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '这是计网交流群', '1585116503558', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '89', null);
+INSERT INTO `chatlog` VALUES ('jisuanjiwangluo', 'BB小天使?', '哈哈哈', '1585116507476', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '90', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1585120543573', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '91', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '3', '1585120552354', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '92', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '4', '1585120577687', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '93', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1585123782775', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '94', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '5', '1585123792640', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8aBQ2b5tic5bRFbg6iaC0EnuQ/132', '95', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '1', '1587034290763', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '96', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1587034308039', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '97', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1587178788146', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '98', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1587178795099', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '99', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '999', '1587178811052', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '100', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1587178824224', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8eAqOnia1yo2XMdEatWPElPA/132', '101', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿嘿嘿', '1589542270416', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '102', null);
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '测试测试', '1589542275437', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '103', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '。。。', '1589542335646', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '104', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '嗷呜嗷呜', '1589542339468', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '105', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊', '1589542342493', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '106', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '啦啦啦啦啦', '1589542345942', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '107', null);
+INSERT INTO `chatlog` VALUES ('shujuku', '测试号?', '13123213', '1589542349965', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132', '108', '');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '嘿嘿', '1589550924197', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '109', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '12', '1589678788758', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132', '110', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '321', '1600156424593', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '111', 'f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1600156510810', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '112', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600156665933', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '113', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '2', '1600169798949', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '114', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '1231232131', '1600169803296', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '115', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600169857497', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '116', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '2132312', '1600169863164', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '117', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '2323', '1600169867520', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '118', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '123', '1600169878472', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '119', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '23', '1600169880216', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '120', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '。。。', '1600170413681', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '121', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600173843959', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '122', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1600173847070', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '123', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '3', '1600173959278', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '124', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '4', '1600173967502', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '125', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600175081276', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '126', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1600175082743', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '127', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '3', '1600175092002', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '128', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '4', '1600175093550', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '129', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '5', '1600175166030', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '130', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600175481700', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '131', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1600175484622', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '132', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '3', '1600175491618', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '133', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600175520385', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '134', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1600175521934', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '135', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '3', '1600175617287', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '136', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '4', '1600175619599', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '137', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '5', '1600178032591', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '138', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '6', '1600178035352', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '139', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '7', '1600178040199', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '140', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600179735225', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '141', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1600179736705', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '142', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '3', '1600179767935', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '143', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '4', '1600179770363', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '144', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '5', '1600179773080', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '145', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '6', '1600179776482', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '146', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '7', '1600179780032', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '147', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '8', '1600179781157', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '148', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '9', '1600179785424', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '149', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '1', '1600319014639', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '150', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '2', '1600319017881', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '151', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'BB小天使?', '3', '1600319523384', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS8Typrj9yQycolzdrJKIFxRg/132', '152', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '123', '1600319528156', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '153', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '123123', '1600327125087', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '154', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
+INSERT INTO `chatlog` VALUES ('shujuku', 'Jr', '123213', '1600327125994', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132', '155', 'o0e-f4h1LwKViF9asG08ZUxTsJIU');
 
 -- ----------------------------
--- Table structure for `class_list`
+-- Table structure for class_list
 -- ----------------------------
 DROP TABLE IF EXISTS `class_list`;
 CREATE TABLE `class_list` (
@@ -141,7 +187,7 @@ INSERT INTO `class_list` VALUES ('6', '123121321', '2IWX7D', '0', '321', '2', '0
 INSERT INTO `class_list` VALUES ('7', '1', '5JTAWH', '0', '1', '1', '0', '');
 
 -- ----------------------------
--- Table structure for `contacts_list`
+-- Table structure for contacts_list
 -- ----------------------------
 DROP TABLE IF EXISTS `contacts_list`;
 CREATE TABLE `contacts_list` (
@@ -159,7 +205,7 @@ INSERT INTO `contacts_list` VALUES ('软件工程交流群', 'http://cdn.algbb.c
 INSERT INTO `contacts_list` VALUES ('数据库系统原理交流群', 'http://cdn.algbb.cn/study/banner/9.svg', 'shujuku');
 
 -- ----------------------------
--- Table structure for `course_info`
+-- Table structure for course_info
 -- ----------------------------
 DROP TABLE IF EXISTS `course_info`;
 CREATE TABLE `course_info` (
@@ -181,7 +227,7 @@ CREATE TABLE `course_info` (
 INSERT INTO `course_info` VALUES ('156612079490634', 'BB小天使', '1572169315443', '132', '能说出这种话的男人，确实给不了朋友幸福！但是这个渣男竟然敢对我朋友说出“我还爱你”四个字，这就有点恶心人了，还侮辱了爱这个词。爱的话跨过千山万水，跨过艰难险阻，都是要来到朋友面前爱她的！不爱就不爱了呗，还在分手时说出什么我还爱你，爱是给不了你幸福的话。', '[\"思考，感悟\",\"爱国，敬业\",\"思考，感悟\",\"诚信，友善\"]', '[\"阅读课文\",\"翻译文章\",\"阅读课文\",\"翻译文章\"]', '1', '3.5');
 
 -- ----------------------------
--- Table structure for `course_list`
+-- Table structure for course_list
 -- ----------------------------
 DROP TABLE IF EXISTS `course_list`;
 CREATE TABLE `course_list` (
@@ -217,7 +263,7 @@ INSERT INTO `course_list` VALUES ('14', '新增课程', '1', '123', '15813889447
 INSERT INTO `course_list` VALUES ('15', '1', '0', '1', '1586569697030', '0', '[{\"title\":\"1\",\"content\":\"1\"}]', '4', '1', '4', '0');
 
 -- ----------------------------
--- Table structure for `exam_list`
+-- Table structure for exam_list
 -- ----------------------------
 DROP TABLE IF EXISTS `exam_list`;
 CREATE TABLE `exam_list` (
@@ -250,7 +296,23 @@ INSERT INTO `exam_list` VALUES ('4', '操作系统期中考试', '4', '3', '2', 
 INSERT INTO `exam_list` VALUES ('5', '软件测试第六章测试', '1', '1', '1', '[{\"topicContent\":\"1\",\"topicType\":1,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1,\"option\":\"1\"},{\"id\":2,\"option\":\"1\"},{\"id\":3,\"option\":\"1\"},{\"id\":4,\"option\":\"1\"}]}]', '1581693805161', '1581693785000', '1584112985000', '2', '7197bf', '0', '0', '5');
 
 -- ----------------------------
--- Table structure for `exercise_detail`
+-- Table structure for exercise_class
+-- ----------------------------
+DROP TABLE IF EXISTS `exercise_class`;
+CREATE TABLE `exercise_class` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `exercise_id` int(11) DEFAULT NULL,
+  `class_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of exercise_class
+-- ----------------------------
+INSERT INTO `exercise_class` VALUES ('1', '1', '4');
+
+-- ----------------------------
+-- Table structure for exercise_detail
 -- ----------------------------
 DROP TABLE IF EXISTS `exercise_detail`;
 CREATE TABLE `exercise_detail` (
@@ -269,7 +331,7 @@ CREATE TABLE `exercise_detail` (
 INSERT INTO `exercise_detail` VALUES ('2', '2', '[{\"type\":\"radio\",\"topic\":\"人们常常把软件工程的方法（开发方法）、工具（支持方法的工具）、（ ）称为软件工程三要素。\",\"options\":[\"程序\",\"质量\",\"人员\",\"过程\"]},{\"type\":\"radio\",\"topic\":\"下面的（ ）说法是正确的。\",\"options\":[\"软件危机在20世纪70年代末期全面爆发\",\"当前先进的软件工程方法已经解决了软件危机的问题\",\"软件危机是指在计算机软件的开发和维护过程中遇到的一系列严重问题\",\"软件危机是指在软件产品中存在一系列的质量问题\"]},{\"type\":\"multiple\",\"topic\":\"软件工程的基本目标是（ ）。\",\"options\":[\"消除软件固有的复杂性\",\"开发高质量的软件\",\"努力发挥开发人员的创造性潜能\",\"更好地维护正在使用的软件产品\"]},{\"type\":\"radio\",\"topic\":\"开发软件所需高成本和产品的低质量之间有着尖锐的矛盾，这种现象称作（ ）\",\"options\":[\"软件工程\",\"软件周期\",\"软件危机\",\"软件产生\"]},{\"type\":\"multiple\",\"topic\":\"面向过程方法，设计时强调( )的思想采用“自顶向下，逐步求精”的技术对于系统进行划分，分解和抽象是它的两个基本手段。\",\"options\":[\"组件化\",\"模块化\",\"构建化\",\"包\"]},{\"type\":\"radio\",\"topic\":\"从事物的组成部件及每个部件的属性、功能来认识事物。这种方法被称为（ ）的方法。\",\"options\":[\"面向对象\",\"面向数据\",\"面向过程\",\"面向属性\"]}]', '[\"0\",\"2\",\"1-3\",\"3\",\"1-2\",\"2\"]');
 
 -- ----------------------------
--- Table structure for `exercise_list`
+-- Table structure for exercise_list
 -- ----------------------------
 DROP TABLE IF EXISTS `exercise_list`;
 CREATE TABLE `exercise_list` (
@@ -288,12 +350,12 @@ CREATE TABLE `exercise_list` (
   PRIMARY KEY (`id`),
   KEY `题库班级id` (`class_id`),
   CONSTRAINT `题库班级id` FOREIGN KEY (`class_id`) REFERENCES `class_list` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of exercise_list
 -- ----------------------------
-INSERT INTO `exercise_list` VALUES ('1', '软件工程第一章', '本章对软件、软件工程、软件工程课程、软件工程学科体系进行了定义', '1', '1', '3', '1', '1', '[{\"topicContent\":\"软件工程的定义\",\"topicType\":1,\"topicAnswer\":[2],\"topicOptions\":[{\"id\":1,\"option\":\"程序\"},{\"id\":2,\"option\":\"算法\"},{\"id\":3,\"option\":\"设计\"},{\"id\":4,\"option\":\"硬件\"}]},{\"topicContent\":\"软件测试是什么\",\"topicType\":2,\"topicAnswer\":[1,3,2],\"topicOptions\":[{\"id\":1,\"option\":\"测试性能\"},{\"id\":2,\"option\":\"压力测试\"},{\"id\":3,\"option\":\"性能测试\"},{\"id\":4,\"option\":\"功能测试\"}]},{\"topicContent\":\"安卓怎么用\",\"topicType\":1,\"topicAnswer\":[2],\"topicOptions\":[{\"id\":1,\"option\":\"IDE打开\"},{\"id\":2,\"option\":\"VScode\"},{\"id\":3,\"option\":\"手写\"},{\"id\":4,\"option\":\"记事本\"}]}]', '1581314023570', '4', '1');
+INSERT INTO `exercise_list` VALUES ('1', '软件工程第一章', '本章对软件、软件工程、软件工程课程、软件工程学科体系进行了定义', '1', '1', '9', '1', '1', '[{\"topicContent\":\"软件工程的定义\",\"isUpload\":false,\"topicType\":1,\"topicAnswer\":[2],\"topicOptions\":[{\"id\":1,\"option\":\"程序\"},{\"id\":2,\"option\":\"算法\"},{\"id\":3,\"option\":\"设计\"},{\"id\":4,\"option\":\"硬件\"}]},{\"topicContent\":\"软件测试是什么\",\"isUpload\":false,\"topicType\":2,\"topicAnswer\":[1,3,2],\"topicOptions\":[{\"id\":1,\"option\":\"测试性能\"},{\"id\":2,\"option\":\"压力测试\"},{\"id\":3,\"option\":\"性能测试\"},{\"id\":4,\"option\":\"功能测试\"}]},{\"topicContent\":\"安卓怎么用\",\"isUpload\":false,\"topicType\":1,\"topicAnswer\":[2],\"topicOptions\":[{\"id\":1,\"option\":\"IDE打开\"},{\"id\":2,\"option\":\"VScode\"},{\"id\":3,\"option\":\"手写\"},{\"id\":4,\"option\":\"记事本\"}]},{\"topicContent\":\"123\",\"isUpload\":true,\"topicType\":3,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1},{\"id\":2},{\"id\":3},{\"id\":4}]},{\"topicContent\":\"占位置\",\"isUpload\":false,\"topicType\":1,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1,\"option\":\"1\"},{\"id\":2,\"option\":\"2\"},{\"id\":3,\"option\":\"3\"},{\"id\":4,\"option\":\"4\"}]},{\"topicContent\":\"321\",\"isUpload\":true,\"topicType\":3,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1},{\"id\":2},{\"id\":3},{\"id\":4}]},{\"topicContent\":\"7\",\"isUpload\":false,\"topicType\":1,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1,\"option\":\"1\"},{\"id\":2,\"option\":\"2\"},{\"id\":3,\"option\":\"3\"},{\"id\":4,\"option\":\"4\"}]},{\"topicContent\":\"8\",\"isUpload\":true,\"topicType\":3,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1},{\"id\":2},{\"id\":3},{\"id\":4}]},{\"topicContent\":\"9\",\"topicType\":3,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1},{\"id\":2},{\"id\":3},{\"id\":4}]}]', '1581314023570', '4', '1');
 INSERT INTO `exercise_list` VALUES ('2', 'UML建模', '深度了解UML建模之间的各种关系', '1', '23', '14', '2', '2', '[{\"topicContent\":\"软件工程的定义\",\"topicType\":1,\"topicAnswer\":[2],\"topicOptions\":[{\"id\":1,\"option\":\"程序\"},{\"id\":2,\"option\":\"算法\"},{\"id\":3,\"option\":\"设计\"},{\"id\":4,\"option\":\"硬件\"}]},{\"topicContent\":\"软件测试是什么\",\"topicType\":2,\"topicAnswer\":[1,3,2],\"topicOptions\":[{\"id\":1,\"option\":\"测试性能\"},{\"id\":2,\"option\":\"压力测试\"},{\"id\":3,\"option\":\"性能测试\"},{\"id\":4,\"option\":\"功能测试\"}]}]', '1581314023570', '4', '0');
 INSERT INTO `exercise_list` VALUES ('3', '前端面试必备', '收录了各大厂商的前端面试资源', '1', '45', '8', '3', '1', '[{\"topicContent\":\"软件工程的定义\",\"topicType\":1,\"topicAnswer\":[2],\"topicOptions\":[{\"id\":1,\"option\":\"程序\"},{\"id\":2,\"option\":\"算法\"},{\"id\":3,\"option\":\"设计\"},{\"id\":4,\"option\":\"硬件\"}]},{\"topicContent\":\"软件测试是什么\",\"topicType\":2,\"topicAnswer\":[1,3,2],\"topicOptions\":[{\"id\":1,\"option\":\"测试性能\"},{\"id\":2,\"option\":\"压力测试\"},{\"id\":3,\"option\":\"性能测试\"},{\"id\":4,\"option\":\"功能测试\"}]}]', '1581314023570', '4', '0');
 INSERT INTO `exercise_list` VALUES ('4', 'Linux从入门到精通', '内含各种常见Linux命令，助您巩固基础', '1', '664', '12', '1', '2', '[{\"topicContent\":\"软件工程的定义\",\"topicType\":1,\"topicAnswer\":[2],\"topicOptions\":[{\"id\":1,\"option\":\"程序\"},{\"id\":2,\"option\":\"算法\"},{\"id\":3,\"option\":\"设计\"},{\"id\":4,\"option\":\"硬件\"}]},{\"topicContent\":\"软件测试是什么\",\"topicType\":2,\"topicAnswer\":[1,3,2],\"topicOptions\":[{\"id\":1,\"option\":\"测试性能\"},{\"id\":2,\"option\":\"压力测试\"},{\"id\":3,\"option\":\"性能测试\"},{\"id\":4,\"option\":\"功能测试\"}]}]', '1581314023570', '4', '0');
@@ -305,9 +367,37 @@ INSERT INTO `exercise_list` VALUES ('19', '新测试测试', '新简介', '0', '
 INSERT INTO `exercise_list` VALUES ('20', '哈哈哈', '嘿嘿', '0', '6', '6', '3', '2', '[{\"topicContent\":\"1\",\"topicType\":2,\"topicAnswer\":[1,3],\"topicOptions\":[{\"id\":1,\"option\":\"2\"},{\"id\":2,\"option\":\"2\"},{\"id\":3,\"option\":\"2\"},{\"id\":4,\"option\":\"2\"}]}]', '1581314023570', '4', '0');
 INSERT INTO `exercise_list` VALUES ('22', '测试新题库', '啊啊啊', '1', '7', '2', '1', '1', '[{\"topicContent\":\"123\",\"topicType\":1,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1,\"option\":\"111\"},{\"id\":2,\"option\":\"111\"},{\"id\":3,\"option\":\"22\"},{\"id\":4,\"option\":\"22\"}]},{\"topicContent\":\"22\",\"topicType\":1,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1,\"option\":\"22\"},{\"id\":2,\"option\":\"22\"},{\"id\":3,\"option\":\"22\"},{\"id\":4,\"option\":\"22\"}]}]', '1581314023570', '4', '0');
 INSERT INTO `exercise_list` VALUES ('23', '题库', '123', '1', '0', '1', '1', '1', '[{\"topicContent\":\"123\",\"topicType\":1,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1,\"option\":\"123\"},{\"id\":2,\"option\":\"123\"},{\"id\":3,\"option\":\"213\"},{\"id\":4,\"option\":\"123\"}]}]', '1581388972096', '4', '0');
+INSERT INTO `exercise_list` VALUES ('24', 'test', '123', '0', '0', '2', '1', '1', '[{\"topicContent\":\"1\",\"isUpload\":true,\"topicType\":3,\"topicAnswer\":[1],\"topicOptions\":[{\"id\":1},{\"id\":2},{\"id\":3},{\"id\":4}]},{\"topicContent\":\"2\",\"isUpload\":false,\"topicType\":2,\"topicAnswer\":[1,3],\"topicOptions\":[{\"id\":1,\"option\":\"1\"},{\"id\":2,\"option\":\"2\"},{\"id\":3,\"option\":\"3\"},{\"id\":4,\"option\":\"4\"}]}]', '1602143004402', '4', '0');
 
 -- ----------------------------
--- Table structure for `forum_list`
+-- Table structure for exercise_score
+-- ----------------------------
+DROP TABLE IF EXISTS `exercise_score`;
+CREATE TABLE `exercise_score` (
+  `exercise_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `student_id` int(11) NOT NULL,
+  `student_score` double DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `习题id` (`exercise_id`) USING BTREE,
+  KEY `学生id` (`student_id`) USING BTREE,
+  CONSTRAINT `习题id` FOREIGN KEY (`exercise_id`) REFERENCES `exercise_list` (`id`),
+  CONSTRAINT `学生id` FOREIGN KEY (`student_id`) REFERENCES `student_list` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of exercise_score
+-- ----------------------------
+INSERT INTO `exercise_score` VALUES ('1', '1', '1', '33.33');
+INSERT INTO `exercise_score` VALUES ('2', '5', '1', '100');
+INSERT INTO `exercise_score` VALUES ('16', '6', '1', '50');
+INSERT INTO `exercise_score` VALUES ('1', '7', '75', '100');
+INSERT INTO `exercise_score` VALUES ('1', '8', '6', '100');
+INSERT INTO `exercise_score` VALUES ('2', '9', '6', '100');
+INSERT INTO `exercise_score` VALUES ('18', '10', '1', '0');
+
+-- ----------------------------
+-- Table structure for forum_list
 -- ----------------------------
 DROP TABLE IF EXISTS `forum_list`;
 CREATE TABLE `forum_list` (
@@ -332,7 +422,7 @@ INSERT INTO `forum_list` VALUES ('3', 'http://cdn.algbb.cn/emoji/32.png', 'Rose 
 INSERT INTO `forum_list` VALUES ('21', 'http://cdn.algbb.cn/fat.jpg', '凤舞九天', '1576570442536', 'http://cdn.algbb.cn/forum/5.jpg', '大学生逃课，知道真相后大家都竖起了大拇指', '我在马路边捡到一分钱，把它交到警察叔叔手里边，叔叔拿着钱，对我把头点，我高兴的说了声，叔叔再见！我在马路边捡到一分钱，把它交到警察叔叔手里边，叔叔拿着钱，对我把头点，我高兴的说了声，叔叔再见！我在马路边捡到一分钱，把它交到警察叔叔手里边，叔叔拿着钱，对我把头点，我高兴的说了声，叔叔再见！', '66', '43');
 
 -- ----------------------------
--- Table structure for `student_class`
+-- Table structure for student_class
 -- ----------------------------
 DROP TABLE IF EXISTS `student_class`;
 CREATE TABLE `student_class` (
@@ -345,9 +435,10 @@ CREATE TABLE `student_class` (
 -- Records of student_class
 -- ----------------------------
 INSERT INTO `student_class` VALUES ('1', '1', '4');
+INSERT INTO `student_class` VALUES ('1', '6', '4');
 
 -- ----------------------------
--- Table structure for `student_list`
+-- Table structure for student_list
 -- ----------------------------
 DROP TABLE IF EXISTS `student_list`;
 CREATE TABLE `student_list` (
@@ -358,16 +449,17 @@ CREATE TABLE `student_list` (
   `student_avatar` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `open_id` (`open_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of student_list
 -- ----------------------------
-INSERT INTO `student_list` VALUES ('1', 'real_name', 'BB小天使?', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw', 'https://wx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS87p7XqWweNpy4vzaTRiapysw/132');
-INSERT INTO `student_list` VALUES ('6', 'real_name', '测试号?', 'o0e-f4srh8x2H6heNAg6x95DOPJE', 'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132');
+INSERT INTO `student_list` VALUES ('1', 'real_name', 'BB小天使??', 'o0e-f4ot_r4ffQVqcLJBxpNO82Uw', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Ef99ySqq9bh56PoyZUsfg6jJcDpqJN0lKLCPyn305erwSl89U0W85BOsq7uRcrS86wSic8MAeMjVm4b9vwfXrnQ/132');
+INSERT INTO `student_list` VALUES ('6', 'real_name', '测试号?', 'o0e-f4srh8x2H6heNAg6x95DOPJE', 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJrnBicE4IawLQR3oAXmNZPWCLxnwcppSbSTmogZJNLWyUsoutS6YoO9iaWRXvQERDrj8hYgicqtibJicA/132');
+INSERT INTO `student_list` VALUES ('75', '郭俊汝', 'Jr', 'o0e-f4h1LwKViF9asG08ZUxTsJIU', 'https://thirdwx.qlogo.cn/mmopen/vi_32/COTPpQIaZ91iay886jy8SXF063R414ypcyQOYhrr63DicjHyhTBaIqiaFm9nuhI0jUelWIibib4rExXFo3p2PRTKHDg/132');
 
 -- ----------------------------
--- Table structure for `tag_list`
+-- Table structure for tag_list
 -- ----------------------------
 DROP TABLE IF EXISTS `tag_list`;
 CREATE TABLE `tag_list` (
@@ -386,7 +478,7 @@ INSERT INTO `tag_list` VALUES ('4', '后端');
 INSERT INTO `tag_list` VALUES ('5', '算法');
 
 -- ----------------------------
--- Table structure for `topic_list`
+-- Table structure for topic_list
 -- ----------------------------
 DROP TABLE IF EXISTS `topic_list`;
 CREATE TABLE `topic_list` (
@@ -399,7 +491,29 @@ CREATE TABLE `topic_list` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `user_info`
+-- Table structure for upload_exercise
+-- ----------------------------
+DROP TABLE IF EXISTS `upload_exercise`;
+CREATE TABLE `upload_exercise` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `class_id` int(11) DEFAULT NULL,
+  `exercise_id` int(11) DEFAULT NULL,
+  `student_id` int(11) DEFAULT NULL,
+  `exercise_index` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+-- Records of upload_exercise
+-- ----------------------------
+INSERT INTO `upload_exercise` VALUES ('1', '4', '1', '1', '7');
+INSERT INTO `upload_exercise` VALUES ('2', '4', '1', '1', '3');
+INSERT INTO `upload_exercise` VALUES ('3', '4', '1', '1', '5');
+INSERT INTO `upload_exercise` VALUES ('4', '4', '1', '6', '3');
+INSERT INTO `upload_exercise` VALUES ('5', '4', '1', '1', '8');
+
+-- ----------------------------
+-- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
@@ -425,7 +539,7 @@ INSERT INTO `user_info` VALUES ('25', 'dd', '1', '6', '123', '123', '1');
 INSERT INTO `user_info` VALUES ('26', 'ee', '1', '7', '123', '123', '1');
 
 -- ----------------------------
--- Table structure for `user_password`
+-- Table structure for user_password
 -- ----------------------------
 DROP TABLE IF EXISTS `user_password`;
 CREATE TABLE `user_password` (
