@@ -87,7 +87,9 @@
 
 .game {
   &__container {
+    position: relative;
     display: flex;
+    padding: 0 20px;
   }
 
   &__userinfo {
@@ -96,21 +98,23 @@
     justify-content: flex-end;
     margin-top: 80px;
     color: #333;
+    font-size: 30px;
 
     View {
       order: 2;
     }
 
     Image {
-      width: 120px;
-      height: 120px;
-      margin-top: 20px;
+      width: 100px;
+      height: 100px;
+      // margin-top: 20px;
       border-radius: 50%;
       order: 1;
     }
 
     &--other {
       margin-left: auto;
+      text-align: right;
 
       Image {
         order: 2;

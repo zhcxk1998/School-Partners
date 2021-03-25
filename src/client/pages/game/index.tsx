@@ -15,7 +15,8 @@ interface IProps {
 
 type UserInfo = {
   userName: string,
-  userAvatar: string
+  userAvatar: string,
+  score: number
 }
 
 const WRONG_ANSWER: number = -1
@@ -28,8 +29,8 @@ const Game: FC<IProps> = (props: IProps) => {
   const [isMatch, setIsMatch] = useState<boolean>(false)
   const [isReady, setIsReady] = useState<boolean>(false)
 
-  const [leftUser, setLeftUser] = useState<UserInfo>({ userName: '', userAvatar: '' })
-  const [rightUser, setRightUser] = useState<UserInfo>({ userName: '', userAvatar: '' })
+  const [leftUser, setLeftUser] = useState<UserInfo>({ userName: '', userAvatar: '', score: 0 })
+  const [rightUser, setRightUser] = useState<UserInfo>({ userName: '', userAvatar: '', score: 0 })
 
   const [answerUser, setAnswerUser] = useState<string>('')
   const [roomId, setRoomId] = useState<string>('')
@@ -56,6 +57,10 @@ const Game: FC<IProps> = (props: IProps) => {
       handleSocketOpen()
       handleSocketMessage()
     })
+    
+    return () => {
+      socketTaskRef.current.close()
+    }
   }, [])
 
   const handleSocketOpen = () => {
@@ -84,7 +89,8 @@ const Game: FC<IProps> = (props: IProps) => {
 
       setLeftUser({
         userName: nickName,
-        userAvatar: avatarUrl
+        userAvatar: avatarUrl,
+        score: 0
       })
 
       socketTask.send({
@@ -151,7 +157,8 @@ const Game: FC<IProps> = (props: IProps) => {
 
     setRightUser({
       userName: otherUserName,
-      userAvatar: otherUserAvatar
+      userAvatar: otherUserAvatar,
+      score: 0
     })
 
     console.log(userInfoRef)
@@ -297,11 +304,17 @@ const Game: FC<IProps> = (props: IProps) => {
         匹配成功，房间号: {roomId}
         <View className="game__container">
           <View className="game__userinfo">
-            <View>{leftUser.userName}</View>
+            <View>
+              <View>{leftUser.userName}</View>
+              <View>{leftUser.score}</View>
+            </View>
             <Image src={leftUser.userAvatar}></Image>
           </View>
           <View className="game__userinfo game__userinfo--other">
-            <View>{rightUser.userName}123</View>
+            <View>
+              <View>{rightUser.userName}</View>
+              <View>{rightUser.score}</View>
+            </View>
             <Image src={rightUser.userAvatar || 'http://cdn.algbb.cn/emoji/32.png'}></Image>
           </View>
         </View>
