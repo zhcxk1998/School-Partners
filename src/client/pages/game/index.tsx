@@ -28,6 +28,7 @@ const Game: FC<IProps> = (props: IProps) => {
   const [isMatching, setIsMatching] = useState<boolean>(false)
   const [isMatch, setIsMatch] = useState<boolean>(false)
   const [isReady, setIsReady] = useState<boolean>(false)
+  const [isSocketConnected, setIsSocketConnected] = useState<boolean>(false)
 
   const [leftUser, setLeftUser] = useState<UserInfo>({ userName: '', userAvatar: '', score: 0 })
   const [rightUser, setRightUser] = useState<UserInfo>({ userName: '', userAvatar: '', score: 0 })
@@ -40,13 +41,19 @@ const Game: FC<IProps> = (props: IProps) => {
   const [topicId, setTopicId] = useState<number>(0)
 
   const [answerStatus, setAnswerStatus] = useState<any[]>([
-    0, 0, 0, 0
+    { status: 0, answerUser: 0 },
+    { status: 0, answerUser: 0 },
+    { status: 0, answerUser: 0 },
+    { status: 0, answerUser: 0 }
   ])
   const [topicList, setTopicList] = useState<any[]>([])
   const socketTaskRef: MutableRefObject<any> = useRef(null)
   const socketIdRef: MutableRefObject<number> = useRef(-1)
   const roomIdRef: MutableRefObject<string> = useRef('')
   const userInfoRef: MutableRefObject<object> = useRef({})
+
+
+
 
   useEffect(() => {
     Taro.connectSocket({
@@ -57,11 +64,64 @@ const Game: FC<IProps> = (props: IProps) => {
       handleSocketOpen()
       handleSocketMessage()
     })
-    
+
     return () => {
       socketTaskRef.current.close()
     }
   }, [])
+
+
+  // useEffect(() => {
+  //   setLeftUser({
+  //     userName: '123',
+  //     userAvatar: '',
+  //     score: 0
+  //   })
+  //   setRightUser({
+  //     userName: '123',
+  //     userAvatar: '',
+  //     score: 0
+  //   })
+  //   setIsMatch(true)
+  //   setTopicId(0)
+  //   setCurrentTopicId(0)
+  //   setTopicList([{
+  //     id: 1,
+  //     topicContent: '我是题目1',
+  //     correctAnswer: 0,
+  //     optionList: [{
+  //       id: 1,
+  //       option: '我是选项1'
+  //     }, {
+  //       id: 2,
+  //       option: '我是选项2'
+  //     }, {
+  //       id: 3,
+  //       option: '我是选项3'
+  //     }, {
+  //       id: 4,
+  //       option: '我是选项4'
+  //     }]
+  //   }, {
+  //     id: 2,
+  //     topicContent: '我是题目2',
+  //     correctAnswer: 1,
+  //     optionList: [{
+  //       id: 1,
+  //       option: '我是选项1'
+  //     }, {
+  //       id: 2,
+  //       option: '我是选项2'
+  //     }, {
+  //       id: 3,
+  //       option: '我是选项3'
+  //     }, {
+  //       id: 4,
+  //       option: '我是选项4'
+  //     }]
+  //   }])
+  //   setIsReady(true)
+  // }, [])
 
   const handleSocketOpen = () => {
     const { current: socketTask } = socketTaskRef
@@ -92,6 +152,8 @@ const Game: FC<IProps> = (props: IProps) => {
         userAvatar: avatarUrl,
         score: 0
       })
+
+      setIsSocketConnected(true)
 
       socketTask.send({
         data: JSON.stringify(loginInfo)
@@ -213,11 +275,11 @@ const Game: FC<IProps> = (props: IProps) => {
     if (isNext) {
       console.log('下一题: ')
       setTimeout(() => {
-        setAnswerStatus([{ status: 0, answerUser: '' }, { status: 0, answerUser: '' }, { status: 0, answerUser: '' }, { status: 0, answerUser: '' }])
-        answerStatus[0] = { status: 0, answerUser: '' }
-        answerStatus[1] = { status: 0, answerUser: '' }
-        answerStatus[2] = { status: 0, answerUser: '' }
-        answerStatus[3] = { status: 0, answerUser: '' }
+        setAnswerStatus([{ status: 0, answerUser: 0 }, { status: 0, answerUser: 0 }, { status: 0, answerUser: 0 }, { status: 0, answerUser: 0 }])
+        answerStatus[0] = { status: 0, answerUser: 0 }
+        answerStatus[1] = { status: 0, answerUser: 0 }
+        answerStatus[2] = { status: 0, answerUser: 0 }
+        answerStatus[3] = { status: 0, answerUser: 0 }
         setCurrentTopicId(topicId + 1)
       }, 2000)
     }
@@ -254,9 +316,16 @@ const Game: FC<IProps> = (props: IProps) => {
   }
 
   const handleOptionClick = (option: string, index: number) => {
+    console.log(answerStatus)
     const { current: socketTask } = socketTaskRef
     const { current: roomId } = roomIdRef
     const { current: socketId } = socketIdRef
+
+    if (
+      answerStatus[index].status !== 0 ||
+      answerStatus.findIndex(item=>item.answerUser === socketId) !== -1
+    ) return
+
     socketTask.send({
       data: JSON.stringify({
         type: 'answer',
@@ -270,23 +339,27 @@ const Game: FC<IProps> = (props: IProps) => {
         }
       })
     })
+    // answerStatus[index] = {
+    //   status: CORRECT_ANSWER,
+    //   answerUser:'123'
+    // }
+    // setAnswerStatus([...answerStatus])
     console.log(option)
   }
 
   const { topicContent = '', optionList = [] } = topicList[currentTopicId] || {}
 
   const answerColor = {
-    [WRONG_ANSWER]: 'red',
-    [NORMAL_ANSWER]: 'white',
-    [CORRECT_ANSWER]: 'blue'
+    [WRONG_ANSWER]: 'linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe9a8b 100%)',
+    [NORMAL_ANSWER]: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)',
+    [CORRECT_ANSWER]: 'linear-gradient(to top, #0ba360 0%, #3cba92 100%)'
   }
 
   return (
     <View>
-      {currentTopicId}
       在线人数: {onlineUserCount}
 
-      <View className="footer__container">
+      <View className="footer__container" hidden={!isSocketConnected}>
         <Button className="match__button" onClick={handleMatchClick} hidden={isMatch}>匹配</Button>
         <Button className="ready__button" onClick={handleReadyClick} hidden={isReady || !isMatch}>准备</Button>
       </View>
@@ -317,23 +390,32 @@ const Game: FC<IProps> = (props: IProps) => {
             </View>
             <Image src={rightUser.userAvatar || 'http://cdn.algbb.cn/emoji/32.png'}></Image>
           </View>
+
+          <View className="game__logo">
+            V.S
+          </View>
         </View>
       </View>
       <View hidden={!isReady}>
         <View>
-          题目内容: {topicContent}
+          <View className="options__title">
+            {topicContent}
+          </View>
 
-          <View className="container">
+          <View className="options__container">
             {optionList.map((item, index) => {
               const status = answerStatus[index].status
               const answerUser = answerStatus[index].answerUser
               const userInfo = userInfoRef.current[answerUser]
 
               return (
-                <View className="wrap" style={{ background: answerColor[status] }}>
-                  <View className="option" key={item.id} onClick={() => handleOptionClick(item.option, index)}>{String.fromCharCode(65 + index)}</View>
+                <View className="options__item"
+                  onClick={() => handleOptionClick(item.option, index)}
+                  style={{ backgroundImage: answerColor[status] }}>
                   {item.option}
-                  {userInfo.userName}
+                  <View className="options__user">
+                    {userInfo.userName}
+                  </View>
                 </View>
               )
             })}
