@@ -49,8 +49,11 @@ const Game: FC<IProps> = (props: IProps) => {
   const [topicList, setTopicList] = useState<any[]>([])
   const socketTaskRef: MutableRefObject<any> = useRef(null)
   const socketIdRef: MutableRefObject<number> = useRef(-1)
+  const otherSocketIdRef: MutableRefObject<number> = useRef(-1)
   const roomIdRef: MutableRefObject<string> = useRef('')
   const userInfoRef: MutableRefObject<object> = useRef({})
+  const topicListRef: MutableRefObject<any[]> = useRef([])
+  const currentTopicIdRef: MutableRefObject<number> = useRef(0)
 
 
 
@@ -144,7 +147,8 @@ const Game: FC<IProps> = (props: IProps) => {
 
       userInfoRef.current[socketId] = {
         userName: nickName,
-        userAvatar: avatarUrl
+        userAvatar: avatarUrl,
+        score: 0
       }
 
       setLeftUser({
@@ -196,6 +200,9 @@ const Game: FC<IProps> = (props: IProps) => {
 
   const handleRoomClose = (data: any) => {
     console.log(data)
+
+    // setIsMatch(false)
+    // setIsReady(false)
   }
 
   const handleSystemMessage = (data: any) => {
@@ -207,6 +214,7 @@ const Game: FC<IProps> = (props: IProps) => {
   const handleMatchMessage = (data: any) => {
     const { roomId, otherUser, otherUserName, otherUserAvatar } = data
     roomIdRef.current = roomId
+    otherSocketIdRef.current = otherUser
 
     Taro.showToast({
       title: '匹配成功'
@@ -214,7 +222,8 @@ const Game: FC<IProps> = (props: IProps) => {
 
     userInfoRef.current[otherUser] = {
       userName: otherUserName,
-      userAvatar: otherUserAvatar
+      userAvatar: otherUserAvatar,
+      score: 0
     }
 
     setRightUser({
@@ -239,6 +248,8 @@ const Game: FC<IProps> = (props: IProps) => {
     setTopicId(topicId)
     setTopicList(topicList)
     setIsReady(true)
+
+    topicListRef.current = [...topicList]
   }
 
   const handleAnswerMessage = (data: any) => {
@@ -258,14 +269,50 @@ const Game: FC<IProps> = (props: IProps) => {
     console.log('原来: ')
     console.log(answerContent, answerStatus)
 
-    answerStatus[answerContent] = {
+    const optionList = topicListRef.current[currentTopicIdRef.current].optionList
+    const answerIndex = optionList.findIndex((item: any) => item.id === answerContent)
+    console.log('开始回答')
+    console.log(topicListRef.current[currentTopicIdRef.current])
+    console.log(optionList)
+    console.log(answerIndex)
+
+    answerStatus[answerIndex] = {
       status: isCorrect ? CORRECT_ANSWER : WRONG_ANSWER,
       answerUser
     }
     setAnswerStatus([...answerStatus])
 
+    if (isCorrect) {
+      userInfoRef.current[answerUser].score = userInfoRef.current[answerUser].score + 20
+      console.log(userInfoRef.current)
+      if (isMyself) {
+        setLeftUser({
+          ...userInfoRef.current[socketIdRef.current],
+        })
+      } else {
+        setRightUser({
+          ...userInfoRef.current[otherSocketIdRef.current],
+        })
+      }
+    }
+
+    // if (isMyself && isCorrect) {
+    //   setLeftUser({
+    //     ...leftUser,
+    //     score: leftUser.score + 20
+    //   })
+    // } else if(!isMyself && isCorrect){
+    //   setRightUser({
+    //     ...rightUser,
+    //     score: rightUser.score + 20
+    //   })
+    // }
+
     if (isFinish) {
       console.log('结束了')
+
+      console.log(userInfoRef.current)
+
       Taro.showToast({
         title: '结束'
       })
@@ -280,7 +327,11 @@ const Game: FC<IProps> = (props: IProps) => {
         answerStatus[1] = { status: 0, answerUser: 0 }
         answerStatus[2] = { status: 0, answerUser: 0 }
         answerStatus[3] = { status: 0, answerUser: 0 }
-        setCurrentTopicId(topicId + 1)
+        setCurrentTopicId(currentTopicIdRef.current + 1)
+        currentTopicIdRef.current = currentTopicIdRef.current + 1
+
+        console.log(currentTopicId)
+        console.log(topicListRef.current)
       }, 2000)
     }
   }
@@ -310,12 +361,18 @@ const Game: FC<IProps> = (props: IProps) => {
       roomId: roomIdRef.current
     }
 
+    Taro.showToast({
+      title: '准备成功'
+    })
+
     socketTask.send({
       data: JSON.stringify(matchInfo)
     })
   }
 
-  const handleOptionClick = (option: string, index: number) => {
+  const handleOptionClick = (option: string, id: number, index: number) => {
+    console.log('\n\n\n\n')
+    console.log(option, id, index)
     console.log(answerStatus)
     const { current: socketTask } = socketTaskRef
     const { current: roomId } = roomIdRef
@@ -323,7 +380,7 @@ const Game: FC<IProps> = (props: IProps) => {
 
     if (
       answerStatus[index].status !== 0 ||
-      answerStatus.findIndex(item=>item.answerUser === socketId) !== -1
+      answerStatus.findIndex(item => item.answerUser === socketId) !== -1
     ) return
 
     socketTask.send({
@@ -334,7 +391,7 @@ const Game: FC<IProps> = (props: IProps) => {
         data: {
           topicId,
           answerUser: socketId,
-          answerContent: index,
+          answerContent: id,
           currentTopicId
         }
       })
@@ -410,7 +467,7 @@ const Game: FC<IProps> = (props: IProps) => {
 
               return (
                 <View className="options__item"
-                  onClick={() => handleOptionClick(item.option, index)}
+                  onClick={() => handleOptionClick(item.option, item.id, index)}
                   style={{ backgroundImage: answerColor[status] }}>
                   {item.option}
                   <View className="options__user">

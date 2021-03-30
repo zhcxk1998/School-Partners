@@ -1,82 +1,91 @@
 const generateTime = require('../../utils/generateTime')
+const {
+  query
+} = require('../../utils/query')
+const {
+  QUERY_TABLE
+} = require('../../utils/sql');
+const parse = require('../../utils/parse')
 
 const onlineUserSocket = {}
 const onlineUserInfo = {}
 const matchQueue = []
 const gameRoom = {}
 
-const topicList = [
-  [{
-    id: 1,
-    topicContent: '我是题目1',
-    correctAnswer: 0,
-    optionList: [{
-      id: 1,
-      option: '我是选项1'
-    }, {
-      id: 2,
-      option: '我是选项2'
-    }, {
-      id: 3,
-      option: '我是选项3'
-    }, {
-      id: 4,
-      option: '我是选项4'
-    }]
-  }, {
-    id: 2,
-    topicContent: '我是题目2',
-    correctAnswer: 1,
-    optionList: [{
-      id: 1,
-      option: '我是选项1'
-    }, {
-      id: 2,
-      option: '我是选项2'
-    }, {
-      id: 3,
-      option: '我是选项3'
-    }, {
-      id: 4,
-      option: '我是选项4'
-    }]
-  }],
-  [{
-    id: 1,
-    topicContent: '我是题目3',
-    correctAnswer: 2,
-    optionList: [{
-      id: 1,
-      option: '我是选项1'
-    }, {
-      id: 2,
-      option: '我是选项2'
-    }, {
-      id: 3,
-      option: '我是选项3'
-    }, {
-      id: 4,
-      option: '我是选项4'
-    }]
-  }, {
-    id: 2,
-    topicContent: '我是题目4',
-    correctAnswer: 3,
-    optionList: [{
-      id: 1,
-      option: '我是选项1'
-    }, {
-      id: 2,
-      option: '我是选项2'
-    }, {
-      id: 3,
-      option: '我是选项3'
-    }, {
-      id: 4,
-      option: '我是选项4'
-    }]
-  }]
-]
+let topicList = []
+
+// const topicList = [
+//   [{
+//     id: 1,
+//     topicContent: '我是题目1',
+//     correctAnswer: 0,
+//     optionList: [{
+//       id: 1,
+//       option: '我是选项1'
+//     }, {
+//       id: 2,
+//       option: '我是选项2'
+//     }, {
+//       id: 3,
+//       option: '我是选项3'
+//     }, {
+//       id: 4,
+//       option: '我是选项4'
+//     }]
+//   }, {
+//     id: 2,
+//     topicContent: '我是题目2',
+//     correctAnswer: 1,
+//     optionList: [{
+//       id: 1,
+//       option: '我是选项1'
+//     }, {
+//       id: 2,
+//       option: '我是选项2'
+//     }, {
+//       id: 3,
+//       option: '我是选项3'
+//     }, {
+//       id: 4,
+//       option: '我是选项4'
+//     }]
+//   }],
+//   [{
+//     id: 1,
+//     topicContent: '我是题目3',
+//     correctAnswer: 2,
+//     optionList: [{
+//       id: 1,
+//       option: '我是选项1'
+//     }, {
+//       id: 2,
+//       option: '我是选项2'
+//     }, {
+//       id: 3,
+//       option: '我是选项3'
+//     }, {
+//       id: 4,
+//       option: '我是选项4'
+//     }]
+//   }, {
+//     id: 2,
+//     topicContent: '我是题目4',
+//     correctAnswer: 3,
+//     optionList: [{
+//       id: 1,
+//       option: '我是选项1'
+//     }, {
+//       id: 2,
+//       option: '我是选项2'
+//     }, {
+//       id: 3,
+//       option: '我是选项3'
+//     }, {
+//       id: 4,
+//       option: '我是选项4'
+//     }]
+//   }]
+// ]
 
 // 广播消息
 const broadcast = (message) => {
@@ -111,6 +120,7 @@ const handleLogin = (ws, socketMessage) => {
     openid
   }
   ws.socketId = socketId
+  console.log('game login\n\n\n\n')
   console.log('|---------------------------------------------------\n')
   console.log(Object.keys(onlineUserSocket).length + '人在线')
   console.log(onlineUserInfo)
@@ -151,6 +161,7 @@ const handleLogout = (socketId) => {
 
   delete onlineUserSocket[socketId]
   delete onlineUserInfo[socketId]
+  console.log('game logout\n\n\n\n')
   console.log('|---------------------------------------------------\n')
   console.log(Object.keys(onlineUserSocket).length + '人在线')
   console.log(onlineUserInfo)
@@ -229,7 +240,38 @@ const handleMatch = (ws, socketMessage) => {
   }
 }
 
-const handleGameReady = (ws, socketMessage) => {
+const getGameTopicList = async () => {
+  const response = []
+  const res = await query(QUERY_TABLE('exercise_list'));
+  res.map((item, index) => {
+    const {
+      topic_list
+    } = item
+    response[index] = {
+      topicList: topic_list
+    }
+  })
+
+  /* 筛选出单选题 */
+  const exerciseList = parse(response)[Math.floor(Math.random() * response.length)].topicList.filter(item => item.topicType === 1)
+  const gameTopicList = exerciseList.map((item, index) => {
+    const {
+      topicContent = '', topicAnswer = [], topicOptions = []
+    } = item
+    return {
+      id: index + 1,
+      topicContent,
+      correctAnswer: topicAnswer[0],
+      optionList: topicOptions
+    }
+  })
+
+  topicList = [...gameTopicList]
+
+  return gameTopicList
+}
+
+const handleGameReady = async (ws, socketMessage) => {
   const {
     roomId,
     socketId
@@ -243,15 +285,18 @@ const handleGameReady = (ws, socketMessage) => {
   /* 全部准备好就开始 */
   if (Object.values(gameRoom[roomId]).every(item => item.status)) {
     console.log(roomId, gameRoom[roomId])
-    const topicId = Math.floor(Math.random() * Object.keys(topicList).length)
+    // const topicId = Math.floor(Math.random() * Object.keys(topicList).length)
+
+    const gameTopicList = await getGameTopicList()
+
     Object.keys(gameRoom[roomId]).forEach(id => {
       onlineUserSocket[id].send(JSON.stringify({
         status: true,
         msg: '游戏开始',
         socketId: id,
         type: 'ready',
-        topicId,
-        topicList: topicList[topicId]
+        topicId: 1,
+        topicList: gameTopicList
       }))
     })
   }
@@ -277,12 +322,12 @@ const handleAnswer = (ws, socketMessage) => {
 
   gameRoom[roomId][socketId]['answer'] = true
 
-  const correctAnswer = topicList[topicId][currentTopicId].correctAnswer
+  const correctAnswer = topicList[currentTopicId].correctAnswer
   const isCorrect = correctAnswer === answerContent
 
   const isNext = Object.values(gameRoom[roomId]).every(item => item.answer) || isCorrect
 
-  const isFinish = (currentTopicId === topicList[topicId].length - 1) && isNext
+  const isFinish = (currentTopicId === topicList.length - 1) && isNext
 
   console.log(correctAnswer, answerContent, isCorrect)
 
