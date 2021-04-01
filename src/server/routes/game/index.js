@@ -240,20 +240,41 @@ const handleMatch = (ws, socketMessage) => {
   }
 }
 
+const shuffle = (arr) => {
+  let len = arr.length
+  while (len > 1) {
+    let index = Math.floor(Math.random() * len--);
+    [arr[index], arr[len]] = [arr[len], arr[index]]
+  }
+  return arr
+}
+
 const getGameTopicList = async () => {
   const response = []
   const res = await query(QUERY_TABLE('exercise_list'));
+
+  /* 找出全部题目，进行单选题筛选 */
   res.map((item, index) => {
     const {
       topic_list
     } = item
-    response[index] = {
-      topicList: topic_list
-    }
+
+
+    // response[index] = {
+    //   topicList: topic_list
+    // }
+
+
+    response.push(...JSON.parse(topic_list))
+
   })
 
+
   /* 筛选出单选题 */
-  const exerciseList = parse(response)[Math.floor(Math.random() * response.length)].topicList.filter(item => item.topicType === 1)
+  // const exerciseList = parse(response)[Math.floor(Math.random() * response.length)].topicList.filter(item => item.topicType === 1)
+  const singleExerciseList = response.filter(item => item.topicType === 1)
+  const exerciseList = shuffle(singleExerciseList).slice(0, 5)
+
   const gameTopicList = exerciseList.map((item, index) => {
     const {
       topicContent = '', topicAnswer = [], topicOptions = []
@@ -270,6 +291,8 @@ const getGameTopicList = async () => {
 
   return gameTopicList
 }
+
+getGameTopicList()
 
 const handleGameReady = async (ws, socketMessage) => {
   const {
