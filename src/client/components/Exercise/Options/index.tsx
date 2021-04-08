@@ -16,6 +16,7 @@ interface IProps {
 }
 
 interface IStates {
+  uploadImg: string
 }
 
 @inject('exerciseStore')
@@ -23,6 +24,9 @@ interface IStates {
 class Options extends Component<IProps, IStates> {
   constructor(props: IProps) {
     super(props);
+    this.state = {
+      uploadImg: ''
+    }
   }
 
   formatNumber(number: number): string {
@@ -47,6 +51,10 @@ class Options extends Component<IProps, IStates> {
       success: (res) => {
         const filePath = res.tempFilePaths[0]
         const openid = Taro.getStorageSync('openid')
+
+        this.setState({
+          uploadImg: filePath
+        })
 
         Taro.uploadFile({
           url: `${prefix}/upload`,
@@ -93,15 +101,20 @@ class Options extends Component<IProps, IStates> {
             </View>
           )
         }) : (
-            <View className="uploader__container">
-              请在此上传图片:
-              <View className="uploader__wrapper" onClick={this.handleImageUpload.bind(this)}>
+          <View className="uploader__container">
+            请在此上传图片:
+            <View className="uploader__wrapper" onClick={this.handleImageUpload.bind(this)}>
+              {!this.state.uploadImg ?
                 <View className="uploader__icon">
                   +
-                </View>
-              </View>
+                </View> :
+                <View className="uploader__icon uploader__img" style={{ backgroundImage: `url(${this.state.uploadImg})` }}>
+
+                </View>}
+
             </View>
-          )}
+          </View>
+        )}
         <View className={buttonClassName} onClick={this.onConfirmClick.bind(this)}>{buttonName}</View>
       </View>
     )
